@@ -14,4 +14,11 @@ public class ArbreFichiers {
     public ArbreFichiers(){
 
     }
+    protected ajouterNoeud(){
+
+    }
+
+    protected supprimerNoeud(){
+
+    }
 }
