@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 public class ArbreFichiers {
 
     private ArbreFichiers pere;
@@ -48,18 +51,19 @@ public class ArbreFichiers {
         }
         return s;
     }
-    protected addNode(ArbreFichiers n1,ArbreFichiers n2){
-        if n1.getPremierFils() == null {
+    protected boolean addNode(ArbreFichiers n1,ArbreFichiers n2){
+        if (n1.getPremierFils() == null) {
             n1.setPremierFils(n2);
         }else{
 
         }
 
-
+        return false;
     }
 
-    protected supprimerNoeud(){
+    protected boolean supprimerNoeud(){
 
+        return false;
     }
     //getter
 
@@ -145,11 +149,14 @@ public class ArbreFichiers {
         List<ArbreFichiers> f = new ArrayList();
         f.add(n1);
         atteint.add(n1);
-        while(f.listIterator())
+        while(f.listIterator().hasNext()){
 
+        }
 
+        return false;
     }
-    public addNodeBetween(ArbreFichiers n1, ArbreFichiers n2){
+    public boolean addNodeBetween(ArbreFichiers n1, ArbreFichiers n2){
 
+        return false;
     }
 }
