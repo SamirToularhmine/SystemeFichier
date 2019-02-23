@@ -151,7 +151,7 @@ public class ArbreFichiers {
     }
 
     //verification si un chemin entre les deux noyeaux en ne passant que par les frères/soeurs gauches/droit(e)s parcours en largeur en partant de n1
-    private boolean isSibling(ArbreFichiers n1){
+    public boolean isSibling(ArbreFichiers n1){
         return parcoursLargeurFrere(this,n2 -> n1 == n2);
     }
 
@@ -207,6 +207,13 @@ public class ArbreFichiers {
             toAdd.setPere(this.getPere());
             System.out.println("toAdd = "+toAdd);
             toAdd.getPere().updateFirstSon();
+    }
+    public void addOnRigth(ArbreFichiers toAdd){
+        toAdd.setFrereGauche(this);
+        toAdd.setFrereDroit(this.getFrereDroit());
+        this.setFrereDroit(toAdd);
+        toAdd.setPere(this.getPere());
+        toAdd.getPere().updateFirstSon();
     }
 
 
