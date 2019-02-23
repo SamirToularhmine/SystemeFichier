@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class ArbreFichiers {
 
@@ -18,6 +16,17 @@ public class ArbreFichiers {
     private int taille;
 
     public ArbreFichiers(){
+    }
+//attention à méthode pas du tout prête à l'utilisation, les premiers fils des futures père ne sont pas mis à jour (par exemple)
+    public ArbreFichiers(ArbreFichiers pere, ArbreFichiers premierFils, ArbreFichiers frereGauche, ArbreFichiers frereDroit, String nom, boolean fichier, String contenu, int taille) {
+        this.pere = pere;
+        this.premierFils = premierFils;
+        this.frereGauche = frereGauche;
+        this.frereDroit = frereDroit;
+        this.nom = nom;
+        this.fichier = fichier;
+        this.contenu = contenu;
+        this.taille = taille;
     }
 
     public boolean isFichier() {
@@ -83,15 +92,15 @@ public class ArbreFichiers {
         return frereDroit;
     }
 
-        private String getNom () {
+        public String getNom () {
         return nom;
     }
 
-        private String getContenu () {
+        public String getContenu () {
         return contenu;
     }
 
-        private int getTaille () {
+        public int getTaille () {
         return taille;
     }
 
@@ -105,38 +114,36 @@ public class ArbreFichiers {
         this.premierFils = premierFils;
     }
 
-        public void setFrereGauche(ArbreFichiers frereGauche) {
+        private void setFrereGauche(ArbreFichiers frereGauche) {
         this.frereGauche = frereGauche;
     }
 
-        public void setFrereDroit(ArbreFichiers frereDroit) {
+        private void setFrereDroit(ArbreFichiers frereDroit) {
         this.frereDroit = frereDroit;
     }
 
-        public void setNom(String nom) {
+        private void setNom(String nom) {
         this.nom = nom;
     }
 
-        public void setFichier(boolean fichier) {
+        private void setFichier(boolean fichier) {
         this.fichier = fichier;
     }
 
-        public void setContenu(String contenu) {
+        private void setContenu(String contenu) {
         this.contenu = contenu;
     }
 
-        public void setTaille(int taille) {
+        private void setTaille(int taille) {
         this.taille = taille;
     }
 
 
-    public boolean isFirstSon(ArbreFichiers n1){
-        return getPremierFils() == n1;
+    public boolean isFirstSon(){
+        return  getPere().getPremierFils() == this;
     }
-    public boolean isFirstSon(ArbreFichiers n1, ArbreFichiers n2){
-        return n1.isFirstSon(n2);
-    }
-    public List getSibling(){
+
+    public List<ArbreFichiers> getSibling(){
         List sibling = new ArrayList();
         if (frereDroit != null) sibling.add(frereDroit);
         if (frereGauche != null) sibling.add(frereGauche);
@@ -144,19 +151,80 @@ public class ArbreFichiers {
     }
 
     //verification si un chemin entre les deux noyeaux en ne passant que par les frères/soeurs gauches/droit(e)s parcours en largeur en partant de n1
-    public boolean areSibling(ArbreFichiers n1,ArbreFichiers n2){
-        List<ArbreFichiers> atteint = new ArrayList();
-        List<ArbreFichiers> f = new ArrayList();
-        f.add(n1);
-        atteint.add(n1);
-        while(f.listIterator().hasNext()){
-
-        }
-
-        return false;
+    private boolean isSibling(ArbreFichiers n1){
+        return parcoursLargeurFrere(this,n2 -> n1 == n2);
     }
-    public boolean addNodeBetween(ArbreFichiers n1, ArbreFichiers n2){
 
-        return false;
+   public boolean parcoursLargeurFrere(ArbreFichiers n1,Rule r){
+       List<ArbreFichiers> atteint = new ArrayList();
+       List<ArbreFichiers> f = new ArrayList();
+       f.add(n1);
+       atteint.add(n1);
+       ListIterator<ArbreFichiers> it = f.listIterator();
+       while((!f.isEmpty())&&it.hasNext()){
+           ArbreFichiers current = it.next();
+           List<ArbreFichiers> neighbour = current.getSibling();
+           ListIterator<ArbreFichiers> itr = neighbour.listIterator();
+           boolean exit = r.doTheRule(current);
+           if(exit)return true;
+           it.remove();
+           while(itr.hasNext()){
+               ArbreFichiers crt = itr.next();
+               if (!atteint.contains(crt)){
+                   it.add(crt);
+                   atteint.add(crt);
+               }
+           }
+           if(!it.hasNext()){
+               it = f.listIterator();
+           }
+       }
+       return false;
+   }
+
+
+    public void updateFirstSon(){
+        ArbreFichiers son = this.getPremierFils();
+        System.out.println("entrer parcours en largeur");
+        parcoursLargeurFrere(son, n2 -> {
+            if(n2.getFrereGauche()==null){
+
+                System.out.println("this is ="+this);this.setPremierFils(n2);
+                return true;
+            }
+            return false;
+        });
+        System.out.println("fin parcours en largeur");
+    }
+
+    private boolean areSibling(ArbreFichiers n1, ArbreFichiers n2){
+        return n1.isSibling(n2);
+    }
+    public void addOnleft(ArbreFichiers toAdd){
+            toAdd.setFrereGauche(this.getFrereGauche());
+            this.setFrereGauche(toAdd);
+            toAdd.setFrereDroit(this);
+            toAdd.setPere(this.getPere());
+            System.out.println("toAdd = "+toAdd);
+            toAdd.getPere().updateFirstSon();
+    }
+
+
+    @Override
+    public String toString() {
+        String nomPere = (pere!=null)?pere.getNom():"null";
+        String nomPremierFils = (premierFils!=null)?premierFils.getNom():"null";
+        String nomFrereGauche = (frereGauche!=null)?frereGauche.getNom():"null";
+        String nomFrereDroit = (frereDroit!=null)?frereDroit.getNom():"null";
+        return "ArbreFichiers{" +
+                "pere=" + nomPere +
+                ", premierFils=" + nomPremierFils +
+                ", frereGauche=" + nomFrereGauche +
+                ", frereDroit=" + nomFrereDroit +
+                ", nom='" + nom + '\'' +
+                ", fichier=" + fichier +
+                ", contenu='" + contenu + '\'' +
+                ", taille=" + taille +
+                '}';
     }
 }
