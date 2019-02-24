@@ -60,10 +60,15 @@ public class ArbreFichiers {
         }
         return s;
     }
-    protected boolean addNode(ArbreFichiers n1,ArbreFichiers n2){
-        if (n1.getPremierFils() == null) {
-            n1.setPremierFils(n2);
+    protected boolean addNode(ArbreFichiers n2)throws RuntimeException{
+
+        if (this.getPremierFils() == null) {
+            this.setPremierFils(n2);
         }else{
+            ArbreFichiers sonN1 = this.getPremierFils();
+            if(parcoursLargeurFrere(sonN1,crt -> n2.getNom().compareToIgnoreCase(crt.getNom())==0)){
+                throw new RuntimeException("fichier du même nom déjà présent");
+            }
 
         }
 
@@ -71,8 +76,33 @@ public class ArbreFichiers {
     }
 
     protected boolean supprimerNoeud(){
+        ArbreFichiers dad = this.getPere();
+        //cas du fils unique
+        if(this.getFrereGauche()==null&&this.getFrereDroit()==null){
+            dad.setPremierFils(null);
+            dad.updateFirstSon();
+            return true;
+        }else{
+            //cas si ce n'est pas le premierFils de son père
+            if(!this.isFirstSon()){
+                this.getFrereGauche().setFrereDroit(this.getFrereDroit());
+                dad.updateFirstSon();
+                return true;
+            }else{//si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
 
-        return false;
+                if(this.getFrereGauche()!=null){
+                    ArbreFichiers crt = this.getFrereGauche();
+                    crt.setFrereDroit(this.getFrereGauche());
+                    this.getFrereGauche().setFrereDroit(crt);
+                }else{
+                    ArbreFichiers crt = this.getFrereDroit();
+                    crt.setFrereGauche(this.getFrereDroit());
+                    this.getFrereDroit().setFrereGauche(crt);
+                }
+                dad.updateFirstSon();
+                return true;
+            }
+        }
     }
     //getter
 
@@ -144,7 +174,7 @@ public class ArbreFichiers {
     }
 
     public List<ArbreFichiers> getSibling(){
-        List sibling = new ArrayList();
+        List<ArbreFichiers> sibling = new ArrayList();
         if (frereDroit != null) sibling.add(frereDroit);
         if (frereGauche != null) sibling.add(frereGauche);
         return sibling;
@@ -182,19 +212,27 @@ public class ArbreFichiers {
        return false;
    }
 
-
+   public boolean isRoot(){
+        return this.getPere() == null;
+   }
+    public boolean haveNoChild(){
+        return this.getPremierFils() == null;
+    }
     public void updateFirstSon(){
-        ArbreFichiers son = this.getPremierFils();
-        System.out.println("entrer parcours en largeur");
-        parcoursLargeurFrere(son, n2 -> {
-            if(n2.getFrereGauche()==null){
+        if(!haveNoChild()) {
+            ArbreFichiers son = this.getPremierFils();
+            parcoursLargeurFrere(son, n2 -> {
+                if (n2.getFrereGauche() == null) {
 
-                System.out.println("this is ="+this);this.setPremierFils(n2);
-                return true;
-            }
-            return false;
-        });
-        System.out.println("fin parcours en largeur");
+                    System.out.println("this is =" + this);
+                    this.setPremierFils(n2);
+                    return true;
+                }
+                return false;
+            });
+        }else{
+            System.out.println("pas d'enfant, throw new RuntimeException ?");
+        }
     }
 
     private boolean areSibling(ArbreFichiers n1, ArbreFichiers n2){
