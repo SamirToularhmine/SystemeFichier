@@ -23,58 +23,54 @@ public class FileParser {
             Deque<String> pile = new ArrayDeque<>();
             String currentFile = "";
             String currentDir = "racine";
+            ArbreFichiers racine = new ArbreFichiers();
             while(line != null){
-            if(numLigne == 1){
-                if(line.equals("racine")){
-                    ArbreFichiers racine = new ArbreFichiers();
-                    pile.add("fin");
-                }else{
-                    throw new FileParseException("Votre fichier doit commencer par le mot racine !", numLigne);
-                }
-            }else{
-                if(line.charAt(0) != '%'){
-                    if(line.matches("^[*]+ ([a-zA-Z0-9]*|([a-zA-Z0-9]*_[a-zA-Z0-9]*)*) (d|f)( %.*)?$")){
-                        String[] lineSplitted = line.split(" ");
-                        String arbo = lineSplitted[0];
-                        String nom = lineSplitted[1];
-                        String type = lineSplitted[2];
-                        System.out.println("On crée le " + type + " nommé " + nom + " à l'emplacement " + arbo);
-
-                        if(type.equals("f")){
-                            currentFile = nom;
-                        }else{
-                            if(type.equals("d")){
-                                currentDir = nom;
-                            }
-                        }
-
-                        if(!currentDir.equals("")){
-                            pile.add("fin");
-                        }else{
-                            pile.add("fin");
-                        }
-                        if(arbo.length() > 1 && currentDir.equals("racine")){
-                            throw new FileParseException("Vous devez d'abord définir un dossier avant de pouvoir descendre dans l'arborescence !", numLigne);
-                        }
+                if(numLigne == 1){
+                    if(line.equals("racine")){
+                        pile.add("fin");
                     }else{
-                        if(line.matches("fin")){
-                            if(line.equals("fin")){
-                                pile.pop();
+                        throw new FileParseException("Votre fichier doit commencer par le mot racine !", numLigne);
+                    }
+                }else{
+                    if(line.charAt(0) != '%'){
+                        if(line.matches("^[*]+ ([a-zA-Z0-9]*|([a-zA-Z0-9]*_[a-zA-Z0-9]*)*) (d|f)( %.*)?$")){
+                            String[] lineSplitted = line.split(" ");
+                            String arbo = lineSplitted[0];
+                            String nom = lineSplitted[1];
+                            String type = lineSplitted[2];
+                            System.out.println("On crée le " + type + " nommé " + nom + " à l'emplacement " + arbo);
+
+                            if(type.equals("f")){
+                                //racine.addNode(racine, new ArbreFichiers());
+                                currentFile = nom;
+                            }else{
+                                if(type.equals("d")){
+                                    pile.add("fin");
+                                    currentDir = nom;
+                                }
+                            }
+                            if(arbo.length() > 1 && currentDir.equals("racine")){
+                                throw new FileParseException("Vous devez d'abord définir un dossier avant de pouvoir descendre dans l'arborescence !", numLigne);
                             }
                         }else{
-                            if(line.matches(".*") && !currentFile.equals("")){
-                                //on ajoute la ligne au contenu du fichier
-                                System.out.println("On ajoute " + line + " au fichier " + currentFile);
-                                currentFile = "";
+                            if(line.matches("fin")){
+                                if(line.equals("fin")){
+                                    pile.pop();
+                                }
                             }else{
-                                throw new FileParseException("Vous devez définir un fichier avant de pouvoir préciser son contenu", numLigne);
+                                if(line.matches(".*") && !currentFile.equals("")){
+                                    //on ajoute la ligne au contenu du fichier
+                                    System.out.println("On ajoute " + line + " au fichier " + currentFile);
+                                    currentFile = "";
+                                }else{
+                                    throw new FileParseException("Vous devez définir un fichier avant de pouvoir préciser son contenu", numLigne);
+                                }
                             }
                         }
                     }
                 }
-            }
-            numLigne++;
-            line = br.readLine();
+                numLigne++;
+                line = br.readLine();
             }
             if(!pile.isEmpty()){
                 throw new FileParseException("Le fichier ne se termine pas par le mot 'fin'", numLigne);
