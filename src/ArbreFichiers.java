@@ -29,6 +29,14 @@ public class ArbreFichiers {
         this.taille = taille;
     }
 
+    public ArbreFichiers(ArbreFichiers pere, ArbreFichiers premierFils, ArbreFichiers frereGauche, ArbreFichiers frereDroit, String nom) {
+        this.pere = pere;
+        this.premierFils = premierFils;
+        this.frereGauche = frereGauche;
+        this.frereDroit = frereDroit;
+        this.nom = nom;
+    }
+
     public boolean isFichier() {
         return fichier;
     }
@@ -69,36 +77,45 @@ public class ArbreFichiers {
             if(parcoursLargeurFrere(sonN1,crt -> n2.getNom().compareToIgnoreCase(crt.getNom())==0)){
                 throw new RuntimeException("fichier du même nom déjà présent");
             }
-
         }
 
         return false;
     }
 
-    protected boolean supprimerNoeud(){
+    public boolean supprimerNoeud()throws Exception{
+        ArbreFichiers crt = null;
+        if(isRoot()){
+            throw new Exception("impossible de supprimer la racine");
+        }
         ArbreFichiers dad = this.getPere();
         //cas du fils unique
         if(this.getFrereGauche()==null&&this.getFrereDroit()==null){
+            System.out.println("fils unique");
             dad.setPremierFils(null);
             dad.updateFirstSon();
             return true;
         }else{
             //cas si ce n'est pas le premierFils de son père
             if(!this.isFirstSon()){
+                System.out.println("pas le premier fils");
                 this.getFrereGauche().setFrereDroit(this.getFrereDroit());
                 dad.updateFirstSon();
                 return true;
             }else{//si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
-
+                System.out.println("premier fils");
                 if(this.getFrereGauche()!=null){
-                    ArbreFichiers crt = this.getFrereGauche();
+                    crt = this.getFrereGauche();
                     crt.setFrereDroit(this.getFrereGauche());
                     this.getFrereGauche().setFrereDroit(crt);
+
                 }else{
-                    ArbreFichiers crt = this.getFrereDroit();
+                    System.out.println("frere droite pas null");
+                    crt = this.getFrereDroit();
                     crt.setFrereGauche(this.getFrereDroit());
                     this.getFrereDroit().setFrereGauche(crt);
                 }
+                dad.setPremierFils(crt);
+                System.out.println("dad =" + dad);
                 dad.updateFirstSon();
                 return true;
             }
@@ -144,11 +161,11 @@ public class ArbreFichiers {
         this.premierFils = premierFils;
     }
 
-        private void setFrereGauche(ArbreFichiers frereGauche) {
+        public void setFrereGauche(ArbreFichiers frereGauche) {
         this.frereGauche = frereGauche;
     }
 
-        private void setFrereDroit(ArbreFichiers frereDroit) {
+        public void setFrereDroit(ArbreFichiers frereDroit) {
         this.frereDroit = frereDroit;
     }
 
@@ -224,14 +241,14 @@ public class ArbreFichiers {
             parcoursLargeurFrere(son, n2 -> {
                 if (n2.getFrereGauche() == null) {
 
-                    System.out.println("this is =" + this);
+                    System.out.println("this is =" + this +" n2 = "+n2.getNom());
                     this.setPremierFils(n2);
                     return true;
                 }
                 return false;
             });
         }else{
-            System.out.println("pas d'enfant, throw new RuntimeException ?");
+            System.out.println("pas d'enfant, throw new RuntimeException ? ah non enfait c'est bon");
         }
     }
 
