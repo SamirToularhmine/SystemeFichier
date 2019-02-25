@@ -75,7 +75,11 @@ public class ArbreFichiers {
         return false;
     }
 
-    protected boolean supprimerNoeud(){
+    protected boolean supprimerNoeud()throws Exception{
+        if(this.isRoot()){
+            throw new Exception("impossible de supprimer la racine");
+        }
+
         ArbreFichiers dad = this.getPere();
         //cas du fils unique
         if(this.getFrereGauche()==null&&this.getFrereDroit()==null){
@@ -272,4 +276,5 @@ public class ArbreFichiers {
                 ", taille=" + taille +
                 '}';
     }
+
 }
