@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class testMahafaly {
     public static final String RESET = "\u001B[0m";
@@ -43,15 +40,29 @@ public class testMahafaly {
         ArbreFichiers d = new ArbreFichiers("d");
         ArbreFichiers e = new ArbreFichiers("e");
         ArbreFichiers f = new ArbreFichiers("f");
+        ArbreFichiers a1 = new ArbreFichiers("a1");
+        System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
         a.addOnRigth(b);
         b.addOnRigth(c);
         b.addOnleft(d);
         d.addOnRigth(e);
         a.addOnleft(f);
         // f a d e b c
+        System.out.println("\u001B[36m"+"premier fils root = "+root.getPremierFils()+"\u001B[0m");
         System.out.println("\u001B[32m"+a.getFrereDroit()+"\u001B[0m");
-        System.out.println(GREEN+root.childrenToList()+RESET);
+        List<ArbreFichiers> l2 = root.childrenToList();
 
+        Collections.sort(l2);
+        Collections.reverse(l2);
+        System.out.println("\u001B[35m"+l2+"\u001B[0m");
+        System.out.println("\u001B[33m"+"list2children"+"\u001B[0m");
+        root.listToChildren(l2);
+        System.out.println("\u001B[33m"+"fin"+"\u001B[0m");
+        System.out.println("\u001B[36m"+"premier fils root = "+root.getPremierFils()+"\u001B[0m");
+        System.out.println(GREEN+root.childrenToList()+RESET);
+        System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
+        root.addNode(a1);
+        System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
 
 
 

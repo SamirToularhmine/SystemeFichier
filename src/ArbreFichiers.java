@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ArbreFichiers implements Comparable<ArbreFichiers> {
+public class ArbreFichiers implements Comparable<ArbreFichiers>{
 
     private ArbreFichiers pere;
     private ArbreFichiers premierFils;
@@ -102,7 +102,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
         return s;
     }
     //todo updateLength addNode
-    protected boolean addNode(ArbreFichiers n2)throws RuntimeException{
+    public boolean addNoede(ArbreFichiers n2)throws RuntimeException{
         //cas où this n'a pas d'enfant
         if (this.getPremierFils() == null) {
             this.setPremierFils(n2);
@@ -117,7 +117,16 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
 
         return false;
     }
+
+    public void addNode(ArbreFichiers n2)throws RuntimeException{
+        List<ArbreFichiers> l = this.childrenToList();
+        l.add(n2);
+        l.sort(Comparator.comparing(ArbreFichiers::getNom));
+        this.listToChildren(l);
+    }
+
     public ArbreFichiers getExtremLeftSon(){
+        if (this.haveNoChild())return null;
         ArbreFichiers a = new ArbreFichiers();
         a = (ArbreFichiers) parcoursLargeurFrere(this.getPremierFils(),(b)->{
             if(b.getFrereGauche()==null) {
@@ -140,7 +149,35 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
         }
         return l;
     }
+public void listToChildren(List<ArbreFichiers> l){
+        if(!l.isEmpty()){
+            ArbreFichiers first_element = l.get(0);
+            first_element.removeSiblings();
+            this.setPremierFils(first_element);
+            if(l.size()>1){
+                ListIterator<ArbreFichiers> it = l.listIterator(1);
+                while(it.hasNext()){
+                    ArbreFichiers prev = l.get(it.previousIndex());
+                    ArbreFichiers crt = it.next();
+                    System.out.println("\u001B[34m"+"crt = "+crt+"\u001B[0m");
 
+                    System.out.println("\u001B[31m"+"Prev ="+prev+"\u001B[0m");
+                    crt.removeSiblings();
+                    System.out.println("crt ="+ crt +"crt left = "+crt.getFrereGauche()+"crt right ="+crt.getFrereDroit());
+                    prev.addOnRigthIgnoringFather(crt);
+                    System.out.println("crt ="+ crt +" |crt left = "+crt.getFrereGauche()+" |crt right ="+crt.getFrereDroit());
+                    System.out.println("\u001B[30m"+"------------"+"\u001B[0m");
+                }
+            }
+        }else{
+            this.setPremierFils(null);
+        }
+        this.updateFirstSon();
+}
+public void removeSiblings(){
+        this.setFrereDroit(null);
+        this.setFrereGauche(null);
+}
     //todo updateLength removeNode
     public boolean removeNode()throws Exception{
         ArbreFichiers crt = null;
@@ -190,6 +227,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
         public ArbreFichiers getPremierFils () {
         return premierFils;
     }
+
 
         public ArbreFichiers getFrereGauche () {
         return frereGauche;
@@ -262,7 +300,10 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
         return (boolean) parcoursLargeurFrere(this,n2 -> n1 == n2);
     }
 
-   public Object parcoursLargeurFrere(ArbreFichiers n1,Rule r){
+   public Object parcoursLargeurFrere(ArbreFichiers n1,Rule r)throws RuntimeException{
+       if (n1 == null) {
+           throw new RuntimeException("Argument n1 null");
+       }
        List<ArbreFichiers> atteint = new ArrayList();
        List<ArbreFichiers> f = new ArrayList();
        f.add(n1);
@@ -314,6 +355,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
         if(!haveNoChild()) {
             ArbreFichiers son = this.getPremierFils();
             parcoursLargeurFrere(son, n2 -> {
+
                 if (n2.getFrereGauche() == null) {
 
                     this.setPremierFils(n2);
@@ -331,6 +373,11 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
     }
     public void addOnleft(ArbreFichiers toAdd){
 
+        this.addOnleftIgnoringFather(toAdd);
+        toAdd.getPere().updateFirstSon();
+    }
+    public void addOnleftIgnoringFather(ArbreFichiers toAdd){
+
         if (this.getFrereGauche() != null) {
             this.getFrereGauche().setFrereDroit(toAdd);
         }
@@ -339,19 +386,22 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
         toAdd.setFrereDroit(this);
         toAdd.setPere(this.getPere());
         toAdd.getPere().setPremierFils(toAdd);
+
+    }
+
+    public void addOnRigth(ArbreFichiers toAdd){
+        this.addOnRigthIgnoringFather(toAdd);
         toAdd.getPere().updateFirstSon();
     }
-    public void addOnRigth(ArbreFichiers toAdd){
+    public void addOnRigthIgnoringFather(ArbreFichiers toAdd){
         toAdd.setFrereGauche(this);
         if (this.getFrereDroit() != null) {
             this.getFrereDroit().setFrereGauche(toAdd);
         }
-
         toAdd.setFrereDroit(this.getFrereDroit());
         this.setFrereDroit(toAdd);
         toAdd.setPere(this.getPere());
         toAdd.getPere().setPremierFils(toAdd);
-        toAdd.getPere().updateFirstSon();
     }
 
 
@@ -380,6 +430,8 @@ public class ArbreFichiers implements Comparable<ArbreFichiers> {
     public String toString(){
         return "nom=" + nom;
     }
+
+
 
 
     public boolean equals(Object o){
