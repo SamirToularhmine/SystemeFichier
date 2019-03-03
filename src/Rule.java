@@ -1,4 +1,4 @@
 @FunctionalInterface
 public interface Rule {
-    public boolean doTheRule(ArbreFichiers n1);
+    public Object doTheRule(ArbreFichiers n1);
 }

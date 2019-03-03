@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ArbreFichiers {
+public class ArbreFichiers implements Comparable<ArbreFichiers> {
 
     private ArbreFichiers pere;
     private ArbreFichiers premierFils;
@@ -15,8 +15,6 @@ public class ArbreFichiers {
     //Correspond à la taille en octets du dossier/fichier correspondant au noeud
     private int taille;
 
-    public ArbreFichiers(){
-    }
 //attention à méthode pas du tout prête à l'utilisation, les premiers fils des futures père ne sont pas mis à jour (par exemple)
     public ArbreFichiers(ArbreFichiers pere, ArbreFichiers premierFils, ArbreFichiers frereGauche, ArbreFichiers frereDroit, String nom, boolean fichier, String contenu, int taille) {
         this.pere = pere;
@@ -35,6 +33,41 @@ public class ArbreFichiers {
         this.frereGauche = frereGauche;
         this.frereDroit = frereDroit;
         this.nom = nom;
+        this.fichier = false;
+        this.contenu = "";
+        this.taille = 0;
+    }
+
+    public ArbreFichiers(String nom) {
+        this.nom = nom;
+        this.pere = null;
+        this.premierFils = null;
+        this.frereGauche = null;
+        this.frereDroit = null;
+        this.fichier = false;
+        this.contenu = "";
+        this.taille = 0;
+    }
+    public void reform(ArbreFichiers n1) {
+        this.pere = n1.pere ;
+        this.premierFils = n1.premierFils;
+        this.frereGauche = n1.frereGauche;
+        this.frereDroit = n1.frereDroit ;
+        this.nom = n1.nom;
+        this.fichier = n1.fichier   ;
+        this.contenu = n1.contenu   ;
+        this.taille = n1.taille    ;
+    }
+    public ArbreFichiers() {
+
+        this.pere = null;
+        this.premierFils = null;
+        this.frereGauche = null;
+        this.frereDroit = null;
+        this.nom = "";
+        this.fichier = false;
+        this.contenu = "";
+        this.taille = 0;
     }
 
     public boolean isFichier() {
@@ -68,21 +101,48 @@ public class ArbreFichiers {
         }
         return s;
     }
+    //todo updateLength addNode
     protected boolean addNode(ArbreFichiers n2)throws RuntimeException{
-
+        //cas où this n'a pas d'enfant
         if (this.getPremierFils() == null) {
             this.setPremierFils(n2);
-        }else{
+        }else{// this a au moins 1 enfant
             ArbreFichiers sonN1 = this.getPremierFils();
-            if(parcoursLargeurFrere(sonN1,crt -> n2.getNom().compareToIgnoreCase(crt.getNom())==0)){
-                throw new RuntimeException("fichier du même nom déjà présent");
+            //verification si le noyeau à ajouter ne possede pas le même nom qu'un des fichiers présent
+            if((boolean) parcoursLargeurFrere(sonN1,crt -> n2.getNom().compareToIgnoreCase(crt.getNom())==0)){
+                throw new RuntimeException("fichier du même nom déjà présent");//fichierDéjàexistantExcetpion -> catch = ajout du fichier avec (n+1) ajouté à son nom
             }
+
         }
 
         return false;
     }
+    public ArbreFichiers getExtremLeftSon(){
+        ArbreFichiers a = new ArbreFichiers();
+        a = (ArbreFichiers) parcoursLargeurFrere(this.getPremierFils(),(b)->{
+            if(b.getFrereGauche()==null) {
+                return b;
+            }
+            return null;
+        });
+        return a;
+    }
+    //on mets les enfants dans une liste en gardant l'ordre
+    public List<ArbreFichiers> childrenToList(){
+        List<ArbreFichiers> l = new ArrayList<>();
+        if(this.haveNoChild()){
+            return l;
+        }
+        ArbreFichiers crt = this.getExtremLeftSon();
+        while(crt!=null){
+            l.add(crt);
+            crt = crt.getFrereDroit();
+        }
+        return l;
+    }
 
-    public boolean supprimerNoeud()throws Exception{
+    //todo updateLength removeNode
+    public boolean removeNode()throws Exception{
         ArbreFichiers crt = null;
         if(this.isRoot()){
             throw new Exception("impossible de supprimer la racine");
@@ -199,21 +259,30 @@ public class ArbreFichiers {
 
     //verification si un chemin entre les deux noyeaux en ne passant que par les frères/soeurs gauches/droit(e)s parcours en largeur en partant de n1
     public boolean isSibling(ArbreFichiers n1){
-        return parcoursLargeurFrere(this,n2 -> n1 == n2);
+        return (boolean) parcoursLargeurFrere(this,n2 -> n1 == n2);
     }
 
-   public boolean parcoursLargeurFrere(ArbreFichiers n1,Rule r){
+   public Object parcoursLargeurFrere(ArbreFichiers n1,Rule r){
        List<ArbreFichiers> atteint = new ArrayList();
        List<ArbreFichiers> f = new ArrayList();
        f.add(n1);
        atteint.add(n1);
+       Object exit = null;
        ListIterator<ArbreFichiers> it = f.listIterator();
        while((!f.isEmpty())&&it.hasNext()){
            ArbreFichiers current = it.next();
            List<ArbreFichiers> neighbour = current.getSibling();
            ListIterator<ArbreFichiers> itr = neighbour.listIterator();
-           boolean exit = r.doTheRule(current);
-           if(exit)return true;
+
+           if(exit instanceof java.lang.Boolean && (boolean) exit) {
+               return exit;
+               //ici le type du return n'est pas encore déterminé
+           }else if(!(exit instanceof ArbreFichiers)){
+               exit = r.doTheRule(current);
+           }else{
+               //ici le type de return sera un ArbreFichier
+               return exit;
+           }
            it.remove();
            while(itr.hasNext()){
                ArbreFichiers crt = itr.next();
@@ -222,11 +291,16 @@ public class ArbreFichiers {
                    atteint.add(crt);
                }
            }
+           //on revient au début de la liste
            if(!it.hasNext()){
                it = f.listIterator();
            }
        }
-       return false;
+       System.out.println("atteint = "+atteint);
+       if(exit instanceof java.lang.Boolean){
+           return false;
+       }
+       return exit;
    }
 
    public boolean isRoot(){
@@ -236,12 +310,12 @@ public class ArbreFichiers {
         return this.getPremierFils() == null;
     }
     public void updateFirstSon(){
+        //le cas où this a au moins un enfant
         if(!haveNoChild()) {
             ArbreFichiers son = this.getPremierFils();
             parcoursLargeurFrere(son, n2 -> {
                 if (n2.getFrereGauche() == null) {
 
-                    System.out.println("this is =" + this +" n2 = "+n2.getNom());
                     this.setPremierFils(n2);
                     return true;
                 }
@@ -256,22 +330,33 @@ public class ArbreFichiers {
         return n1.isSibling(n2);
     }
     public void addOnleft(ArbreFichiers toAdd){
-            toAdd.setFrereGauche(this.getFrereGauche());
-            this.setFrereGauche(toAdd);
-            toAdd.setFrereDroit(this);
-            toAdd.setPere(this.getPere());
-            System.out.println("toAdd = "+toAdd);
-            toAdd.getPere().updateFirstSon();
+
+        if (this.getFrereGauche() != null) {
+            this.getFrereGauche().setFrereDroit(toAdd);
+        }
+        toAdd.setFrereGauche(this.getFrereGauche());
+        this.setFrereGauche(toAdd);
+        toAdd.setFrereDroit(this);
+        toAdd.setPere(this.getPere());
+        toAdd.getPere().setPremierFils(toAdd);
+        toAdd.getPere().updateFirstSon();
     }
     public void addOnRigth(ArbreFichiers toAdd){
         toAdd.setFrereGauche(this);
+        if (this.getFrereDroit() != null) {
+            this.getFrereDroit().setFrereGauche(toAdd);
+        }
+
         toAdd.setFrereDroit(this.getFrereDroit());
         this.setFrereDroit(toAdd);
         toAdd.setPere(this.getPere());
+        toAdd.getPere().setPremierFils(toAdd);
         toAdd.getPere().updateFirstSon();
     }
 
 
+
+/*
     @Override
     public String toString() {
         String nomPere = (pere!=null)?pere.getNom():"null";
@@ -288,5 +373,24 @@ public class ArbreFichiers {
                 ", contenu='" + contenu + '\'' +
                 ", taille=" + taille +
                 '}';
+    }
+*/
+
+    @Override
+    public String toString(){
+        return "nom=" + nom;
+    }
+
+
+    public boolean equals(Object o){
+        if (o instanceof ArbreFichiers){
+            return ((ArbreFichiers)o).getNom().equals(this.getNom());
+        }
+        return false;
+    }
+
+    @Override
+    public int compareTo(ArbreFichiers o) {
+        return o.getNom().compareToIgnoreCase(this.getNom());
     }
 }
