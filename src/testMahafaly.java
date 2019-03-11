@@ -48,9 +48,9 @@ public class testMahafaly {
             root.addNode(a);
             root.addNode(b);
             root.addNode(c);
-            root.addNode(d);
-            root.addNode(e);
-            root.addNode(f);
+            a.addNode(d);
+            d.addNode(e);
+            e.addNode(f);
         }catch(Exception e1){
 
         }
@@ -58,10 +58,13 @@ public class testMahafaly {
         System.out.println(GREEN+"before rm = "+root+RESET);
         try {
             a1.removeNode();
+            //a.removeNode();
+            b.removeNode();
         }catch(Exception e1){
 
         }
-        System.out.println("\u001B[32m"+root+"\u001B[0m");
+        System.out.println("\u001B[32m"+root.childrenToList()+"\u001B[0m");
+        System.out.println(root);
 
 
 
