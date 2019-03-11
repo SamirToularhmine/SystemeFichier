@@ -130,14 +130,14 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         return false;
     }
 
-    public void addNode(ArbreFichiers n2)throws Exception{
+    public void addNode(ArbreFichiers n2){
         if(this.isFichier()){
-            throw new Exception("c'est un fichier");
+            throw new RuntimeException("c'est un fichier");
         }
         List<ArbreFichiers> l = this.childrenToList();
         n2.setPere(this);
         if(l.contains(n2)){
-            throw new Exception("fichier du même nom déjà présent");//fichierDéjàexistantExcetpion -> catch = ajout du fichier avec (n+1) ajouté à son nom
+            throw new RuntimeException("fichier du même nom déjà présent");//fichierDéjàexistantExcetpion -> catch = ajout du fichier avec (n+1) ajouté à son nom
         }
         l.add(n2);
         l.sort(Comparator.comparing(ArbreFichiers::getNom));
@@ -295,7 +295,7 @@ public void removeSiblings(){
         this.fichier = fichier;
     }
 
-        private void setContenu(String contenu) {
+        public void setContenu(String contenu) {
         this.contenu = contenu;
     }
 
@@ -438,8 +438,6 @@ public void removeSiblings(){
 
     }
 
-
-
 /*
     @Override
     public String toString() {
@@ -479,7 +477,7 @@ public void removeSiblings(){
 // for test
     @Override
     public String toString(){
-        return "[" + nom+","+taille+"]";
+        return "[" + nom+","+taille+","+"]";
     }
 
     public String fillContenue(){
