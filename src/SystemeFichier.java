@@ -12,7 +12,7 @@ public class SystemeFichier {
     }
 
     public SystemeFichier(){
-        this.arborescence = new ArbreFichiers("/");
+        this.arborescence = new Folder("/");
         this.commandes = null;
         this.fp = null;
     }

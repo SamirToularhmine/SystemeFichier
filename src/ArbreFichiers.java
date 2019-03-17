@@ -1,6 +1,6 @@
 import java.util.*;
 
-public abstract class ArbreFichiers implements Comparable<ArbreFichiers>{
+public abstract class ArbreFichiers implements Comparable<ArbreFichiers>,Cloneable{
 
     //TODO: Systeme de type
 
@@ -206,6 +206,8 @@ public void removeSiblings(){
         return pere;
     }
 
+        public ArbreFichiers getThis () { return this; }
+
         public ArbreFichiers getPremierFils () {
         return premierFils;
     }
@@ -249,7 +251,7 @@ public void removeSiblings(){
         this.frereDroit = frereDroit;
     }
 
-        private void setNom(String nom) {
+        public void setNom(String nom) {
         this.nom = nom;
     }
 
@@ -403,8 +405,10 @@ public void removeSiblings(){
         return s;
     }
 
-    public abstract String draw();
-
+    public String draw(){
+        return this.draw(0);
+    }
+    public abstract String draw(int n);
     //todo enlever utilisation de isFichier
     /*public String drawe(int n){
         String s ="";
@@ -465,6 +469,10 @@ public void removeSiblings(){
         String s ="";
         for(int i=0; i<taille;i++)s+=i;
         return s;
+    }
+    @Override
+    public Object clone()throws CloneNotSupportedException{
+        return super.clone();
     }
 
 }

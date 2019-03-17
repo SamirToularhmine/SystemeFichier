@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.util.regex.*;
 public class testMahafaly {
     public static final String RESET = "\u001B[0m";
     public static final String BLACK = "\u001B[30m";
@@ -14,12 +14,13 @@ public class testMahafaly {
     public static void main(String[] args) {
         Folder root = new Folder("root");
         Folder a = new Folder("a");
-        File b = new File("b",1);
-        File c = new File("c",1);
+        Fichier b = new Fichier("b",1);
+        Fichier c = new Fichier("c",1);
         Folder d = new Folder("d");
         Folder e = new Folder("e");
-        File f = new File("f",100);
-        File a1 = new File("a1",10);
+        Fichier f = new Fichier("f",100);
+        Fichier a1 = new Fichier("a1",10);
+
         System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
 
         /*
@@ -51,8 +52,14 @@ public class testMahafaly {
             a.addNode(d);
             d.addNode(e);
             e.addNode(f);
-        }catch(Exception e1){
+            for (int i = 1; i < 100; i++) {
+                System.out.println("list ="+e.childrenToList());
+                System.out.println(i);
+                e.addNode(new Fichier("f"));
+            }
 
+        }catch(Exception e1){
+            System.out.println(e1.getMessage());
         }
         System.out.println("\u001B[33m"+"before rm children root = "+root.childrenToList()+"\u001B[0m");
 
@@ -64,6 +71,27 @@ public class testMahafaly {
         System.out.println(root);
         System.out.println(a.getFrereDroit());
         System.out.println(root.draw());
+        System.out.println("\u001B[32m"+e.childrenToList()+"\u001B[0m");
+        String nom = "f(1)";
+        System.out.println("\u001B[31m"+nom+"\u001B[0m");
+        Pattern p = Pattern.compile(".*\\(\\d+\\)$");
+        Matcher matcher = p.matcher(nom);
+        System.out.println(matcher.find());
+
+        System.out.println(matcher.group());
+        matcher = Pattern.compile("\\(\\d+\\)$").matcher(nom);
+        System.out.println(matcher.find());
+        System.out.println(matcher.group());
+        String end = "1";
+        // String end = matcher.group();
+        //end = Pattern.compile("\\d+").matcher(end).group();
+        int nv = Integer.valueOf(end);
+        String begin = "argh";
+        //String begin = Pattern.compile("[^\\(\\d+\\)$)]").matcher(nom).group();
+        nom = begin +"("+ (nv+1) +")";
+        System.out.println("\u001B[33m"+nom+"\u001B[0m");
+
+
 
 
 
