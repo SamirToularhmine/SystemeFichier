@@ -75,7 +75,7 @@ public class FileParser{
                                 }
                             }
                         }else{
-                            if(line.matches("fin")){
+                            if(line.equals("fin")){
                                 if(finOk){
                                     throw new FileParseException(DEJA_FINI, numLigne);
                                 }
