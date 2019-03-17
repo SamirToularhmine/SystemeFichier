@@ -1,13 +1,8 @@
 public class testDonTouli {
 
     public static void main(String[] args) {
-        String[] mr = {
-                "*"
-        };
-        FileParser fp = new FileParser("arbo", mr);
-        ArbreFichiers arbo = fp.parserFichier();
 
-        System.out.println(arbo.draw());
+        SystemeFichier sf = new SystemeFichier("arbo");
         /*try {
             ArbreFichiers root = new ArbreFichiers(null, null, null, null, "root");
             System.out.println(root);

@@ -30,7 +30,7 @@ public class FileParser{
         this.motsReserves = List.of(motsReserves);
     }
 
-    public ArbreFichiers parserFichier(){
+    public Folder parserFichier(){
 
         try{
             BufferedReader br = new BufferedReader(new FileReader(this.file));
@@ -75,7 +75,7 @@ public class FileParser{
                                 }
                             }
                         }else{
-                            if(line.matches("fin")){
+                            if(line.equals("fin")){
                                 if(finOk){
                                     throw new FileParseException(DEJA_FINI, numLigne);
                                 }
