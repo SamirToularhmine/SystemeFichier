@@ -444,8 +444,8 @@ public void removeSiblings(){
         toAdd.setPere(this.getPere());
 
     }
-    public String nChar(String c,int n){
-        String s=(n==0)?"":"│";
+    public String nChar(String c,int n,boolean t){
+        String s=(n==0||t)?"":"│";
         for (int i = 0; i < n; i++) {
             s += c;
         }
@@ -465,7 +465,9 @@ public void removeSiblings(){
             List<ArbreFichiers> l = this.childrenToList();
             s += "\u001B[36m"+this.getNom() + "/\n"+"\u001B[0m";
             for (ArbreFichiers a : l) {
-                String tc =(a.getFrereDroit()!=null)? nChar("   ", n) + "├── ": nChar("   ", n) + "└── ";
+                boolean t = a.getPere().getFrereDroit() == null;
+                String tc =(a.getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
+
                 s += tc+a.draw(n+1);
             }
         }

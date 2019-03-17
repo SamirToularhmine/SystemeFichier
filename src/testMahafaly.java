@@ -62,7 +62,6 @@ public class testMahafaly {
 
         System.out.println("\u001B[32m"+"after rm"+root.childrenToList()+"\u001B[0m");
         System.out.println(root);
-        System.out.println(root.nChar("*",3));
         System.out.println(a.getFrereDroit());
         System.out.println(root.draw());
 
