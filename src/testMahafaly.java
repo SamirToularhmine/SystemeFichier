@@ -57,7 +57,7 @@ public class testMahafaly {
         System.out.println("\u001B[33m"+"children root = "+root.childrenToList()+"\u001B[0m");
         System.out.println(GREEN+"before rm = "+root+RESET);
         try {
-            a1.removeNode();
+            //a1.removeNode();
             //a.removeNode();
             b.removeNode();
         }catch(Exception e1){

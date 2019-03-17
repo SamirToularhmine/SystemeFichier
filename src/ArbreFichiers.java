@@ -2,6 +2,8 @@ import java.util.*;
 
 public class ArbreFichiers implements Comparable<ArbreFichiers>{
 
+    //TODO: Systeme de type
+
     private ArbreFichiers pere;
     private ArbreFichiers premierFils;
     private ArbreFichiers frereGauche;
@@ -70,6 +72,18 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
 
     }
 
+    public ArbreFichiers(String nom,int t, boolean estFichier) {
+        this.nom = nom;
+        this.pere = null;
+        this.premierFils = null;
+        this.frereGauche = null;
+        this.frereDroit = null;
+        this.fichier = estFichier;
+        this.taille = t;
+        this.contenu = fillContenue();
+
+    }
+
     public ArbreFichiers() {
 
         this.pere = null;
@@ -102,7 +116,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         }
         return s;
     }
-
+// TODO :Vérifier le cas d'un fichier à la racine
     public String rootToNode(){
         final String SEPARATEUR="/";
         String s=SEPARATEUR+this.nom;
@@ -144,6 +158,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         this.listToChildren(l);
         this.updateLength(n2.getTaille());
     }
+
 
     public ArbreFichiers getExtremLeftSon(){
         if (this.haveNoChild())return null;
@@ -458,10 +473,6 @@ public void removeSiblings(){
     }
 */
 
-
-
-
-
     public boolean equals(Object o){
         if (o instanceof ArbreFichiers){
             return ((ArbreFichiers)o).getNom().equals(this.getNom());
@@ -474,7 +485,7 @@ public void removeSiblings(){
         return o.getNom().compareToIgnoreCase(this.getNom());
     }
 
-// for test
+// for testDonTouli
     @Override
     public String toString(){
         return "[" + nom+","+taille+","+"]";
