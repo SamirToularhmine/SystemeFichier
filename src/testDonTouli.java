@@ -6,10 +6,7 @@ public class testDonTouli {
         };
         FileParser fp = new FileParser("arbo", mr);
         ArbreFichiers arbo = fp.parserFichier();
-        ArbreFichiers fs = arbo.getPremierFils();
-        System.out.println(arbo.nodeInfos());
 
-        System.out.println("Premier fils :" + fs.nodeInfos());
         System.out.println(arbo.draw());
         /*try {
             ArbreFichiers root = new ArbreFichiers(null, null, null, null, "root");

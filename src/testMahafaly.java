@@ -14,12 +14,12 @@ public class testMahafaly {
     public static void main(String[] args) {
         Folder root = new Folder("root");
         Folder a = new Folder("a");
-        File b = new File("b",1);
-        File c = new File("c",1);
+        Fichier b = new Fichier("b",1);
+        Fichier c = new Fichier("c",1);
         Folder d = new Folder("d");
         Folder e = new Folder("e");
-        File f = new File("f",100);
-        File a1 = new File("a1",10);
+        Fichier f = new Fichier("f",100);
+        Fichier a1 = new Fichier("a1",10);
         System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
 
         /*
