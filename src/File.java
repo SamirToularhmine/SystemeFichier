@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class File extends ArbreFichiers{
 
     public File(String nom){
@@ -11,6 +13,16 @@ public class File extends ArbreFichiers{
     //pour les tests contenu rempli automatiquement
     public File(String nom,int taille){
         super(nom,taille);
+    }
+
+    public String draw(){
+        return this.draw(0);
+    }
+
+    public String draw(int n){
+        String s ="";
+            s+="\u001B[33m"+this.getNom() +" -\n"+"\u001B[0m";
+        return s;
     }
 
 }

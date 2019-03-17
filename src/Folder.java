@@ -22,4 +22,22 @@ public class Folder extends ArbreFichiers{
         this.updateLength(n2.getTaille());
     }
 
+    public String draw(){
+        return this.draw(0);
+    }
+
+    public String draw(int n){
+        String s ="";
+            List<ArbreFichiers> l = this.childrenToList();
+            s += "\u001B[36m"+this.getNom() + "/\n"+"\u001B[0m";
+            for (ArbreFichiers a : l) {
+                boolean t = a.getPere().getFrereDroit() == null;
+                String tc =(a.getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
+
+                s += tc+a.draw(n+1);
+            }
+
+        return s;
+    }
+
 }

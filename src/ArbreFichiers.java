@@ -403,12 +403,10 @@ public void removeSiblings(){
         return s;
     }
 
-    public String draw(){
-        return this.draw(0);
-    }
+    public abstract String draw();
 
     //todo enlever utilisation de isFichier
-    public String draw(int n){
+    /*public String drawe(int n){
         String s ="";
         if(this.isFichier()){
             s+="\u001B[33m"+this.getNom() +" -\n"+"\u001B[0m";
@@ -424,7 +422,7 @@ public void removeSiblings(){
         }
         return s;
     }
-
+*/
 /*
     @Override
     public String toString() {
