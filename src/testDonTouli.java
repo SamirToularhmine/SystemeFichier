@@ -1,4 +1,4 @@
-public class test {
+public class testDonTouli {
 
     public static void main(String[] args) {
         FileParser fp = new FileParser("arbo");

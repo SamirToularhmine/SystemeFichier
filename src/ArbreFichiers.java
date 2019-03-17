@@ -168,6 +168,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         }
         return l;
     }
+
 public void listToChildren(List<ArbreFichiers> l){
         if(!l.isEmpty()){
             ArbreFichiers first_element = l.get(0);
@@ -194,7 +195,7 @@ public void removeSiblings(){
     //todo updateLength removeNode
     public boolean removeNode()throws Exception{
 
-
+System.out.println("this = "+this);
         ArbreFichiers crt = null;
         if(this.isRoot()){
             throw new Exception("impossible de supprimer la racine");
@@ -211,25 +212,31 @@ public void removeSiblings(){
         }else{
             //cas si ce n'est pas le premierFils de son père
             if(!this.isFirstSon()){
+                System.out.println("this = "+this+" g"+this.getFrereGauche()+" d= "+this.getFrereDroit());
                 System.out.println("pas le premier fils");
                 this.getFrereGauche().setFrereDroit(this.getFrereDroit());
+                this.getFrereDroit().setFrereGauche(this.getFrereGauche());
                 dad.updateFirstSon();
                 dad.updateLength(this.getTaille());
+                System.out.println("this = "+this+" g"+this.getFrereGauche()+" d= "+this.getFrereDroit());
+                System.out.println("------------");
                 return true;
             }else{//si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
                 System.out.println("premier fils");
                 if(this.getFrereGauche()!=null){
+                    System.out.println("\u001B[31m"+"frere gauche pas null"+"\u001B[0m");
                     crt = this.getFrereGauche();
                     crt.setFrereDroit(this.getFrereGauche());
                     this.getFrereGauche().setFrereDroit(crt);
 
                 }else{
-                    System.out.println("frere droite pas null");
+
+                    System.out.println("\u001B[31m"+"frere droit pas null"+"\u001B[0m");
                     crt = this.getFrereDroit();
-                    crt.setFrereGauche(this.getFrereDroit());
-                    this.getFrereDroit().setFrereGauche(crt);
+                    crt.setFrereGauche(null);
                 }
                 dad.setPremierFils(crt);
+                System.out.println("\u001B[31m"+"crt ="+crt+"\u001B[0m");
                 System.out.println("dad =" + dad);
                 dad.updateFirstSon();
 
