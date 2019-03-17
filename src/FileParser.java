@@ -3,7 +3,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public class FileParser {
     //TODO: Hashmap pour les mots réservés
@@ -12,10 +14,12 @@ public class FileParser {
 
     private File file;
     private ArbreFichiers racine;
+    private List motsReserves;
 
-    public FileParser(String cheminFichier){
+    public FileParser(String cheminFichier, String[] motsReserves){
         this.racine = null;
         this.file = new File(cheminFichier);
+        this.motsReserves = List.of(motsReserves);
     }
 
     public ArbreFichiers parserFichier(){
@@ -24,15 +28,14 @@ public class FileParser {
             BufferedReader br = new BufferedReader(new FileReader(this.file));
             String line = br.readLine();
             int numLigne = 1;
-            Deque<String> pile = new ArrayDeque<>();
             ArbreFichiers currentFile = null;
             Deque<ArbreFichiers> arborescence = new ArrayDeque<>();
+            boolean finOk = false;
             while(line != null){
                 if(numLigne == 1){
                     if(line.equals("racine")){
                         this.racine = new ArbreFichiers("racine", 0, false);
                         arborescence.add(racine);
-                        pile.add("fin");
                     }else{
                         throw new FileParseException("Votre fichier doit commencer par le mot racine !", numLigne);
                     }
@@ -51,30 +54,37 @@ public class FileParser {
                             }else{
                                 if(type.equals("d")){
                                     ArbreFichiers dossier = new ArbreFichiers(nom, 0, false);
-                                    pile.add("fin");
                                     arborescence.getLast().addNode(dossier);
                                     arborescence.add(dossier);
                                 }
                             }
-                            if(arbo.length() > 1 && arborescence.getLast().getNom().equals("racine")){
+                            if(arbo.length() > arborescence.size()){
                                 throw new FileParseException("Vous devez d'abord définir un dossier avant de pouvoir descendre dans l'arborescence !", numLigne);
-                            }
-                        }else{
-                            //enlever double vérif
-                            if(line.matches("fin")){
-                                if(line.equals("fin")){
-                                    pile.pop();
-                                    arborescence.pop();
-                                }
                             }else{
-                                if(line.matches(".*") && !currentFile.equals("")){
-                                    //on ajoute la ligne au contenu du fichier
-                                    //System.out.println("On ajoute " + line + " au fichier " + currentFile);
-                                    currentFile.setContenu(line);
-                                    currentFile = null;
+                                if(arbo.length() < arborescence.size() - 1){
+                                    throw new FileParseException("Vous devez terminer la déclaration d'un dossier par le mot fin suivit du nombre d'étoiles correspondants", numLigne);
+                                }
+                            }
+
+                        }else{
+                            if(line.matches("fin")){
+                                if(finOk){
+                                    throw new FileParseException("Vous avez déjà terminé le fichier avec le mot fin !", numLigne);
+                                }
+                                finOk = true;
+                            }else{
+                                if(line.matches("^[*]+ fin( %.*)?$")){
+                                    arborescence.removeLast();
                                 }else{
-                                    //ajouter internationalisation
-                                    throw new FileParseException("Vous devez définir un fichier avant de pouvoir préciser son contenu", numLigne);
+                                    if(line.matches(".*") && currentFile != null && !line.contains("*")){
+                                        //on ajoute la ligne au contenu du fichier
+                                        //System.out.println("On ajoute " + line + " au fichier " + currentFile);
+                                        currentFile.setContenu(line);
+                                        currentFile = null;
+                                    }else{
+                                        //ajouter internationalisation
+                                        throw new FileParseException("Vous devez définir un fichier avant de pouvoir préciser son contenu ou la ligne est mal formattée", numLigne);
+                                    }
                                 }
                             }
                         }
@@ -83,14 +93,16 @@ public class FileParser {
                 numLigne++;
                 line = br.readLine();
             }
-            if(!pile.isEmpty()){
+            if(!finOk){
                 throw new FileParseException("Le fichier ne se termine pas par le mot 'fin'", numLigne);
+            }
+            if(arborescence.size() > 1){
+                throw new FileParseException("Vous devez fermer le dossier défini afin de finir le fichier", numLigne);
             }
         }catch(IOException ioe){
             ioe.printStackTrace();
         }
 
-        System.out.println(racine.toString());
         return racine;
 
     }

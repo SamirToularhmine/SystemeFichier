@@ -7,7 +7,7 @@ public class SystemeFichier {
     private FileParser fp;
 
     public SystemeFichier(String cheminFichier){
-        this.fp = new FileParser(cheminFichier);
+        //this.fp = new FileParser(cheminFichier);
         this.arborescence = fp.parserFichier();
     }
 
