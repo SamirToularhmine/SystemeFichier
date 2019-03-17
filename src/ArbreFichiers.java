@@ -444,7 +444,33 @@ public void removeSiblings(){
         toAdd.setPere(this.getPere());
 
     }
+    public String nChar(String c,int n){
+        String s=(n==0)?"":"│";
+        for (int i = 0; i < n; i++) {
+            s += c;
+        }
+        return s;
+    }
 
+    public String draw() {
+        return this.draw(0);
+    }
+
+    //todo enlever utilisation de isFichier
+    public String draw(int n){
+        String s ="";
+        if(this.isFichier()){
+            s+="\u001B[33m"+this.getNom() +" -\n"+"\u001B[0m";
+        }else {
+            List<ArbreFichiers> l = this.childrenToList();
+            s += "\u001B[36m"+this.getNom() + "/\n"+"\u001B[0m";
+            for (ArbreFichiers a : l) {
+                String tc =(a.getFrereDroit()!=null)? nChar("   ", n) + "├── ": nChar("   ", n) + "└── ";
+                s += tc+a.draw(n+1);
+            }
+        }
+        return s;
+    }
 
 /*
     @Override

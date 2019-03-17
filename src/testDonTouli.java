@@ -10,6 +10,7 @@ public class testDonTouli {
         System.out.println(arbo.nodeInfos());
 
         System.out.println("Premier fils :" + fs.nodeInfos());
+        System.out.println(arbo.draw());
         /*try {
             ArbreFichiers root = new ArbreFichiers(null, null, null, null, "root");
             System.out.println(root);

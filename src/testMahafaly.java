@@ -13,12 +13,12 @@ public class testMahafaly {
 
     public static void main(String[] args) {
         ArbreFichiers root = new ArbreFichiers(null,null,null,null,"root");
-        ArbreFichiers a = new ArbreFichiers("a",5);
+        ArbreFichiers a = new ArbreFichiers("a",0,false);
         ArbreFichiers b = new ArbreFichiers("b",1);
         ArbreFichiers c = new ArbreFichiers("c",1);
-        ArbreFichiers d = new ArbreFichiers("d",1);
-        ArbreFichiers e = new ArbreFichiers("e",1);
-        ArbreFichiers f = new ArbreFichiers("f",1);
+        ArbreFichiers d = new ArbreFichiers("d",0,false);
+        ArbreFichiers e = new ArbreFichiers("e",0,false);
+        ArbreFichiers f = new ArbreFichiers("f",100);
         ArbreFichiers a1 = new ArbreFichiers("a1",10);
         System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
 
@@ -56,12 +56,15 @@ public class testMahafaly {
         }
         System.out.println("\u001B[33m"+"before rm children root = "+root.childrenToList()+"\u001B[0m");
 
-        a1.removeNode();
-        b.removeNode();
-        a.removeNode();
+        //a1.removeNode();
+        //b.removeNode();
+        //a.removeNode();
 
         System.out.println("\u001B[32m"+"after rm"+root.childrenToList()+"\u001B[0m");
         System.out.println(root);
+        System.out.println(root.nChar("*",3));
+        System.out.println(a.getFrereDroit());
+        System.out.println(root.draw());
 
 
 
