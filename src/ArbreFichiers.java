@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ArbreFichiers implements Comparable<ArbreFichiers>{
+public abstract class ArbreFichiers implements Comparable<ArbreFichiers>{
 
     //TODO: Systeme de type
 
@@ -17,28 +17,6 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
     //Correspond à la taille en octets du dossier/fichier correspondant au noeud
     private int taille;
 
-//attention à méthode pas du tout prête à l'utilisation, les premiers fils des futures père ne sont pas mis à jour (par exemple)
-    public ArbreFichiers(ArbreFichiers pere, ArbreFichiers premierFils, ArbreFichiers frereGauche, ArbreFichiers frereDroit, String nom, boolean fichier, String contenu, int taille) {
-        this.pere = pere;
-        this.premierFils = premierFils;
-        this.frereGauche = frereGauche;
-        this.frereDroit = frereDroit;
-        this.nom = nom;
-        this.fichier = fichier;
-        this.contenu = contenu;
-        this.taille = taille;
-    }
-
-    public ArbreFichiers(ArbreFichiers pere, ArbreFichiers premierFils, ArbreFichiers frereGauche, ArbreFichiers frereDroit, String nom) {
-        this.pere = pere;
-        this.premierFils = premierFils;
-        this.frereGauche = frereGauche;
-        this.frereDroit = frereDroit;
-        this.nom = nom;
-        this.fichier = false;
-        this.contenu = "";
-        this.taille = 0;
-    }
 
     public ArbreFichiers(String nom) {
         this.nom = nom;
@@ -50,38 +28,40 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         this.contenu = "";
         this.taille = 0;
     }
-    public void reform(ArbreFichiers n1) {
-        this.pere = n1.pere ;
-        this.premierFils = n1.premierFils;
-        this.frereGauche = n1.frereGauche;
-        this.frereDroit = n1.frereDroit ;
-        this.nom = n1.nom;
-        this.fichier = n1.fichier   ;
-        this.contenu = n1.contenu   ;
-        this.taille = n1.taille    ;
-    }
-    public ArbreFichiers(String nom,int t) {
+
+
+    //on garde
+    public ArbreFichiers(String nom,int taille) {
         this.nom = nom;
         this.pere = null;
         this.premierFils = null;
         this.frereGauche = null;
         this.frereDroit = null;
         this.fichier = true;
-        this.taille = t;
+        this.taille = taille;
         this.contenu = fillContenue();
-
     }
-
-    public ArbreFichiers(String nom,int t, boolean estFichier) {
+    //on garde
+    public ArbreFichiers(String nom,String contenu) {
         this.nom = nom;
         this.pere = null;
         this.premierFils = null;
         this.frereGauche = null;
         this.frereDroit = null;
-        this.fichier = estFichier;
-        this.taille = t;
-        this.contenu = fillContenue();
+        this.fichier = true;
+        this.taille = contenu.length();
+        this.contenu = contenu;
+    }
 
+    public ArbreFichiers(String nom,boolean isFichier){
+        this.nom = nom;
+        this.pere = null;
+        this.premierFils = null;
+        this.frereGauche = null;
+        this.frereDroit = null;
+        this.fichier = false;
+        this.taille = 0;
+        this.contenu = "";
     }
 
     public ArbreFichiers() {
@@ -100,7 +80,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         return fichier;
     }
 
-    public String nodeInfos(){
+    public String nodeInfo(){
         final String FICHIER="f";
         final String DOSSIER="d";
         String s="";
@@ -127,37 +107,8 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         }
         return s;
     }
-    //todo updateLength addNode
-    public boolean addNoede(ArbreFichiers n2)throws RuntimeException{
-        //cas où this n'a pas d'enfant
-        if (this.getPremierFils() == null) {
-            this.setPremierFils(n2);
-        }else{// this a au moins 1 enfant
-            ArbreFichiers sonN1 = this.getPremierFils();
-            //verification si le noyeau à ajouter ne possede pas le même nom qu'un des fichiers présent
-            if((boolean) parcoursLargeurFrere(sonN1,crt -> n2.getNom().compareToIgnoreCase(crt.getNom())==0)){
 
-            }
 
-        }
-
-        return false;
-    }
-
-    public void addNode(ArbreFichiers n2){
-        if(this.isFichier()){
-            throw new RuntimeException("c'est un fichier");
-        }
-        List<ArbreFichiers> l = this.childrenToList();
-        n2.setPere(this);
-        if(l.contains(n2)){
-            throw new RuntimeException("fichier du même nom déjà présent");//fichierDéjàexistantExcetpion -> catch = ajout du fichier avec (n+1) ajouté à son nom
-        }
-        l.add(n2);
-        l.sort(Comparator.comparing(ArbreFichiers::getNom));
-        this.listToChildren(l);
-        this.updateLength(n2.getTaille());
-    }
 
 
     public ArbreFichiers getExtremLeftSon(){
@@ -212,7 +163,7 @@ public void removeSiblings(){
 
         ArbreFichiers crt = null;
         if(this.isRoot()){
-            throw new RuntimeException("impossible de supprimer la racine");
+            return false;
         }
         ArbreFichiers dad = this.getPere();
         this.setTaille(-(this.getTaille()));
@@ -452,7 +403,7 @@ public void removeSiblings(){
         return s;
     }
 
-    public String draw() {
+    public String draw(){
         return this.draw(0);
     }
 

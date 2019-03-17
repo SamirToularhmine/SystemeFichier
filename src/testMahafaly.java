@@ -12,14 +12,14 @@ public class testMahafaly {
     public static final String WHITE = "\u001B[37m";
 
     public static void main(String[] args) {
-        ArbreFichiers root = new ArbreFichiers(null,null,null,null,"root");
-        ArbreFichiers a = new ArbreFichiers("a",0,false);
-        ArbreFichiers b = new ArbreFichiers("b",1);
-        ArbreFichiers c = new ArbreFichiers("c",1);
-        ArbreFichiers d = new ArbreFichiers("d",0,false);
-        ArbreFichiers e = new ArbreFichiers("e",0,false);
-        ArbreFichiers f = new ArbreFichiers("f",100);
-        ArbreFichiers a1 = new ArbreFichiers("a1",10);
+        Folder root = new Folder("root");
+        Folder a = new Folder("a");
+        File b = new File("b",1);
+        File c = new File("c",1);
+        Folder d = new Folder("d");
+        Folder e = new Folder("e");
+        File f = new File("f",100);
+        File a1 = new File("a1",10);
         System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
 
         /*
