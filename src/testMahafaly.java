@@ -90,7 +90,7 @@ public class testMahafaly {
         //String begin = Pattern.compile("[^\\(\\d+\\)$)]").matcher(nom).group();
         nom = begin +"("+ (nv+1) +")";
         System.out.println("\u001B[33m"+nom+"\u001B[0m");
-
+        System.out.println(a.contains(c));
 
 
 

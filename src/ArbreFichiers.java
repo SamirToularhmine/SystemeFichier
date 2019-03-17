@@ -121,6 +121,16 @@ public abstract class ArbreFichiers implements Comparable<ArbreFichiers>,Cloneab
         });
         return a;
     }
+    public ArbreFichiers getExtremRightSon(){
+        if (this.haveNoChild())return null;
+        ArbreFichiers a = (ArbreFichiers) parcoursLargeurFrere(this.getPremierFils(),(b)->{
+            if(b.getFrereDroit()==null) {
+                return b;
+            }
+            return null;
+        });
+        return a;
+    }
     //on mets les enfants dans une liste en gardant l'ordre
     public List<ArbreFichiers> childrenToList(){
         List<ArbreFichiers> l = new ArrayList<>();
@@ -406,9 +416,9 @@ public void removeSiblings(){
     }
 
     public String draw(){
-        return this.draw(0);
+        return this.draw(0,this.getExtremRightSon());
     }
-    public abstract String draw(int n);
+    public abstract String draw(int n,ArbreFichiers exLS);
     //todo enlever utilisation de isFichier
     /*public String drawe(int n){
         String s ="";
@@ -456,7 +466,7 @@ public void removeSiblings(){
 
     @Override
     public int compareTo(ArbreFichiers o) {
-        return o.getNom().compareToIgnoreCase(this.getNom());
+        return -o.getNom().compareToIgnoreCase(this.getNom());
     }
 
 // for testDonTouli
@@ -473,6 +483,14 @@ public void removeSiblings(){
     @Override
     public Object clone()throws CloneNotSupportedException{
         return super.clone();
+    }
+    public boolean contains(ArbreFichiers n){
+        ArbreFichiers it = n;
+        while(it!=null){
+            if(it == this) return true;
+            it = it.getPere();
+        }
+        return false;
     }
 
 }

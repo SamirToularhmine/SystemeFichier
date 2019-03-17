@@ -17,13 +17,11 @@ public class Folder extends ArbreFichiers{
 
         while(l.contains(n2)){
             String nom = n2.getNom();
-            System.out.println("\u001B[31m"+nom+"\u001B[0m");
             Matcher matcher = Pattern.compile(".*\\(\\d+\\)$").matcher(nom);
             if(matcher.find()){
                 matcher = Pattern.compile("\\(\\d+\\)$").matcher(nom);
                 matcher.find();
                 String end = matcher.group();
-                System.out.println("\u001B[32m"+"ok"+"\u001B[0m");
                 matcher =  Pattern.compile("\\d+").matcher(end);
                 matcher.find();
                 end = matcher.group();
@@ -45,18 +43,22 @@ public class Folder extends ArbreFichiers{
 
 
 
-    public String draw(int n){
+    public String draw(int n,ArbreFichiers exRS){
+        System.out.println(exRS);
         String s ="";
             List<ArbreFichiers> l = this.childrenToList();
             s += "\u001B[36m"+this.getNom() + "/\n"+"\u001B[0m";
             for (ArbreFichiers a : l) {
-                boolean t = a.getPere().getFrereDroit() == null;
+                boolean t = exRS.contains(a);
                 String tc =(a.getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
 
-                s += tc+a.draw(n+1);
+                s += tc+a.draw(n+1,exRS);
             }
 
         return s;
     }
+
+
+
 
 }
