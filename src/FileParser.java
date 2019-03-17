@@ -30,7 +30,7 @@ public class FileParser{
         this.motsReserves = List.of(motsReserves);
     }
 
-    public ArbreFichiers parserFichier(){
+    public Folder parserFichier(){
 
         try{
             BufferedReader br = new BufferedReader(new FileReader(this.file));
