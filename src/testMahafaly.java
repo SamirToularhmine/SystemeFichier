@@ -54,19 +54,13 @@ public class testMahafaly {
         }catch(Exception e1){
 
         }
-        System.out.println("\u001B[33m"+"children root = "+root.childrenToList()+"\u001B[0m");
-        System.out.println(GREEN+"before rm = "+root+RESET);
-        try {
-            System.out.println("\u001B[33m"+"debut"+a.getPere().getPremierFils()+"\u001B[0m");
-            a1.removeNode();
-            c.removeNode();
-            b.removeNode();
+        System.out.println("\u001B[33m"+"before rm children root = "+root.childrenToList()+"\u001B[0m");
 
-            System.out.println("\u001B[31m"+"b frere droit = "+a1.getFrereGauche()+"\u001B[0m");
-        }catch(Exception e1){
-            System.out.println("exception = "+e1.getStackTrace());
-        }
-        System.out.println("\u001B[32m"+"là = "+root.childrenToList()+"\u001B[0m");
+        a1.removeNode();
+        b.removeNode();
+        a.removeNode();
+
+        System.out.println("\u001B[32m"+"after rm"+root.childrenToList()+"\u001B[0m");
         System.out.println(root);
 
 

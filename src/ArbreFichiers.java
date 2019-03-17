@@ -2,6 +2,8 @@ import java.util.*;
 
 public class ArbreFichiers implements Comparable<ArbreFichiers>{
 
+    //TODO: Systeme de type
+
     private ArbreFichiers pere;
     private ArbreFichiers premierFils;
     private ArbreFichiers frereGauche;
@@ -70,6 +72,18 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
 
     }
 
+    public ArbreFichiers(String nom,int t, boolean estFichier) {
+        this.nom = nom;
+        this.pere = null;
+        this.premierFils = null;
+        this.frereGauche = null;
+        this.frereDroit = null;
+        this.fichier = estFichier;
+        this.taille = t;
+        this.contenu = fillContenue();
+
+    }
+
     public ArbreFichiers() {
 
         this.pere = null;
@@ -102,7 +116,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         }
         return s;
     }
-
+// TODO :Vérifier le cas d'un fichier à la racine
     public String rootToNode(){
         final String SEPARATEUR="/";
         String s=SEPARATEUR+this.nom;
@@ -144,6 +158,7 @@ public class ArbreFichiers implements Comparable<ArbreFichiers>{
         this.listToChildren(l);
         this.updateLength(n2.getTaille());
     }
+
 
     public ArbreFichiers getExtremLeftSon(){
         if (this.haveNoChild())return null;
@@ -193,18 +208,16 @@ public void removeSiblings(){
         this.setFrereGauche(null);
 }
     //todo updateLength removeNode
-    public boolean removeNode()throws Exception{
+    public boolean removeNode(){
 
-System.out.println("this = "+this);
         ArbreFichiers crt = null;
         if(this.isRoot()){
-            throw new Exception("impossible de supprimer la racine");
+            throw new RuntimeException("impossible de supprimer la racine");
         }
         ArbreFichiers dad = this.getPere();
         this.setTaille(-(this.getTaille()));
         //cas du fils unique
         if(this.getFrereGauche()==null&&this.getFrereDroit()==null){
-            System.out.println("fils unique");
             dad.setPremierFils(null);
             dad.updateFirstSon();
             dad.updateLength(this.getTaille());
@@ -212,32 +225,23 @@ System.out.println("this = "+this);
         }else{
             //cas si ce n'est pas le premierFils de son père
             if(!this.isFirstSon()){
-                System.out.println("this = "+this+" g"+this.getFrereGauche()+" d= "+this.getFrereDroit());
-                System.out.println("pas le premier fils");
                 this.getFrereGauche().setFrereDroit(this.getFrereDroit());
                 this.getFrereDroit().setFrereGauche(this.getFrereGauche());
                 dad.updateFirstSon();
                 dad.updateLength(this.getTaille());
-                System.out.println("this = "+this+" g"+this.getFrereGauche()+" d= "+this.getFrereDroit());
-                System.out.println("------------");
                 return true;
             }else{//si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
-                System.out.println("premier fils");
                 if(this.getFrereGauche()!=null){
-                    System.out.println("\u001B[31m"+"frere gauche pas null"+"\u001B[0m");
                     crt = this.getFrereGauche();
                     crt.setFrereDroit(this.getFrereGauche());
                     this.getFrereGauche().setFrereDroit(crt);
 
                 }else{
 
-                    System.out.println("\u001B[31m"+"frere droit pas null"+"\u001B[0m");
                     crt = this.getFrereDroit();
                     crt.setFrereGauche(null);
                 }
                 dad.setPremierFils(crt);
-                System.out.println("\u001B[31m"+"crt ="+crt+"\u001B[0m");
-                System.out.println("dad =" + dad);
                 dad.updateFirstSon();
 
                 dad.updateLength(this.getTaille());
@@ -378,14 +382,12 @@ System.out.println("this = "+this);
     }
 
     public void updateFatherLength(){
-        System.out.println("\u001B[36m"+"this = "+this+" |father this = "+getPere()+"\u001B[0m");
         if (this.getPere() != null) {
             this.getPere().updateLength(this.taille);
         }
     }
 
     public void updateLength(int taille){
-        System.out.println("\u001B[31m"+this+"\u001B[0m");
         this.setTaille(this.getTaille()+taille);
         if (this.getPere() != null) {
             this.getPere().updateLength(taille);
@@ -404,8 +406,6 @@ System.out.println("this = "+this);
                 }
                 return false;
             });
-        }else{
-            System.out.println("pas d'enfant, throw new RuntimeException ? ah non enfait c'est bon");
         }
     }
 
@@ -445,6 +445,7 @@ System.out.println("this = "+this);
 
     }
 
+
 /*
     @Override
     public String toString() {
@@ -465,10 +466,6 @@ System.out.println("this = "+this);
     }
 */
 
-
-
-
-
     public boolean equals(Object o){
         if (o instanceof ArbreFichiers){
             return ((ArbreFichiers)o).getNom().equals(this.getNom());
@@ -481,7 +478,7 @@ System.out.println("this = "+this);
         return o.getNom().compareToIgnoreCase(this.getNom());
     }
 
-// for test
+// for testDonTouli
     @Override
     public String toString(){
         return "[" + nom+","+taille+","+"]";

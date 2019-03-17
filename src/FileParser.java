@@ -6,15 +6,19 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class FileParser {
+    //TODO: Hashmap pour les mots réservés
+    // Generaliser le type decque
+    // Ajouter help général et help commande
 
     private File file;
+    private ArbreFichiers racine;
 
     public FileParser(String cheminFichier){
+        this.racine = null;
         this.file = new File(cheminFichier);
     }
 
-    public SystemeFichier parserFichier(){
-        SystemeFichier sf = new SystemeFichier();
+    public ArbreFichiers parserFichier(){
 
         try{
             BufferedReader br = new BufferedReader(new FileReader(this.file));
@@ -22,12 +26,11 @@ public class FileParser {
             int numLigne = 1;
             Deque<String> pile = new ArrayDeque<>();
             ArbreFichiers currentFile = null;
-            ArbreFichiers racine = null;
             Deque<ArbreFichiers> arborescence = new ArrayDeque<>();
             while(line != null){
                 if(numLigne == 1){
                     if(line.equals("racine")){
-                        racine = new ArbreFichiers();
+                        this.racine = new ArbreFichiers("racine", 0, false);
                         arborescence.add(racine);
                         pile.add("fin");
                     }else{
@@ -40,14 +43,14 @@ public class FileParser {
                             String arbo = lineSplitted[0];
                             String nom = lineSplitted[1];
                             String type = lineSplitted[2];
-                            System.out.println("On crée le " + type + " nommé " + nom + " à l'emplacement " + arbo);
+                            //System.out.println("On crée le " + type + " nommé " + nom + " à l'emplacement " + arbo);
                             if(type.equals("f")){
-                                ArbreFichiers fichier = new ArbreFichiers(nom);
-                                racine.addNode(fichier);
+                                ArbreFichiers fichier = new ArbreFichiers(nom, 0, true);
                                 currentFile = fichier;
+                                arborescence.getLast().addNode(fichier);
                             }else{
                                 if(type.equals("d")){
-                                    ArbreFichiers dossier = new ArbreFichiers(nom);
+                                    ArbreFichiers dossier = new ArbreFichiers(nom, 0, false);
                                     pile.add("fin");
                                     arborescence.getLast().addNode(dossier);
                                     arborescence.add(dossier);
@@ -57,6 +60,7 @@ public class FileParser {
                                 throw new FileParseException("Vous devez d'abord définir un dossier avant de pouvoir descendre dans l'arborescence !", numLigne);
                             }
                         }else{
+                            //enlever double vérif
                             if(line.matches("fin")){
                                 if(line.equals("fin")){
                                     pile.pop();
@@ -65,10 +69,11 @@ public class FileParser {
                             }else{
                                 if(line.matches(".*") && !currentFile.equals("")){
                                     //on ajoute la ligne au contenu du fichier
-                                    System.out.println("On ajoute " + line + " au fichier " + currentFile);
+                                    //System.out.println("On ajoute " + line + " au fichier " + currentFile);
                                     currentFile.setContenu(line);
                                     currentFile = null;
                                 }else{
+                                    //ajouter internationalisation
                                     throw new FileParseException("Vous devez définir un fichier avant de pouvoir préciser son contenu", numLigne);
                                 }
                             }
@@ -85,6 +90,8 @@ public class FileParser {
             ioe.printStackTrace();
         }
 
-        return sf;
+        System.out.println(racine.toString());
+        return racine;
+
     }
 }
