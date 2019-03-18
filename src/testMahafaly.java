@@ -61,18 +61,21 @@ public class testMahafaly {
             System.out.println(e1.getMessage());
         }
         //System.out.println("\u001B[33m"+"before rm children root = "+root.childrenToList()+"\u001B[0m");
-
-        //a1.removeNode();
+        ArbreFichiers victim = c;
+        System.out.println(root.draw());
+        System.out.println(a1);
+        System.out.println(victim);
+        System.out.println("\u001B[31m"+root.nChar("-",15,false)+"\u001B[0m");
+        victim.removeNode();
+        b.removeNode();
+        e.removeNode();
+        System.out.println("\u001B[31m"+root.nChar("-",15,false)+"\u001B[0m");
+        System.out.println(b);
+        System.out.println(root.draw());
         //b.removeNode();
         //a.removeNode();
-        System.out.println(root.draw());
+       //System.out.println(root.draw());
 
-
-        System.out.println(root.getTaille());
-        System.out.println("\u001B[32m"+c.getTaille()+"\u001B[0m");
-        c.setContenu("");
-        System.out.println(root.getTaille());
-        System.out.println("\u001B[31m"+c.getTaille()+"\u001B[0m");
 
 
 

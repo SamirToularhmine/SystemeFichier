@@ -185,17 +185,19 @@ public void removeSiblings(){
             return true;
         }else{
             //cas si ce n'est pas le premierFils de son père
-            /*if(!this.isFirstSon()){
+            if(!this.isFirstSon()&&this.getFrereGauche()!=null&&this.getFrereDroit()!=null){
+
                 this.getFrereGauche().setFrereDroit(this.getFrereDroit());
                 this.getFrereDroit().setFrereGauche(this.getFrereGauche());
+
                 dad.updateFirstSon();
                 dad.updateLength(this.getTaille());
                 return true;
-            }else{*///si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
+            }else{//si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
                 if(this.getFrereGauche()!=null){
                     crt = this.getFrereGauche();
-                    crt.setFrereDroit(this.getFrereGauche());
-                    this.getFrereGauche().setFrereDroit(crt);
+                    //crt.setFrereDroit(this.getFrereGauche());
+                    crt.setFrereDroit(null);
 
                 }else{
 
@@ -209,7 +211,7 @@ public void removeSiblings(){
                 return true;
             }
         }
-    //}
+    }
     //getter
 
         public ArbreFichiers getPere () {
@@ -424,7 +426,7 @@ public void removeSiblings(){
     public String draw(){
         return this.draw(0,this.getExtremRightSon());
     }
-    public abstract String draw(int n,ArbreFichiers exLS);
+    public abstract String draw(int n,ArbreFichiers exRS);
     //todo enlever utilisation de isFichier
     /*public String drawe(int n){
         String s ="";
@@ -478,8 +480,15 @@ public void removeSiblings(){
 // for testDonTouli
     @Override
     public String toString(){
-        return "[" + nom+","+taille+","+"]";
+        String nomPere = (pere!=null)?pere.getNom():"null";
+        String nomFrereGauche = (frereGauche!=null)?frereGauche.getNom():"null";
+        int n =nomFrereGauche.length()+(nom.length()/2)+3;
+        String nomFrereDroit = (frereDroit!=null)?frereDroit.getNom():"null";
+        String nomPremierFils = (premierFils!=null)?premierFils.getNom():"null";
+        return nChar(" ",n,true)+"["+"\u001B[34m"+nomPere+"\u001B[0m"+"]"+"\n["+"\u001B[34m"+nomFrereGauche+"\u001B[0m"+"]<--[" + nom +","+taille+"]-->["+"\u001B[34m"+nomFrereDroit+"\u001B[0m"+"]\n"+nChar(" ",n,true)+"["+"\u001B[34m"+nomPremierFils+"\u001B[0m"+"]";
     }
+
+
 
     public String fillContenue(){
         String s ="";

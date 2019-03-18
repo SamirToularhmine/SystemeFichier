@@ -44,7 +44,6 @@ public class Folder extends ArbreFichiers{
 
 
     public String draw(int n,ArbreFichiers exRS){
-        System.out.println(exRS);
         String s ="";
             List<ArbreFichiers> l = this.childrenToList();
             s += "\u001B[36m"+this.getNom() + "/\n"+"\u001B[0m";
