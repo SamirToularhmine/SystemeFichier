@@ -185,13 +185,13 @@ public void removeSiblings(){
             return true;
         }else{
             //cas si ce n'est pas le premierFils de son père
-            if(!this.isFirstSon()){
+            /*if(!this.isFirstSon()){
                 this.getFrereGauche().setFrereDroit(this.getFrereDroit());
                 this.getFrereDroit().setFrereGauche(this.getFrereGauche());
                 dad.updateFirstSon();
                 dad.updateLength(this.getTaille());
                 return true;
-            }else{//si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
+            }else{*///si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
                 if(this.getFrereGauche()!=null){
                     crt = this.getFrereGauche();
                     crt.setFrereDroit(this.getFrereGauche());
@@ -209,7 +209,7 @@ public void removeSiblings(){
                 return true;
             }
         }
-    }
+    //}
     //getter
 
         public ArbreFichiers getPere () {
@@ -270,11 +270,20 @@ public void removeSiblings(){
     }
 
         public void setContenu(String contenu) {
-        this.contenu = contenu;
+
+
+            this.contenu = contenu;
+            int newTaille = contenu.length();
+            this.updateLength(newTaille-this.getTaille());
+            //this.setTaille(newTaille);
+
+
     }
 
         private void setTaille(int taille) {
-        this.taille = taille;
+
+
+            this.taille = taille;
     }
 
 

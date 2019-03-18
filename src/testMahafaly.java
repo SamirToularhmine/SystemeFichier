@@ -43,7 +43,7 @@ public class testMahafaly {
         System.out.println("\u001B[33m"+"fin"+"\u001B[0m");
         System.out.println("\u001B[36m"+"premier fils root = "+root.getPremierFils()+"\u001B[0m");
         System.out.println(GREEN+root.childrenToList()+RESET);
-        System.out.println("\u001B[33m"+"children root = "+root.childrenToList()+"\u001B[0m");
+        //System.out.println("\u001B[33m"+"children root = "+root.childrenToList()+"\u001B[0m");
         try {
             root.addNode(a1);
             root.addNode(a);
@@ -52,45 +52,27 @@ public class testMahafaly {
             a.addNode(d);
             d.addNode(e);
             e.addNode(f);
-            for (int i = 1; i < 100; i++) {
-                System.out.println("list ="+e.childrenToList());
-                System.out.println(i);
+            for (int i = 1; i < 3; i++) {
+
                 e.addNode(new Fichier("f"));
             }
 
         }catch(Exception e1){
             System.out.println(e1.getMessage());
         }
-        System.out.println("\u001B[33m"+"before rm children root = "+root.childrenToList()+"\u001B[0m");
+        //System.out.println("\u001B[33m"+"before rm children root = "+root.childrenToList()+"\u001B[0m");
 
         //a1.removeNode();
         //b.removeNode();
         //a.removeNode();
-
-        System.out.println("\u001B[32m"+"after rm"+root.childrenToList()+"\u001B[0m");
-        System.out.println(root);
-        System.out.println(a.getFrereDroit());
         System.out.println(root.draw());
-        System.out.println("\u001B[32m"+e.childrenToList()+"\u001B[0m");
-        String nom = "f(1)";
-        System.out.println("\u001B[31m"+nom+"\u001B[0m");
-        Pattern p = Pattern.compile(".*\\(\\d+\\)$");
-        Matcher matcher = p.matcher(nom);
-        System.out.println(matcher.find());
 
-        System.out.println(matcher.group());
-        matcher = Pattern.compile("\\(\\d+\\)$").matcher(nom);
-        System.out.println(matcher.find());
-        System.out.println(matcher.group());
-        String end = "1";
-        // String end = matcher.group();
-        //end = Pattern.compile("\\d+").matcher(end).group();
-        int nv = Integer.valueOf(end);
-        String begin = "argh";
-        //String begin = Pattern.compile("[^\\(\\d+\\)$)]").matcher(nom).group();
-        nom = begin +"("+ (nv+1) +")";
-        System.out.println("\u001B[33m"+nom+"\u001B[0m");
-        System.out.println(a.contains(c));
+
+        System.out.println(root.getTaille());
+        System.out.println("\u001B[32m"+c.getTaille()+"\u001B[0m");
+        c.setContenu("");
+        System.out.println(root.getTaille());
+        System.out.println("\u001B[31m"+c.getTaille()+"\u001B[0m");
 
 
 
