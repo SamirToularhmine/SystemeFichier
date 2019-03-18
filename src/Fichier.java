@@ -14,7 +14,13 @@ public class Fichier extends ArbreFichiers{
     }
 
 
+    public void newContenu(String contenu) {
 
+
+        this.setContenu(contenu);
+
+
+    }
     public String draw(int n,ArbreFichiers exRS){
         String s ="";
         s+="\u001B[33m"+this.getNom() +" -\n"+"\u001B[0m";

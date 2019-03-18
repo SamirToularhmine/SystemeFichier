@@ -271,12 +271,9 @@ public void removeSiblings(){
 
         public void setContenu(String contenu) {
 
-
             this.contenu = contenu;
             int newTaille = contenu.length();
             this.updateLength(newTaille-this.getTaille());
-            //this.setTaille(newTaille);
-
 
     }
 
