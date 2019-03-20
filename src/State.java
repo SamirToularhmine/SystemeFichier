@@ -54,7 +54,7 @@ public class State{
         this.premierFils = null;
         this.frereGauche = null;
         this.frereDroit = null;
-        this.fichier = false;
+        this.fichier = isFichier;
         this.taille = 0;
         this.contenu = "";
     }
@@ -159,7 +159,7 @@ public class State{
         return exit;
     }
 
-    public List<ArbreFichier> getSibling() {
+    private List<ArbreFichier> getSibling() {
         List<ArbreFichier> sibling = new ArrayList();
         if (this.frereDroit != null) sibling.add(frereDroit);
         if (frereGauche != null) sibling.add(frereGauche);
@@ -187,7 +187,7 @@ public class State{
         this.frereGauche = null;
     }
 
-    public boolean removeNode() {
+    public boolean supprimerNoeud() {
 
         ArbreFichier crt = null;
         if (this.isRoot()) {
@@ -199,8 +199,8 @@ public class State{
         //cas du fils unique
         if (this.getFrereGauche() == null && this.getFrereDroit() == null) {
             d.getInfos().setPremierFils(null);
-            d.updateFirstSon();
-            d.getInfos().updateLength(this.getTaille());
+            d.mettreAJourPremierFils();
+            d.getInfos().mettreAJourTaille(this.getTaille());
             return true;
         } else {
             //cas si ce n'est pas le premierFils de son père
@@ -209,8 +209,8 @@ public class State{
                 this.getFrereGauche().getInfos().setFrereDroit(this.getFrereDroit());
                 this.getFrereDroit().getInfos().setFrereGauche(this.getFrereGauche());
 
-                d.updateFirstSon();
-                d.getInfos().updateLength(this.getTaille());
+                d.mettreAJourPremierFils();
+                d.getInfos().mettreAJourTaille(this.getTaille());
                 return true;
             } else {//si le premier fils n'est plus définis comme celui tout à gauche il faut en prendre un parmis ceux dispo puis mettre à jour selon la regle
                 if (this.getFrereGauche() != null) {
@@ -224,28 +224,24 @@ public class State{
                     crt.getInfos().setFrereGauche(null);
                 }
                 d.getInfos().setPremierFils(crt);
-                d.updateFirstSon();
+                d.mettreAJourPremierFils();
 
-                d.getInfos().updateLength(this.getTaille());
+                d.getInfos().mettreAJourTaille(this.getTaille());
                 return true;
             }
         }
     }
 
-    public void updateLength(int taille){
+    public void mettreAJourTaille(int taille){
         this.setTaille(this.getTaille()+taille);
         if (this.getPere() != null) {
-            this.getPere().getInfos().updateLength(taille);
+            this.getPere().getInfos().mettreAJourTaille(taille);
         }
     }
 
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public State getThis() {
-        return this;
     }
 
     public boolean isFirstSon(){

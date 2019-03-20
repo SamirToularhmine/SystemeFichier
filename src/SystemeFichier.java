@@ -16,7 +16,7 @@ public class SystemeFichier {
     public SystemeFichier(String cheminFichier){
         this.fp = new FileParser(cheminFichier, MOTS_RESERVES);
         this.arborescence = fp.parserFichier();
-        System.out.println(this.arborescence.draw());
+        System.out.println(this.arborescence.dessiner());
         this.commandes = new HashMap<>();
         this.commandes.put("quit", new Quit());
         this.commandes.put("cd", new Cd());

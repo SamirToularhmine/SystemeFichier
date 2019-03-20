@@ -22,21 +22,10 @@ public class Fichier implements ArbreFichier{
 
 
     @Override
-    public String draw(int n,ArbreFichier exRS){
+    public String dessiner(int n,ArbreFichier exRS){
         String s ="";
         s+="\u001B[33m"+this.state.getNom() +" -\n"+"\u001B[0m";
         return s;
-    }
-
-    public void addOnRigthIgnoringFather(ArbreFichier toAdd){
-        toAdd.getInfos().setFrereGauche(this);
-        if (this.getInfos().getFrereDroit() != null) {
-            this.getInfos().getFrereDroit().getInfos().setFrereGauche(toAdd);
-        }
-        toAdd.getInfos().setFrereDroit(this.getInfos().getFrereDroit());
-        this.getInfos().setFrereDroit(toAdd);
-        toAdd.getInfos().setPere(this.getInfos().getPere());
-
     }
 
     @Override
@@ -50,7 +39,7 @@ public class Fichier implements ArbreFichier{
     }
 
     @Override
-    public String draw() {
+    public String dessiner() {
         return this.state.getNom();
     }
 

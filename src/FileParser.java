@@ -28,7 +28,8 @@ public class FileParser{
     public FileParser(String cheminFichier, String[] motsReserves){
         this.racine = null;
         this.file = new File(cheminFichier);
-        this.motsReserves = List.of(motsReserves); }
+        this.motsReserves = List.of(motsReserves);
+    }
 
     public Dossier parserFichier(){
         try{
@@ -39,7 +40,7 @@ public class FileParser{
             Deque<Dossier> arborescence = new ArrayDeque<>();
             boolean finOk = false;
             while(line != null){
-                //line = line.stripLeading();
+                line = line.stripLeading();
                 if(numLigne == 1){
                     if(!line.equals("racine")){
                         throw new FileParseException(BEGIN_RACINE, numLigne);
@@ -65,11 +66,11 @@ public class FileParser{
                             if(type.equals("f")){
                                 Fichier fichier = new Fichier(nom);
                                 currentFile = fichier;
-                                arborescence.getLast().addNode(fichier);
+                                arborescence.getLast().ajouterNoeud(fichier);
                             }else{
                                 if(type.equals("d")){
                                     Dossier dossier = new Dossier(nom);
-                                    arborescence.getLast().addNode(dossier);
+                                    arborescence.getLast().ajouterNoeud(dossier);
                                     arborescence.add(dossier);
                                 }
                             }
