@@ -8,6 +8,7 @@ import java.util.List;
 
 public class FileParser{
     //TODO: Hashmap pour les mots réservés
+    //TODO: Internationalisation des messages
     // Generaliser le type decque
     // Ajouter help général et help commande
 
@@ -22,16 +23,14 @@ public class FileParser{
 
     private File file;
     private Folder racine;
-    private List motsReserves;
+    private List<String> motsReserves;
 
     public FileParser(String cheminFichier, String[] motsReserves){
         this.racine = null;
         this.file = new File(cheminFichier);
-        this.motsReserves = List.of(motsReserves);
-    }
+        this.motsReserves = List.of(motsReserves); }
 
     public Folder parserFichier(){
-
         try{
             BufferedReader br = new BufferedReader(new FileReader(this.file));
             String line = br.readLine();
@@ -42,12 +41,11 @@ public class FileParser{
             while(line != null){
                 line = line.stripLeading();
                 if(numLigne == 1){
-                    if(line.equals("racine")){
-                        this.racine = new Folder("racine");
-                        arborescence.add(racine);
-                    }else{
+                    if(!line.equals("racine")){
                         throw new FileParseException(BEGIN_RACINE, numLigne);
                     }
+                    this.racine = new Folder("racine");
+                    arborescence.add(racine);
                 }else{
                     if(line.charAt(0) != '%'){
                         if(line.matches("^[*]+ ([a-zA-Z0-9]*|([a-zA-Z0-9]*_[a-zA-Z0-9]*)*) (d|f)( %.*)?$")){
@@ -55,13 +53,14 @@ public class FileParser{
                             String arbo = lineSplitted[0];
                             String nom = lineSplitted[1];
                             String type = lineSplitted[2];
+                            int tailleArborescence = arborescence.size();
+                            int tailleArbo = arbo.length();
                             //System.out.println("On crée le " + type + " nommé " + nom + " à l'emplacement " + arbo);
-                            if(arbo.length() > arborescence.size()){
+                            if(tailleArbo > tailleArborescence){
                                 throw new FileParseException(PB_ARBO, numLigne);
-                            }else{
-                                if(arbo.length() < arborescence.size()){
-                                    throw new FileParseException(FIN_DECLA, numLigne);
-                                }
+                            }
+                            if(tailleArbo < tailleArborescence){
+                                throw new FileParseException(FIN_DECLA, numLigne);
                             }
                             if(type.equals("f")){
                                 Fichier fichier = new Fichier(nom);
@@ -89,13 +88,19 @@ public class FileParser{
                                         throw new FileParseException(NB_ETOILES, numLigne);
                                     }
                                 }else{
-                                    if(line.matches(".*") && currentFile != null && !line.contains("*")){
-                                        //on ajoute la ligne au contenu du fichier
-                                        //System.out.println("On ajoute " + line + " au fichier " + currentFile);
+                                    boolean contenuOk = line.matches(".*") && currentFile != null;
+                                    if(contenuOk){
+                                        for(String mr : this.motsReserves){
+                                            if(line.contains(mr)){
+                                                contenuOk = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if(contenuOk){
                                         currentFile.setContenu(line);
                                         currentFile = null;
                                     }else{
-                                        //ajouter internationalisation
                                         throw new FileParseException(FORMAT_LIGNE, numLigne);
                                     }
                                 }
