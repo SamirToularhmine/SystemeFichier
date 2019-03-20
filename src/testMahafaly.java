@@ -92,6 +92,7 @@ public class testMahafaly {
         State state1 = new State("f3");
         Dossier f3 = new Dossier("f3");
         Dossier f33 = new Dossier("f3");
+        SystemeFichier sf = new SystemeFichier("arbo2");
 
 
         System.out.println(f3.equals(f33));
