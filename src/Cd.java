@@ -1,6 +1,9 @@
+import java.util.Optional;
+
 public class Cd implements Commande {
 
     @Override
-    public void execute(ArbreFichier noeud) {
+    public Optional<String> execute(Object...args) {
+        return Optional.of("Le cd quoi");
     }
 }

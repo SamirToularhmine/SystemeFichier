@@ -253,6 +253,12 @@ public class State{
     }
 
     public int compareTo(Object o){
+        if(o instanceof State){
+            State s = (State)o;
+            if(s.getNom().matches("^.*\\([1-9]+\\)$")){
+
+            }
+        }
         return -getNom().compareToIgnoreCase(((State)o).getNom());
     }
 

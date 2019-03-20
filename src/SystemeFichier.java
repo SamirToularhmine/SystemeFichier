@@ -40,7 +40,7 @@ public class SystemeFichier {
                 String line = sc.nextLine();
                 for(String s : this.commandes.keySet()){
                     if(s.equals(line)){
-                        this.commandes.get(s).execute(currDir);
+                        System.out.println(this.commandes.get(s).execute(currDir).get());
                         break;
                     }
                 }

@@ -1,6 +1,6 @@
 import java.util.Optional;
 
-public interface Commande {
+public interface Commande<T> {
 
-    public void execute(ArbreFichier f);
+    public Optional<T> execute(Object...f);
 }
