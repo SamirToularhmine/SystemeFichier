@@ -1,3 +1,4 @@
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -5,7 +6,7 @@ import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Dossier implements ArbreFichier, Comparable<ArbreFichier>{
+public class Dossier implements ArbreFichier{
 
     private State state;
 
@@ -40,7 +41,7 @@ public class Dossier implements ArbreFichier, Comparable<ArbreFichier>{
             n2.getInfos().setNom(nom);
         }
         l.add(n2);
-        //l.sort(Comparator.comparing(ArbreFichier::getThis));
+        l.sort(Comparator.comparing(ArbreFichier::getThis));
         this.listToChildren(l);
         this.state.updateLength(n2.getInfos().getTaille());
     }
@@ -184,7 +185,12 @@ public class Dossier implements ArbreFichier, Comparable<ArbreFichier>{
     }
 
     @Override
+    public boolean equals(Object o){
+        return this.compareTo((ArbreFichier)o) == 0;
+    }
+
+    @Override
     public int compareTo(ArbreFichier af) {
-        return -af.getInfos().getNom().compareToIgnoreCase(this.getInfos().getNom());
+        return af.getInfos().compareTo(this.getInfos());
     }
 }

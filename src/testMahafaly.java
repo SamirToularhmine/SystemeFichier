@@ -88,5 +88,12 @@ public class testMahafaly {
 
 
 }*/
+        State state = new State("f3");
+        State state1 = new State("f3");
+        Dossier f3 = new Dossier("f3");
+        Dossier f33 = new Dossier("f3");
+
+
+        System.out.println(f3.equals(f33));
     }
 }

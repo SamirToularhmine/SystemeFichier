@@ -53,4 +53,16 @@ public class Fichier implements ArbreFichier{
     public String draw() {
         return this.state.getNom();
     }
+
+    @Override
+    public boolean equals(Object o){
+        return this.compareTo((ArbreFichier)o)==0;
+    }
+
+    @Override
+    public int compareTo(ArbreFichier af) {
+
+        return af.getInfos().compareTo(this.getInfos());
+
+    }
 }

@@ -1,4 +1,4 @@
-public interface ArbreFichier {
+public interface ArbreFichier extends Comparable<ArbreFichier> {
 
     public State getInfos();
 

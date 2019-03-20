@@ -39,7 +39,7 @@ public class FileParser{
             Deque<Dossier> arborescence = new ArrayDeque<>();
             boolean finOk = false;
             while(line != null){
-                line = line.stripLeading();
+                //line = line.stripLeading();
                 if(numLigne == 1){
                     if(!line.equals("racine")){
                         throw new FileParseException(BEGIN_RACINE, numLigne);

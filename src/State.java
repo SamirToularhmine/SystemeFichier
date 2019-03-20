@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class State {
+public class State{
 
     private ArbreFichier pere;
     private ArbreFichier premierFils;
@@ -249,10 +249,15 @@ public class State {
     }
 
     public boolean isFirstSon(){
-        return  getPere().getInfos().getPremierFils() == this;
+        return  getPere().getInfos().getPremierFils().getInfos() == this;
     }
 
     public boolean isRoot(){
         return this.getPere() == null;
     }
+
+    public int compareTo(Object o){
+        return -getNom().compareToIgnoreCase(((State)o).getNom());
+    }
+
 }
