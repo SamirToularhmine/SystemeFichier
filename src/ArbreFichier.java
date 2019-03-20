@@ -1,11 +1,12 @@
 public interface ArbreFichier {
 
+    public State getInfos();
 
-    public boolean removeNode();
+    public void addOnRigthIgnoringFather(ArbreFichier a);
 
-    public String nodeInfo();
+    public ArbreFichier getThis();
 
-    public String rootToNode();
+    public String draw(int n,ArbreFichier exRS);
 
     public String draw();
 

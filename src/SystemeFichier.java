@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class SystemeFichier {
 
-    private Folder arborescence;
+    private Dossier arborescence;
     private Map<String, Commande> commandes;
     private FileParser fp;
     private static final String[] MOTS_RESERVES = {
@@ -24,7 +24,7 @@ public class SystemeFichier {
     }
 
     public SystemeFichier(){
-        this.arborescence = new Folder("/");
+        this.arborescence = new Dossier("/");
         this.commandes = null;
         this.fp = null;
     }
@@ -32,7 +32,7 @@ public class SystemeFichier {
     public void in(){
         Scanner sc = new Scanner(System.in);
         boolean stop = false;
-        Folder currDir = this.arborescence;
+        Dossier currDir = this.arborescence;
         Console c = new Console();
         do {
             c.afficherMenu();

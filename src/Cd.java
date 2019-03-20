@@ -1,6 +1,6 @@
 public class Cd implements Commande {
 
     @Override
-    public void execute(ArbreFichiers noeud) {
+    public void execute(ArbreFichier noeud) {
     }
 }

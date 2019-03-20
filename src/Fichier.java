@@ -1,29 +1,56 @@
-public class Fichier extends ArbreFichiers{
+public class Fichier implements ArbreFichier{
+
+    private State state;
 
     public Fichier(String nom){
-        super(nom,"");
+        this.state = new State(nom, "");
     }
 
     public Fichier(String nom, String contenu){
-        super(nom,contenu);
+        this.state = new State(nom,contenu);
     }
 
     //pour les tests contenu rempli automatiquement
     public Fichier(String nom, int taille){
-        super(nom,taille);
+        this.state = new State(nom,taille);
     }
 
 
     public void newContenu(String contenu) {
+        this.state.setContenu(contenu);
+    }
 
 
-        this.setContenu(contenu);
+    @Override
+    public String draw(int n,ArbreFichier exRS){
+        String s ="";
+        s+="\u001B[33m"+this.state.getNom() +" -\n"+"\u001B[0m";
+        return s;
+    }
 
+    public void addOnRigthIgnoringFather(ArbreFichier toAdd){
+        toAdd.getInfos().setFrereGauche(this);
+        if (this.getInfos().getFrereDroit() != null) {
+            this.getInfos().getFrereDroit().getInfos().setFrereGauche(toAdd);
+        }
+        toAdd.getInfos().setFrereDroit(this.getInfos().getFrereDroit());
+        this.getInfos().setFrereDroit(toAdd);
+        toAdd.getInfos().setPere(this.getInfos().getPere());
 
     }
-    public String draw(int n,ArbreFichiers exRS){
-        String s ="";
-        s+="\u001B[33m"+this.getNom() +" -\n"+"\u001B[0m";
-        return s;
+
+    @Override
+    public ArbreFichier getThis() {
+        return this;
+    }
+
+    @Override
+    public State getInfos() {
+        return this.state;
+    }
+
+    @Override
+    public String draw() {
+        return this.state.getNom();
     }
 }

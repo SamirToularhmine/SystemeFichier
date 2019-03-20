@@ -1,5 +1,5 @@
 import java.util.*;
-import java.util.regex.*;
+
 public class testMahafaly {
     public static final String RESET = "\u001B[0m";
     public static final String BLACK = "\u001B[30m";
@@ -12,16 +12,16 @@ public class testMahafaly {
     public static final String WHITE = "\u001B[37m";
 
     public static void main(String[] args) {
-        Folder root = new Folder("root");
-        Folder a = new Folder("a");
-        Fichier b = new Fichier("b",1);
-        Fichier c = new Fichier("c",1);
-        Folder d = new Folder("d");
-        Folder e = new Folder("e");
-        Fichier f = new Fichier("f",100);
-        Fichier a1 = new Fichier("a1",10);
+        Dossier root = new Dossier("root");
+        Dossier a = new Dossier("a");
+        Fichier b = new Fichier("b", 1);
+        Fichier c = new Fichier("c", 1);
+        Dossier d = new Dossier("d");
+        Dossier e = new Dossier("e");
+        Fichier f = new Fichier("f", 100);
+        Fichier a1 = new Fichier("a1", 10);
 
-        System.out.println("\u001B[33m"+a1.getPere()+"\u001B[0m");
+        //System.out.println("\u001B[33m" + a1.getPere() + "\u001B[0m");
 
         /*
         a.addOnRigth(b);
@@ -31,7 +31,7 @@ public class testMahafaly {
         a.addOnleft(f);
         */
         // f a d e b c
-        System.out.println("\u001B[36m"+"premier fils root = "+root.getPremierFils()+"\u001B[0m");
+        /*System.out.println("\u001B[36m"+"premier fils root = "+root.getPremierFils()+"\u001B[0m");
         System.out.println("\u001B[32m"+a.getFrereDroit()+"\u001B[0m");
         List<ArbreFichiers> l2 = root.childrenToList();
 
@@ -87,4 +87,6 @@ public class testMahafaly {
     }
 
 
+}*/
+    }
 }

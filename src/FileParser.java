@@ -22,7 +22,7 @@ public class FileParser{
     private static final String NB_ETOILES = "Vous devez terminer la définition de ce dossier avec le bon nombre d'étoiles suivies de fin";
 
     private File file;
-    private Folder racine;
+    private Dossier racine;
     private List<String> motsReserves;
 
     public FileParser(String cheminFichier, String[] motsReserves){
@@ -30,13 +30,13 @@ public class FileParser{
         this.file = new File(cheminFichier);
         this.motsReserves = List.of(motsReserves); }
 
-    public Folder parserFichier(){
+    public Dossier parserFichier(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(this.file));
             String line = br.readLine();
             int numLigne = 1;
             Fichier currentFile = null;
-            Deque<Folder> arborescence = new ArrayDeque<>();
+            Deque<Dossier> arborescence = new ArrayDeque<>();
             boolean finOk = false;
             while(line != null){
                 line = line.stripLeading();
@@ -44,7 +44,7 @@ public class FileParser{
                     if(!line.equals("racine")){
                         throw new FileParseException(BEGIN_RACINE, numLigne);
                     }
-                    this.racine = new Folder("racine");
+                    this.racine = new Dossier("racine");
                     arborescence.add(racine);
                 }else{
                     if(line.charAt(0) != '%'){
@@ -68,7 +68,7 @@ public class FileParser{
                                 arborescence.getLast().addNode(fichier);
                             }else{
                                 if(type.equals("d")){
-                                    Folder dossier = new Folder(nom);
+                                    Dossier dossier = new Dossier(nom);
                                     arborescence.getLast().addNode(dossier);
                                     arborescence.add(dossier);
                                 }
@@ -98,7 +98,7 @@ public class FileParser{
                                         }
                                     }
                                     if(contenuOk){
-                                        currentFile.setContenu(line);
+                                        currentFile.getInfos().setContenu(line);
                                         currentFile = null;
                                     }else{
                                         throw new FileParseException(FORMAT_LIGNE, numLigne);

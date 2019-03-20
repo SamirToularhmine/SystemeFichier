@@ -1,4 +1,6 @@
+import java.util.Optional;
+
 public interface Commande {
 
-    public void execute(ArbreFichiers noeud);
+    public void execute(ArbreFichier f);
 }
