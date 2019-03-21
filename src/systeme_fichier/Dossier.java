@@ -1,4 +1,5 @@
-import java.io.ObjectOutputStream;
+package systeme_fichier;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,23 +44,42 @@ public class Dossier implements ArbreFichier{
         this.state.mettreAJourTaille(n2.getInfos().getTaille());
     }
 
-   public String dessiner(int n,ArbreFichier exRS){
+    public String dessiner(int n,ArbreFichier exRS){
         String s ="";
-            List<ArbreFichier> l = this.enfantsVersListe();
-            s += "\u001B[36m"+this.state.getNom() + "/\n"+"\u001B[0m";
-            for (ArbreFichier a : l) {
-                boolean t = false;
-                if(exRS instanceof Dossier){
-                    Dossier exRSD = (Dossier)exRS;
-                    t = exRSD.contient(this);
-                }
-                String tc =(a.getInfos().getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
-
-                s += tc + a.dessiner(n+1,exRS);
+        List<ArbreFichier> l = this.enfantsVersListe();
+        s += "\u001B[36m"+this.state.getNom() + "/\n"+"\u001B[0m";
+        for (ArbreFichier a : l) {
+            boolean t = false;
+            if(exRS instanceof Dossier){
+                Dossier exRSD = (Dossier)exRS;
+                t = exRSD.contient(this);
             }
+            String tc =(a.getInfos().getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
+
+            s += tc + a.dessiner(n+1,exRS);
+        }
 
         return s;
     }
+
+    public Dossier getNoeud(String nom) throws  Exception{
+        ArbreFichier noeud = this.getInfos().getPremierFils();
+        String nomNoeud = noeud.getInfos().getNom();
+        while(!nomNoeud.equals(nom)){
+            if(noeud.getInfos().getFrereDroit() == null){
+                break;
+            }
+            noeud = noeud.getInfos().getFrereDroit();
+        }
+        if(nomNoeud.equals(nom)){
+            if(noeud instanceof Dossier){
+                return (Dossier) noeud;
+            }
+        }
+        throw new Exception("Pas de dossier avec ce nom !");
+    }
+
+
 
     private boolean contient(ArbreFichier n){
         ArbreFichier it = n;
@@ -111,7 +131,7 @@ public class Dossier implements ArbreFichier{
         this.mettreAJourPremierFils();
     }
 
-    public void mettreAJourPremierFils(){
+    protected void mettreAJourPremierFils(){
         //le cas où this a au moins un enfant
         if(!estVide()) {
             ArbreFichier son = this.state.getPremierFils();
@@ -148,8 +168,17 @@ public class Dossier implements ArbreFichier{
         return a;
     }
 
+    public Dossier getPere(){
+        return (Dossier)this.getInfos().getPere();
+    }
+
     public ArbreFichier getThis(){
         return this;
+    }
+
+    @Override
+    public boolean supprimerNoeud(){
+        return this.getInfos().supprimerNoeud();
     }
 
     private boolean estVide(){
