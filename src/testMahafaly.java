@@ -87,12 +87,29 @@ public class testMahafaly {
     }
 
 
-}*/
+}*/try {
+            root.ajouterNoeud(a1);
+            root.ajouterNoeud(a);
+            root.ajouterNoeud(b);
+            root.ajouterNoeud(c);
+            a.ajouterNoeud(d);
+            d.ajouterNoeud(e);
+            //e.ajouterNoeud(f);
+            for (int i = 1; i < 30; i++) {
+
+                e.ajouterNoeud(new Fichier("azerzrazazra"));
+
+            }
+
+        }catch(Exception e1){
+            System.out.println(e1.getMessage());
+        }
         State state = new State("f3");
         State state1 = new State("f3");
         Dossier f3 = new Dossier("f3");
         Dossier f33 = new Dossier("f3");
-        SystemeFichier sf = new SystemeFichier("arbo2");
+        System.out.println(root.dessiner());
+        //ystemeFichier sf = new SystemeFichier("arbo2");
 
 
         System.out.println(f3.equals(f33));

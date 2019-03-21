@@ -24,7 +24,7 @@ public class Fichier implements ArbreFichier{
     @Override
     public String dessiner(int n,ArbreFichier exRS){
         String s ="";
-        s+="\u001B[33m"+this.state.getNom() +" -\n"+"\u001B[0m";
+        s+="\u001B[33m"+this.state.getNom()+" - [ "+"\u001B[35m"+this.getInfos().getContenu()+"\u001B[0m"+"\u001B[33m"+" ] - "+"\n\u001B[0m";
         return s;
     }
 
