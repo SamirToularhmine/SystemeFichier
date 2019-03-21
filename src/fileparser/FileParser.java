@@ -1,3 +1,8 @@
+package fileparser;
+
+import systeme_fichier.Dossier;
+import systeme_fichier.Fichier;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -99,7 +104,7 @@ public class FileParser{
                                         }
                                     }
                                     if(contenuOk){
-                                        currentFile.getInfos().setContenu(line);
+                                        currentFile.setContenu(line);
                                         currentFile = null;
                                     }else{
                                         throw new FileParseException(FORMAT_LIGNE, numLigne);

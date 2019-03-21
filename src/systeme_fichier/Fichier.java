@@ -1,3 +1,5 @@
+package systeme_fichier;
+
 public class Fichier implements ArbreFichier{
 
     private State state;
@@ -28,9 +30,18 @@ public class Fichier implements ArbreFichier{
         return s;
     }
 
+    public void setContenu(String contenu){
+        this.state.setContenu(contenu);
+    }
+
     @Override
     public ArbreFichier getThis() {
         return this;
+    }
+
+    @Override
+    public boolean supprimerNoeud(){
+        return this.getInfos().supprimerNoeud();
     }
 
     @Override

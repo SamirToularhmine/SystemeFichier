@@ -1,3 +1,5 @@
+package commandes;
+
 public class Commandes {
 
     //Peut etre provisoire, c'est une proposition de classe pour stocker les commandes reconnues par le système de fichier

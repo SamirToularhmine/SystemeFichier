@@ -1,5 +1,13 @@
+package systeme_fichier;
+
+import commandes.Cd;
+import commandes.Commande;
+import commandes.Quit;
+import fileparser.FileParser;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class SystemeFichier {
@@ -38,9 +46,16 @@ public class SystemeFichier {
             c.afficherMenu();
             if(sc.hasNext()){
                 String line = sc.nextLine();
+                String[] lineSplitted = line.split(" ");
                 for(String s : this.commandes.keySet()){
-                    if(s.equals(line)){
-                        this.commandes.get(s).execute(currDir);
+                    if(s.equals(lineSplitted[0])){
+                        Object o = null;
+                        try {
+                            o = this.commandes.get(s).execute(currDir, lineSplitted).get();
+                        }catch(Exception e){
+                            System.out.println(e.getLocalizedMessage());
+                        }
+                        currDir = o instanceof Dossier ? (Dossier)o:currDir;
                         break;
                     }
                 }

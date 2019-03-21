@@ -1,4 +1,7 @@
-import java.util.*;
+import systeme_fichier.Dossier;
+import systeme_fichier.Fichier;
+import systeme_fichier.State;
+import systeme_fichier.SystemeFichier;
 
 public class testMahafaly {
     public static final String RESET = "\u001B[0m";
@@ -54,7 +57,7 @@ public class testMahafaly {
             e.addNode(f);
             for (int i = 1; i < 3; i++) {
 
-                e.addNode(new Fichier("f"));
+                e.addNode(new systeme_fichier.Fichier("f"));
             }
 
         }catch(Exception e1){

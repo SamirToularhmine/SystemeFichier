@@ -1,3 +1,5 @@
+package fileparser;
+
 public class FileParseException extends RuntimeException {
 
     public FileParseException(String message, int numLigne){

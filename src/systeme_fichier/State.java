@@ -1,4 +1,5 @@
-import java.awt.geom.Area;
+package systeme_fichier;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -70,19 +71,19 @@ public class State{
         this.taille = 0;
     }
 
-    public ArbreFichier getPere() {
+    protected ArbreFichier getPere() {
         return pere;
     }
 
-    public ArbreFichier getPremierFils() {
+    protected ArbreFichier getPremierFils() {
         return premierFils;
     }
 
-    public ArbreFichier getFrereGauche() {
+    protected ArbreFichier getFrereGauche() {
         return frereGauche;
     }
 
-    public ArbreFichier getFrereDroit() {
+    protected ArbreFichier getFrereDroit() {
         return frereDroit;
     }
 
@@ -90,23 +91,23 @@ public class State{
         return nom;
     }
 
-    public boolean isFichier() {
+    protected boolean isFichier() {
         return fichier;
     }
 
-    public String getContenu() {
+    protected String getContenu() {
         return contenu;
     }
 
-    public int getTaille() {
+    protected int getTaille() {
         return taille;
     }
 
-    public void setTaille(int taille) {
+    protected void setTaille(int taille) {
         this.taille = taille;
     }
 
-    public void setContenu(String contenu) {
+    protected void setContenu(String contenu) {
         this.contenu = contenu;
     }
 
@@ -116,7 +117,7 @@ public class State{
         return s;
     }
 
-    public Object parcoursLargeurFrere(ArbreFichier n1,Rule r)throws RuntimeException{
+    protected Object parcoursLargeurFrere(ArbreFichier n1,Rule r)throws RuntimeException{
         if (n1 == null) {
             throw new RuntimeException("Argument n1 null");
         }
@@ -137,7 +138,7 @@ public class State{
             }else if(!(exit instanceof ArbreFichier)){
                 exit = r.doTheRule(current);
             }else{
-                //ici le type de return sera un ArbreFichier
+                //ici le type de return sera un systeme_fichier.ArbreFichier
                 return exit;
             }
             it.remove();
@@ -166,23 +167,23 @@ public class State{
         return sibling;
     }
 
-    public void setPere(ArbreFichier pere) {
+    protected void setPere(ArbreFichier pere) {
         this.pere = pere;
     }
 
-    public void setPremierFils(ArbreFichier premierFils) {
+    protected void setPremierFils(ArbreFichier premierFils) {
         this.premierFils = premierFils;
     }
 
-    public void setFrereDroit(ArbreFichier frereDroit) {
+    protected void setFrereDroit(ArbreFichier frereDroit) {
         this.frereDroit = frereDroit;
     }
 
-    public void setFrereGauche(ArbreFichier frereGauche) {
+    protected void setFrereGauche(ArbreFichier frereGauche) {
         this.frereGauche = frereGauche;
     }
 
-    public void removeSiblings(){
+    protected void removeSiblings(){
         this.frereDroit = null;
         this.frereGauche = null;
     }
@@ -232,7 +233,7 @@ public class State{
         }
     }
 
-    public void mettreAJourTaille(int taille){
+    protected void mettreAJourTaille(int taille){
         this.setTaille(this.getTaille()+taille);
         if (this.getPere() != null) {
             this.getPere().getInfos().mettreAJourTaille(taille);
@@ -240,19 +241,25 @@ public class State{
     }
 
 
-    public void setNom(String nom) {
+    protected void setNom(String nom) {
         this.nom = nom;
     }
 
-    public boolean isFirstSon(){
+    protected boolean isFirstSon(){
         return  getPere().getInfos().getPremierFils().getInfos() == this;
     }
 
-    public boolean isRoot(){
+    protected boolean isRoot(){
         return this.getPere() == null;
     }
 
     public int compareTo(Object o){
+        if(o instanceof State){
+            State s = (State)o;
+            if(s.getNom().matches("^.*\\([1-9]+\\)$")){
+
+            }
+        }
         return -getNom().compareToIgnoreCase(((State)o).getNom());
     }
 
