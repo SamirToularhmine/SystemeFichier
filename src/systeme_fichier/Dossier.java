@@ -90,7 +90,7 @@ public class Dossier implements ArbreFichier{
         return false;
     }
 
-    private String nChar(String c,int n,boolean t){
+    private  String nChar(String c,int n,boolean t){
         String s=(n==0||t)?"":"│";
         for (int i = 0; i < n; i++) {
             s += c;
@@ -98,7 +98,7 @@ public class Dossier implements ArbreFichier{
         return s;
     }
 
-    private List<ArbreFichier> enfantsVersListe(){
+    public List<ArbreFichier> enfantsVersListe(){
         List<ArbreFichier> l = new ArrayList<>();
         if(this.estVide()){
             return l;
@@ -203,5 +203,10 @@ public class Dossier implements ArbreFichier{
     @Override
     public int compareTo(ArbreFichier af) {
         return af.getInfos().compareTo(this.getInfos());
+    }
+
+    @Override
+    public String toString(){
+        return "\u001B[36m"+state.getNom()+"\u001B[0m"+"/ - [taille :"+state.getTaille()+"]";
     }
 }

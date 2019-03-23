@@ -9,6 +9,7 @@ public class Fichier implements ArbreFichier{
     }
 
     public Fichier(String nom, String contenu){
+        System.out.println("FICHIER contenu ="+contenu);
         this.state = new State(nom,contenu);
     }
 
@@ -64,5 +65,9 @@ public class Fichier implements ArbreFichier{
 
         return af.getInfos().compareTo(this.getInfos());
 
+    }
+    @Override
+    public String toString(){
+        return "\u001B[33m"+state.getNom()+"\u001B[0m"+" - [taille :"+state.getTaille()+"]";
     }
 }

@@ -2,6 +2,7 @@ package systeme_fichier;
 
 import commandes.Cd;
 import commandes.Commande;
+import commandes.Commandes;
 import commandes.Quit;
 import fileparser.FileParser;
 
@@ -25,9 +26,7 @@ public class SystemeFichier {
         this.fp = new FileParser(cheminFichier, MOTS_RESERVES);
         this.arborescence = fp.parserFichier();
         System.out.println(this.arborescence.dessiner());
-        this.commandes = new HashMap<>();
-        this.commandes.put("quit", new Quit());
-        this.commandes.put("cd", new Cd());
+        this.commandes = Commandes.importCmd();
         this.in();
     }
 

@@ -1,5 +1,6 @@
 package systeme_fichier;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -47,6 +48,8 @@ public class State{
         this.fichier = true;
         this.taille = contenu.length();
         this.contenu = contenu;
+        mettreAJourTaille(this.taille);
+        System.out.println("contenu = "+contenu+" Nom = "+ nom);
     }
 
     public State(String nom,boolean isFichier){
@@ -109,6 +112,7 @@ public class State{
 
     protected void setContenu(String contenu) {
         this.contenu = contenu;
+        this.mettreAJourTaille(taille);
     }
 
     public String fillContenu(){
@@ -261,6 +265,15 @@ public class State{
             }
         }
         return -getNom().compareToIgnoreCase(((State)o).getNom());
+    }
+    @Override
+    public String toString(){
+        String nomPere = (pere!=null)?pere.getInfos().getNom():"null";
+        String nomFrereGauche = (frereGauche!=null)?frereGauche.getInfos().getNom():"null";
+        int n =nomFrereGauche.length()+(nom.length()/2)+3;
+        String nomFrereDroit = (frereDroit!=null)?frereDroit.getInfos().getNom():"null";
+        String nomPremierFils = (premierFils!=null)?premierFils.getInfos().getNom():"null";
+        return ToolBox.nChar(" ",n,true)+"["+"\u001B[34m"+nomPere+"\u001B[0m"+"]"+"\n["+"\u001B[34m"+nomFrereGauche+"\u001B[0m"+"]<--[" + nom +","+taille+"]-->["+"\u001B[34m"+nomFrereDroit+"\u001B[0m"+"]\n"+ToolBox.nChar(" ",n,true)+"["+"\u001B[34m"+nomPremierFils+"\u001B[0m"+"]";
     }
 
 }

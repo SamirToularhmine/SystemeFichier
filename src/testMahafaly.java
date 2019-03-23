@@ -1,3 +1,4 @@
+import commandes.Commandes;
 import systeme_fichier.Dossier;
 import systeme_fichier.Fichier;
 import systeme_fichier.State;
@@ -116,5 +117,7 @@ public class testMahafaly {
 
 
         System.out.println(f3.equals(f33));
+        System.out.println(Commandes.commandes);
+        System.out.println(new Fichier("oui","azeazfe").getInfos());
     }
 }
