@@ -17,7 +17,11 @@ public class Cd implements Commande {
                     }
                     currDir = currDir.getPere();
                 }else{
-                    currDir = currDir.getNoeud(i);
+                    if(!currDir.getNoeud(i).isFichier()){
+                        currDir = (Dossier)currDir.getNoeud(i);
+                    }else{
+                        throw new Exception("Pas de dossier portant ce nom !");
+                    }
                 }
             }
         }

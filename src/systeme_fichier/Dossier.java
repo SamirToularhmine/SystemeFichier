@@ -42,27 +42,24 @@ public class Dossier extends ArbreFichiers {
         this.mettreAJourTaille(n2.getTaille());
     }
 
-    public Dossier getNoeud(String nom) throws  Exception{
-        ArbreFichiers noeud = this.getPremierFils();
+    public IArbreFichier getNoeud(String nom) throws Exception{
+        IArbreFichier noeud = this.getPremierFils();
         String nomNoeud = noeud.getNom();
         while(!nomNoeud.equals(nom)){
             if(noeud.getFrereDroit() == null){
                 break;
             }
             noeud = noeud.getFrereDroit();
+            nomNoeud = noeud.getNom();
         }
-        if(nomNoeud.equals(nom)){
-            if(noeud instanceof Dossier){
-                return (Dossier) noeud;
-            }
+        if(noeud.getNom().equals(nom)){
+            return noeud;
         }
-        throw new Exception("Pas de dossier avec ce nom !");
+        throw new Exception("Pas de dossier/fichier avec ce nom !");
     }
 
-
-
-    protected boolean contient(ArbreFichiers n){
-        ArbreFichiers it = n;
+    protected boolean contient(IArbreFichier n){
+        IArbreFichier it = n;
         while(it!=null){
             if(it == this) return true;
             it = it.getPere();
@@ -93,10 +90,10 @@ public class Dossier extends ArbreFichiers {
         if(this.estVide()){
             return l;
         }
-        ArbreFichiers crt = this.getEnfantExtremeGauche();
+        ArbreFichiers crt = (ArbreFichiers) this.getEnfantExtremeGauche();
         while(crt!=null){
             l.add(crt);
-            crt = crt.getFrereDroit();
+            crt = (ArbreFichiers) crt.getFrereDroit();
         }
         return l;
     }
@@ -124,7 +121,7 @@ public class Dossier extends ArbreFichiers {
     protected void mettreAJourPremierFils(){
         //le cas où this a au moins un enfant
         if(!estVide()) {
-            ArbreFichiers son = this.getPremierFils();
+            IArbreFichier son = this.getPremierFils();
             this.parcoursLargeurFrere(son, n2 -> {
 
                 if (n2.getFrereGauche() == null) {
@@ -137,9 +134,9 @@ public class Dossier extends ArbreFichiers {
         }
     }
 
-    private ArbreFichiers getEnfantExtremeGauche(){
+    private IArbreFichier getEnfantExtremeGauche(){
         if (this.estVide())return null;
-        ArbreFichiers a = (ArbreFichiers) this.parcoursLargeurFrere(this.getPremierFils(),(b)->{
+        IArbreFichier a = (IArbreFichier) this.parcoursLargeurFrere(this.getPremierFils(),(b)->{
             if(b.getFrereGauche()==null) {
                 return b;
             }
@@ -147,9 +144,9 @@ public class Dossier extends ArbreFichiers {
         });
         return a;
     }
-    private ArbreFichiers getEnfantExtremeDroite(){
+    private IArbreFichier getEnfantExtremeDroite(){
         if (this.estVide())return null;
-        ArbreFichiers a = (ArbreFichiers) this.parcoursLargeurFrere(this.getPremierFils(),(b)->{
+        IArbreFichier a = (IArbreFichier) this.parcoursLargeurFrere(this.getPremierFils(),(b)->{
             if(b.getFrereDroit()==null) {
                 return b;
             }
@@ -158,7 +155,7 @@ public class Dossier extends ArbreFichiers {
         return a;
     }
 
-    private boolean estVide(){
+    public boolean estVide(){
         return this.getPremierFils() == null;
     }
 
@@ -169,7 +166,7 @@ public class Dossier extends ArbreFichiers {
 
     @Override
     public String dessiner() {
-        return this.dessiner(0,this.getEnfantExtremeDroite());
+        return this.dessiner(0,(ArbreFichiers)this.getEnfantExtremeDroite());
     }
 
     @Override

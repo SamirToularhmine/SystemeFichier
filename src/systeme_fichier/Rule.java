@@ -2,5 +2,5 @@ package systeme_fichier;
 
 @FunctionalInterface
 public interface Rule {
-    public Object doTheRule(ArbreFichiers n1);
+    public Object doTheRule(IArbreFichier n1);
 }
