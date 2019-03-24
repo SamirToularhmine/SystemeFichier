@@ -73,39 +73,39 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         this.taille = 0;
     }
 
-    protected ArbreFichiers getPere() {
-        return pere;
+    public Dossier getPere() {
+        return (Dossier)this.pere;
     }
 
-    protected ArbreFichiers getPremierFils() {
-        return premierFils;
+    public ArbreFichiers getPremierFils() {
+        return this.premierFils;
     }
 
-    protected ArbreFichiers getFrereGauche() {
-        return frereGauche;
+    public ArbreFichiers getFrereGauche() {
+        return this.frereGauche;
     }
 
-    protected ArbreFichiers getFrereDroit() {
-        return frereDroit;
+    public ArbreFichiers getFrereDroit() {
+        return this.frereDroit;
     }
 
     public String getNom() {
-        return nom;
+        return this.nom;
     }
 
-    protected boolean isFichier() {
-        return fichier;
+    public boolean isFichier() {
+        return this instanceof Fichier;
     }
 
-    protected String getContenu() {
-        return contenu;
+    public String getContenu() {
+        return this.contenu;
     }
 
-    protected int getTaille() {
+    public int getTaille() {
         return taille;
     }
 
-    protected void setTaille(int taille) {
+    public void setTaille(int taille) {
         this.taille = taille;
     }
 
@@ -238,7 +238,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
     }
 
     protected void mettreAJourTaille(int taille){
-        this.setTaille(this.getTaille()+taille);
+        this.setTaille(this.taille + taille);
         if (this.pere != null) {
             this.pere.mettreAJourTaille(taille);
         }
@@ -265,10 +265,10 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
 
             }
         }*/
-        return -this.getNom().compareToIgnoreCase(o.getNom());
+        return this.getNom().compareToIgnoreCase(o.getNom());
     }
 
-    public void ajouterNoeudDroite(ArbreFichiers toAdd){
+    protected void ajouterNoeudDroite(ArbreFichiers toAdd){
         toAdd.setFrereGauche(this);
         if (this.getFrereDroit() != null) {
             this.getFrereDroit().setFrereGauche(toAdd);
@@ -278,6 +278,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         toAdd.setPere(this.pere);
     }
 
+    @Override
     public String cheminAbsolu(){
         // TODO :Vérifier le cas d'un fichier à la racine
         final String SEPARATEUR="/";

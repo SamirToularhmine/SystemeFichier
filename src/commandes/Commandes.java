@@ -19,9 +19,9 @@ public class Commandes {
     public static Map<String, Commande> commandes = new HashMap<>();
 
     static {
-        commandes.put("quit", new Quit());
-        commandes.put("cd", new Cd());
-        commandes.put("ls",new Ls());
+        commandes.put(QUIT, new Quit());
+        commandes.put(CD, new Cd());
+        commandes.put(LS,new Ls());
     }
 
     public static Map<String,Commande> importCmd(){

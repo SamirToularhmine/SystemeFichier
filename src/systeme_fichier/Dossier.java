@@ -70,14 +70,6 @@ public class Dossier extends ArbreFichiers {
         return false;
     }
 
-    protected  String nChar(String c,int n,boolean t){
-        String s=(n==0||t)?"":"│";
-        for (int i = 0; i < n; i++) {
-            s += c;
-        }
-        return s;
-    }
-
     public String dessiner(int n, ArbreFichiers exRS){
         String s ="";
         List<ArbreFichiers> l = this.enfantsVersListe();
@@ -88,7 +80,7 @@ public class Dossier extends ArbreFichiers {
                 Dossier exRSD = (Dossier)exRS;
                 t = exRSD.contient(this);
             }
-            String tc =(a.getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
+            String tc =(a.getFrereDroit()!=null)? ToolBox.nChar("   ", n,t) + "├── ": ToolBox.nChar("   ", n,t) + "└── ";
 
             s += tc + a.dessiner(n+1,exRS);
         }
@@ -166,21 +158,13 @@ public class Dossier extends ArbreFichiers {
         return a;
     }
 
-    public Dossier getPere(){
-        return (Dossier)super.getPere();
-    }
-
-    public ArbreFichiers getThis(){
-        return this;
+    private boolean estVide(){
+        return this.getPremierFils() == null;
     }
 
     @Override
     public boolean supprimerNoeud(){
         return this.supprimerNoeud();
-    }
-
-    private boolean estVide(){
-        return this.getPremierFils() == null;
     }
 
     @Override

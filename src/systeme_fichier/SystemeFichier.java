@@ -42,7 +42,7 @@ public class SystemeFichier {
         Dossier currDir = this.arborescence;
         Console c = new Console();
         do {
-            c.afficherMenu();
+            c.afficherMenu(currDir);
             if(sc.hasNext()){
                 String line = sc.nextLine();
                 String[] lineSplitted = line.split(" ");
