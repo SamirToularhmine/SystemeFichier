@@ -4,22 +4,20 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Dossier implements ArbreFichier{
-
-    private State state;
+public class Dossier extends ArbreFichiers {
 
     public Dossier(String nom){
-        this.state = new State(nom,false);
+        super(nom,false);
     }
 
-    public void ajouterNoeud(ArbreFichier n2) {
+    public void ajouterNoeud(ArbreFichiers n2) {
 
-        List<ArbreFichier> l = this.enfantsVersListe();
-        n2.getInfos().setPere(this);
+        List<ArbreFichiers> l = this.enfantsVersListe();
+        n2.setPere(this);
         int n = 1;
 
         while (l.contains(n2)) {
-            String nom = n2.getInfos().getNom();
+            String nom = n2.getNom();
             Matcher matcher = Pattern.compile(".*\\(\\d+\\)$").matcher(nom);
             if (matcher.find()) {
                 matcher = Pattern.compile("\\(\\d+\\)$").matcher(nom);
@@ -36,40 +34,22 @@ public class Dossier implements ArbreFichier{
             } else {
                 nom += "(" + (n++) + ")";
             }
-            n2.getInfos().setNom(nom);
+            n2.setNom(nom);
         }
         l.add(n2);
-        l.sort(Comparator.comparing(ArbreFichier::getThis));
+        l.sort(Comparator.comparing(ArbreFichiers::getThis));
         this.listeVersEnfant(l);
-        this.state.mettreAJourTaille(n2.getInfos().getTaille());
-    }
-
-    public String dessiner(int n,ArbreFichier exRS){
-        String s ="";
-        List<ArbreFichier> l = this.enfantsVersListe();
-        s += "\u001B[36m"+this.state.getNom() + "/\n"+"\u001B[0m";
-        for (ArbreFichier a : l) {
-            boolean t = false;
-            if(exRS instanceof Dossier){
-                Dossier exRSD = (Dossier)exRS;
-                t = exRSD.contient(this);
-            }
-            String tc =(a.getInfos().getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
-
-            s += tc + a.dessiner(n+1,exRS);
-        }
-
-        return s;
+        this.mettreAJourTaille(n2.getTaille());
     }
 
     public Dossier getNoeud(String nom) throws  Exception{
-        ArbreFichier noeud = this.getInfos().getPremierFils();
-        String nomNoeud = noeud.getInfos().getNom();
+        ArbreFichiers noeud = this.getPremierFils();
+        String nomNoeud = noeud.getNom();
         while(!nomNoeud.equals(nom)){
-            if(noeud.getInfos().getFrereDroit() == null){
+            if(noeud.getFrereDroit() == null){
                 break;
             }
-            noeud = noeud.getInfos().getFrereDroit();
+            noeud = noeud.getFrereDroit();
         }
         if(nomNoeud.equals(nom)){
             if(noeud instanceof Dossier){
@@ -81,16 +61,16 @@ public class Dossier implements ArbreFichier{
 
 
 
-    private boolean contient(ArbreFichier n){
-        ArbreFichier it = n;
+    protected boolean contient(ArbreFichiers n){
+        ArbreFichiers it = n;
         while(it!=null){
             if(it == this) return true;
-            it = it.getInfos().getPere();
+            it = it.getPere();
         }
         return false;
     }
 
-    private  String nChar(String c,int n,boolean t){
+    protected  String nChar(String c,int n,boolean t){
         String s=(n==0||t)?"":"│";
         for (int i = 0; i < n; i++) {
             s += c;
@@ -98,35 +78,53 @@ public class Dossier implements ArbreFichier{
         return s;
     }
 
-    public List<ArbreFichier> enfantsVersListe(){
-        List<ArbreFichier> l = new ArrayList<>();
+    public String dessiner(int n, ArbreFichiers exRS){
+        String s ="";
+        List<ArbreFichiers> l = this.enfantsVersListe();
+        s += "\u001B[36m"+this.getNom() + "/\n"+"\u001B[0m";
+        for (ArbreFichiers a : l) {
+            boolean t = false;
+            if(exRS instanceof Dossier){
+                Dossier exRSD = (Dossier)exRS;
+                t = exRSD.contient(this);
+            }
+            String tc =(a.getFrereDroit()!=null)? nChar("   ", n,t) + "├── ": nChar("   ", n,t) + "└── ";
+
+            s += tc + a.dessiner(n+1,exRS);
+        }
+
+        return s;
+    }
+
+    public List<ArbreFichiers> enfantsVersListe(){
+        List<ArbreFichiers> l = new ArrayList<>();
         if(this.estVide()){
             return l;
         }
-        ArbreFichier crt = this.getEnfantExtremeGauche();
+        ArbreFichiers crt = this.getEnfantExtremeGauche();
         while(crt!=null){
             l.add(crt);
-            crt = crt.getInfos().getFrereDroit();
+            crt = crt.getFrereDroit();
         }
         return l;
     }
 
-    private void listeVersEnfant(List<ArbreFichier> l){
+    private void listeVersEnfant(List<ArbreFichiers> l){
         if(!l.isEmpty()){
-            ArbreFichier first_element = l.get(0);
-            first_element.getInfos().removeSiblings();
-            this.state.setPremierFils(first_element);
+            ArbreFichiers first_element = l.get(0);
+            first_element.removeSiblings();
+            this.setPremierFils(first_element);
             if(l.size()>1){
-                ListIterator<ArbreFichier> it = l.listIterator(1);
+                ListIterator<ArbreFichiers> it = l.listIterator(1);
                 while(it.hasNext()){
-                    ArbreFichier prev = l.get(it.previousIndex());
-                    ArbreFichier crt = it.next();
-                    crt.getInfos().removeSiblings();
+                    ArbreFichiers prev = l.get(it.previousIndex());
+                    ArbreFichiers crt = it.next();
+                    crt.removeSiblings();
                     prev.ajouterNoeudDroite(crt);
                 }
             }
         }else{
-            this.state.setPremierFils(null);
+            this.setPremierFils(null);
         }
         this.mettreAJourPremierFils();
     }
@@ -134,12 +132,12 @@ public class Dossier implements ArbreFichier{
     protected void mettreAJourPremierFils(){
         //le cas où this a au moins un enfant
         if(!estVide()) {
-            ArbreFichier son = this.state.getPremierFils();
-            this.state.parcoursLargeurFrere(son, n2 -> {
+            ArbreFichiers son = this.getPremierFils();
+            this.parcoursLargeurFrere(son, n2 -> {
 
-                if (n2.getInfos().getFrereGauche() == null) {
+                if (n2.getFrereGauche() == null) {
 
-                    this.state.setPremierFils(n2);
+                    this.setPremierFils(n2);
                     return true;
                 }
                 return false;
@@ -147,20 +145,20 @@ public class Dossier implements ArbreFichier{
         }
     }
 
-    private ArbreFichier getEnfantExtremeGauche(){
+    private ArbreFichiers getEnfantExtremeGauche(){
         if (this.estVide())return null;
-        ArbreFichier a = (ArbreFichier) this.state.parcoursLargeurFrere(this.state.getPremierFils(),(b)->{
-            if(b.getInfos().getFrereGauche()==null) {
+        ArbreFichiers a = (ArbreFichiers) this.parcoursLargeurFrere(this.getPremierFils(),(b)->{
+            if(b.getFrereGauche()==null) {
                 return b;
             }
             return null;
         });
         return a;
     }
-    private ArbreFichier getEnfantExtremeDroite(){
+    private ArbreFichiers getEnfantExtremeDroite(){
         if (this.estVide())return null;
-        ArbreFichier a = (ArbreFichier) this.state.parcoursLargeurFrere(this.state.getPremierFils(),(b)->{
-            if(b.getInfos().getFrereDroit()==null) {
+        ArbreFichiers a = (ArbreFichiers) this.parcoursLargeurFrere(this.getPremierFils(),(b)->{
+            if(b.getFrereDroit()==null) {
                 return b;
             }
             return null;
@@ -169,25 +167,20 @@ public class Dossier implements ArbreFichier{
     }
 
     public Dossier getPere(){
-        return (Dossier)this.getInfos().getPere();
+        return (Dossier)super.getPere();
     }
 
-    public ArbreFichier getThis(){
+    public ArbreFichiers getThis(){
         return this;
     }
 
     @Override
     public boolean supprimerNoeud(){
-        return this.getInfos().supprimerNoeud();
+        return this.supprimerNoeud();
     }
 
     private boolean estVide(){
-        return this.state.getPremierFils() == null;
-    }
-
-    @Override
-    public State getInfos() {
-        return this.state;
+        return this.getPremierFils() == null;
     }
 
     @Override
@@ -197,16 +190,11 @@ public class Dossier implements ArbreFichier{
 
     @Override
     public boolean equals(Object o){
-        return this.compareTo((ArbreFichier)o) == 0;
-    }
-
-    @Override
-    public int compareTo(ArbreFichier af) {
-        return af.getInfos().compareTo(this.getInfos());
+        return this.compareTo((ArbreFichiers) o) == 0;
     }
 
     @Override
     public String toString(){
-        return "\u001B[36m"+state.getNom()+"\u001B[0m"+"/ - [taille :"+state.getTaille()+"]";
+        return "\u001B[36m"+super.getNom()+"\u001B[0m"+"/ - [taille :"+super.getTaille()+"]";
     }
 }

@@ -1,7 +1,7 @@
 package fileparser;
 
 import systeme_fichier.Dossier;
-import systeme_fichier.Fichier;
+import systeme_fichier.FichierI;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +41,7 @@ public class FileParser{
             BufferedReader br = new BufferedReader(new FileReader(this.file));
             String line = br.readLine();
             int numLigne = 1;
-            Fichier currentFile = null;
+            FichierI currentFile = null;
             Deque<Dossier> arborescence = new ArrayDeque<>();
             boolean finOk = false;
             while(line != null){
@@ -69,7 +69,7 @@ public class FileParser{
                                 throw new FileParseException(FIN_DECLA, numLigne);
                             }
                             if(type.equals("f")){
-                                Fichier fichier = new Fichier(nom);
+                                FichierI fichier = new FichierI(nom);
                                 currentFile = fichier;
                                 arborescence.getLast().ajouterNoeud(fichier);
                             }else{

@@ -1,8 +1,6 @@
 import commandes.Commandes;
 import systeme_fichier.Dossier;
-import systeme_fichier.Fichier;
-import systeme_fichier.State;
-import systeme_fichier.SystemeFichier;
+import systeme_fichier.FichierI;
 
 public class testMahafaly {
     public static final String RESET = "\u001B[0m";
@@ -18,12 +16,12 @@ public class testMahafaly {
     public static void main(String[] args) {
         Dossier root = new Dossier("root");
         Dossier a = new Dossier("a");
-        Fichier b = new Fichier("b", 1);
-        Fichier c = new Fichier("c", 1);
+        FichierI b = new FichierI("b", 1);
+        FichierI c = new FichierI("c", 1);
         Dossier d = new Dossier("d");
         Dossier e = new Dossier("e");
-        Fichier f = new Fichier("f", 100);
-        Fichier a1 = new Fichier("a1", 10);
+        FichierI f = new FichierI("f", 100);
+        FichierI a1 = new FichierI("a1", 10);
 
         //System.out.println("\u001B[33m" + a1.getPere() + "\u001B[0m");
 
@@ -58,7 +56,7 @@ public class testMahafaly {
             e.addNode(f);
             for (int i = 1; i < 3; i++) {
 
-                e.addNode(new systeme_fichier.Fichier("f"));
+                e.addNode(new systeme_fichier.FichierI("f"));
             }
 
         }catch(Exception e1){
@@ -101,14 +99,14 @@ public class testMahafaly {
             //e.ajouterNoeud(f);
             for (int i = 1; i < 30; i++) {
 
-                e.ajouterNoeud(new Fichier("azerzrazazra"));
+                e.ajouterNoeud(new FichierI("azerzrazazra"));
 
             }
 
         }catch(Exception e1){
             System.out.println(e1.getMessage());
         }
-        State state = new State("f3");
+        /*State state = new State("f3");
         State state1 = new State("f3");
         Dossier f3 = new Dossier("f3");
         Dossier f33 = new Dossier("f3");
@@ -118,6 +116,6 @@ public class testMahafaly {
 
         System.out.println(f3.equals(f33));
         System.out.println(Commandes.commandes);
-        System.out.println(new Fichier("oui","azeazfe").getInfos());
+        System.out.println(new FichierI("oui","azeazfe").getInfos());*/
     }
 }

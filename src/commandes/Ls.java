@@ -1,7 +1,7 @@
 package commandes;
 
-import systeme_fichier.ArbreFichier;
-import systeme_fichier.Console;
+import systeme_fichier.ArbreFichiers;
+import systeme_fichier.IArbreFichier;
 import systeme_fichier.Dossier;
 
 import java.util.Iterator;
@@ -22,8 +22,8 @@ public class Ls implements Commande {
         System.out.println(args[0]);
 
     }else{
-        List<ArbreFichier> childrenCurr = currDir.enfantsVersListe();
-        Iterator<ArbreFichier> it = childrenCurr.listIterator();
+        List<ArbreFichiers> childrenCurr = currDir.enfantsVersListe();
+        Iterator<ArbreFichiers> it = childrenCurr.listIterator();
         String toShow ="";
         while(it.hasNext()){
             //todo gérer l'affichage avec la classe Console
