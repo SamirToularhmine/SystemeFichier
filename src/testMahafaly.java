@@ -1,6 +1,7 @@
-import commandes.Commandes;
+
 import systeme_fichier.Dossier;
-import systeme_fichier.FichierI;
+import systeme_fichier.Fichier;
+
 
 public class testMahafaly {
     public static final String RESET = "\u001B[0m";
@@ -16,12 +17,12 @@ public class testMahafaly {
     public static void main(String[] args) {
         Dossier root = new Dossier("root");
         Dossier a = new Dossier("a");
-        FichierI b = new FichierI("b", 1);
-        FichierI c = new FichierI("c", 1);
+        Fichier b = new Fichier("b", 1);
+        Fichier c = new Fichier("c", 1);
         Dossier d = new Dossier("d");
         Dossier e = new Dossier("e");
-        FichierI f = new FichierI("f", 100);
-        FichierI a1 = new FichierI("a1", 10);
+        Fichier f = new Fichier("f", 100);
+        Fichier a1 = new Fichier("a1", 10);
 
 
 
@@ -34,7 +35,7 @@ public class testMahafaly {
             //e.ajouterNoeud(f);
             for (int i = 1; i < 30; i++) {
 
-                e.ajouterNoeud(new FichierI("azerzrazazra"));
+                e.ajouterNoeud(new Fichier("azerzrazazra"));
 
             }
 

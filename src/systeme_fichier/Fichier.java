@@ -1,18 +1,18 @@
 package systeme_fichier;
 
-public class FichierI extends ArbreFichiers {
+public class Fichier extends ArbreFichiers {
 
-    public FichierI(String nom){
+    public Fichier(String nom){
         super(nom, "");
     }
 
-    public FichierI(String nom, String contenu){
+    public Fichier(String nom, String contenu){
         super(nom,contenu);
         System.out.println("FICHIER contenu ="+contenu);
     }
 
     //pour les tests contenu rempli automatiquement
-    public FichierI(String nom, int taille){
+    public Fichier(String nom, int taille){
         super(nom,taille);
     }
 
