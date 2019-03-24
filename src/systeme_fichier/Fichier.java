@@ -28,7 +28,7 @@ public class Fichier extends ArbreFichiers {
     }
 
     public void setContenu(String contenu){
-        this.setContenu(contenu);
+        super.setContenu(contenu);
     }
 
     @Override
