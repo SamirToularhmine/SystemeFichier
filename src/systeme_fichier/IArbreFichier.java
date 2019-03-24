@@ -12,7 +12,7 @@ public interface IArbreFichier {
 
     public String getNom();
 
-    public Dossier getPere();
+    public IArbreFichier getPere();
 
     public void setPere(IArbreFichier pere);
 
@@ -25,6 +25,8 @@ public interface IArbreFichier {
     public boolean isFichier();
 
     public boolean estPremierFils();
+
+    public IArbreFichier getPremierFils();
 
     public List<IArbreFichier> getFreres();
 

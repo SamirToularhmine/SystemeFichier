@@ -1,5 +1,6 @@
 package systeme_fichier;
 
+import javax.annotation.processing.SupportedSourceVersion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -73,18 +74,22 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         this.taille = 0;
     }
 
-    public Dossier getPere() {
-        return (Dossier)this.pere;
+    @Override
+    public IArbreFichier getPere() {
+        return this.pere;
     }
 
+    @Override
     public IArbreFichier getPremierFils() {
         return this.premierFils;
     }
 
+    @Override
     public IArbreFichier getFrereGauche() {
         return this.frereGauche;
     }
 
+    @Override
     public IArbreFichier getFrereDroit() {
         return this.frereDroit;
     }
@@ -291,7 +296,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         // TODO :Vérifier le cas d'un fichier à la racine
         final String SEPARATEUR="/";
         String s=SEPARATEUR+this.nom;
-        ArbreFichiers node = (ArbreFichiers) this.pere;
+        IArbreFichier node = this.pere;
         while(node!=null){
             s=SEPARATEUR+node.getNom()+s;
             node=node.getPere();

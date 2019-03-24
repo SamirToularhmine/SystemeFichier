@@ -15,7 +15,7 @@ public class Cd implements Commande {
                     if(currDir.getPere() == null){
                         throw new Exception("Vous ne pouvez pas remonter plus haut !");
                     }
-                    currDir = currDir.getPere();
+                    currDir = (Dossier)currDir.getPere();
                 }else{
                     if(!currDir.getNoeud(i).isFichier()){
                         currDir = (Dossier)currDir.getNoeud(i);
