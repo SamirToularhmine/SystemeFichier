@@ -14,7 +14,7 @@ public interface IArbreFichier {
 
     public Dossier getPere();
 
-    public void setPere(Dossier pere);
+    public void setPere(IArbreFichier pere);
 
     public String getContenu();
 

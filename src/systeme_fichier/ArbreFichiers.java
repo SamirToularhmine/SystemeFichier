@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFichiers>{
 
-    private Dossier pere;
+    private IArbreFichier pere;
     private IArbreFichier premierFils;
     private IArbreFichier frereGauche;
     private IArbreFichier frereDroit;
@@ -175,7 +175,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
     }
 
     @Override
-    public void setPere(Dossier pere) {
+    public void setPere(IArbreFichier pere) {
         this.pere = pere;
     }
 
@@ -201,7 +201,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         if (this.isRoot()) {
             return false;
         }
-        Dossier d = this.pere;
+        Dossier d = (Dossier) this.pere;
         this.setTaille(-(this.getTaille()));
         //cas du fils unique
         if (this.getFrereGauche() == null && this.getFrereDroit() == null) {
@@ -242,7 +242,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
     protected void mettreAJourTaille(int taille){
         this.setTaille(this.taille + taille);
         if (this.pere != null) {
-            this.pere.mettreAJourTaille(taille);
+            ((ArbreFichiers)this.pere).mettreAJourTaille(taille);
         }
     }
 
@@ -291,7 +291,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         // TODO :Vérifier le cas d'un fichier à la racine
         final String SEPARATEUR="/";
         String s=SEPARATEUR+this.nom;
-        ArbreFichiers node = this.pere;
+        ArbreFichiers node = (ArbreFichiers) this.pere;
         while(node!=null){
             s=SEPARATEUR+node.getNom()+s;
             node=node.getPere();
