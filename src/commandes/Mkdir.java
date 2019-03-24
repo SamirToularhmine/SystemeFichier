@@ -9,6 +9,7 @@ public class Mkdir implements Commande{
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
 
+        //TODO: Gérer le cas où l'on passe un fichier en paramètre
         if( args.length>0) {
             for (int i = 1; i < args.length; i++) {
 

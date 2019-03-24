@@ -9,6 +9,7 @@ public class Mkfile implements Commande{
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
 
+        //TODO: Gérer le cas où l'on passe un chemin en paramètre
         if(args.length<4 && args.length>0) {
             String s = args[2];
             Fichier fichier = new Fichier(args[1],s);

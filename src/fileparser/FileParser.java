@@ -14,8 +14,7 @@ import java.util.List;
 public class FileParser{
     //TODO: Hashmap pour les mots réservés
     //TODO: Internationalisation des messages
-    // Generaliser le type decque
-    // Ajouter help général et help commande
+    //TODO: Ajouter help général et help commande
 
     private static final String BEGIN_RACINE = "Votre fichier doit commencer par le mot racine !";
     private static final String PB_ARBO = "Vous devez d'abord définir un dossier avant de pouvoir descendre dans l'arborescence !";
