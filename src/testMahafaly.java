@@ -2,6 +2,7 @@
 import systeme_fichier.Dossier;
 import systeme_fichier.Fichier;
 import systeme_fichier.SystemeFichier;
+import systeme_fichier.ToolBox;
 
 
 public class testMahafaly {
@@ -41,9 +42,13 @@ public class testMahafaly {
             }
 
             System.out.println(root.dessiner());
-            System.out.println("\u001B[34m"+a1+"\u001B[0m");
-            SystemeFichier systemeFichier = new SystemeFichier("arbo2");
-            systemeFichier.in();
+            System.out.println("\u001B[34m"+a1+"\n"+root+"\u001B[0m");
+            System.out.println("------------------------------------");
+        a1.setContenu("20000000000");
+        System.out.println("\u001B[34m"+a1+"\n"+root+"\u001B[0m");
+
+           // SystemeFichier systemeFichier = new SystemeFichier("arbo2");
+            //systemeFichier.in();
 
 
     }
