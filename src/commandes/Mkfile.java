@@ -9,8 +9,9 @@ public class Mkfile implements Commande{
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
 
-        if(args.length<3 && args.length>0) {
-            Fichier fichier = new Fichier(args[1]);
+        if(args.length<4 && args.length>0) {
+            String s = args[2];
+            Fichier fichier = new Fichier(args[1],s);
             currDir.ajouterNoeud(fichier);
 
         }else{

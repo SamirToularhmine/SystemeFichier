@@ -27,7 +27,7 @@ public class Dossier extends ArbreFichiers {
                 matcher.find();
                 end = matcher.group();
                 int nv = Integer.valueOf(end);
-                matcher = Pattern.compile("[^\\(\\d+\\)$)]").matcher(nom);
+                matcher = Pattern.compile("[^\\(\\d+\\)$)]*").matcher(nom);
                 matcher.find();
                 String begin = matcher.group();
                 nom = begin + "(" + (nv + 1) + ")";
