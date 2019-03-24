@@ -1,6 +1,7 @@
 
 import systeme_fichier.Dossier;
 import systeme_fichier.Fichier;
+import systeme_fichier.SystemeFichier;
 
 
 public class testMahafaly {
@@ -40,6 +41,9 @@ public class testMahafaly {
             }
 
             System.out.println(root.dessiner());
+            System.out.println("\u001B[34m"+a1+"\u001B[0m");
+            SystemeFichier systemeFichier = new SystemeFichier("arbo2");
+            systemeFichier.in();
 
 
     }
