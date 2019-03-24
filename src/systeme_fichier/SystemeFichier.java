@@ -55,6 +55,9 @@ public class SystemeFichier {
                             System.out.println(e.getLocalizedMessage());
                         }
                         currDir = o instanceof Dossier ? (Dossier)o:currDir;
+                        if(o instanceof String && !((String) o).isEmpty()){
+                            System.out.println(o);
+                        }
                         break;
                     }
                 }

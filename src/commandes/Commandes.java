@@ -15,6 +15,8 @@ public class Commandes {
     public static final String RM = "rm";
     public static final String QUIT = "quit";
     public static final String EXIT = "exit";
+    public static final String FIND = "find";
+    public static final String GREP = "grep";
 
     public static Map<String, Commande> commandes = new HashMap<>();
 
@@ -22,6 +24,7 @@ public class Commandes {
         commandes.put(QUIT, new Quit());
         commandes.put(CD, new Cd());
         commandes.put(LS,new Ls());
+        commandes.put(GREP, new Grep());
     }
 
     public static Map<String,Commande> importCmd(){

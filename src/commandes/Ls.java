@@ -17,25 +17,19 @@ public class Ls implements Commande {
             System.out.println("\u001B[31m"+"currDir NULL"+"\u001B[0m");
             return Optional.empty();
         }
-    if(args.length>1){
+        if(args.length>1){
+            System.out.println(args[0]);
+        }else {
+            List<ArbreFichiers> childrenCurr = currDir.enfantsVersListe();
+            Iterator<ArbreFichiers> it = childrenCurr.listIterator();
+            String toShow = "";
+            while (it.hasNext()) {
+                //todo gérer l'affichage avec la classe Console
+                toShow += it.next() + "\n";
+            }
 
-        System.out.println(args[0]);
-
-    }else{
-        List<ArbreFichiers> childrenCurr = currDir.enfantsVersListe();
-        Iterator<ArbreFichiers> it = childrenCurr.listIterator();
-        String toShow ="";
-        while(it.hasNext()){
-            //todo gérer l'affichage avec la classe Console
-            toShow += it.next()+"\n";
+            return Optional.of(toShow);
         }
-        System.out.println(toShow);
-       return Optional.of(toShow);
-
-
-    }
-
-
         return Optional.empty();
     }
 }

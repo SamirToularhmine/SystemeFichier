@@ -6,10 +6,10 @@ import java.util.ListIterator;
 
 public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFichiers>{
 
-    private ArbreFichiers pere;
-    private ArbreFichiers premierFils;
-    private ArbreFichiers frereGauche;
-    private ArbreFichiers frereDroit;
+    private Dossier pere;
+    private IArbreFichier premierFils;
+    private IArbreFichier frereGauche;
+    private IArbreFichier frereDroit;
     private String nom;
     private boolean fichier;
     private String contenu;
@@ -77,15 +77,15 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         return (Dossier)this.pere;
     }
 
-    public ArbreFichiers getPremierFils() {
+    public IArbreFichier getPremierFils() {
         return this.premierFils;
     }
 
-    public ArbreFichiers getFrereGauche() {
+    public IArbreFichier getFrereGauche() {
         return this.frereGauche;
     }
 
-    public ArbreFichiers getFrereDroit() {
+    public IArbreFichier getFrereDroit() {
         return this.frereDroit;
     }
 
@@ -93,14 +93,17 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         return this.nom;
     }
 
+    @Override
     public boolean isFichier() {
         return this instanceof Fichier;
     }
 
+    @Override
     public String getContenu() {
         return this.contenu;
     }
 
+    @Override
     public int getTaille() {
         return taille;
     }
@@ -120,20 +123,20 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         return s;
     }
 
-    protected Object parcoursLargeurFrere(ArbreFichiers n1, Rule r)throws RuntimeException{
+    protected Object parcoursLargeurFrere(IArbreFichier n1, Rule r)throws RuntimeException{
         if (n1 == null) {
             throw new RuntimeException("Argument n1 null");
         }
-        List<ArbreFichiers> atteint = new ArrayList();
-        List<ArbreFichiers> f = new ArrayList();
+        List<IArbreFichier> atteint = new ArrayList();
+        List<IArbreFichier> f = new ArrayList();
         f.add(n1);
         atteint.add(n1);
         Object exit = null;
-        ListIterator<ArbreFichiers> it = f.listIterator();
+        ListIterator<IArbreFichier> it = f.listIterator();
         while((!f.isEmpty())&&it.hasNext()){
-            ArbreFichiers current = it.next();
-            List<ArbreFichiers> neighbour = current.getSibling();
-            ListIterator<ArbreFichiers> itr = neighbour.listIterator();
+            IArbreFichier current = it.next();
+            List<IArbreFichier> neighbour = current.getFreres();
+            ListIterator<IArbreFichier> itr = neighbour.listIterator();
 
             if(exit instanceof java.lang.Boolean && (boolean) exit) {
                 return exit;
@@ -146,7 +149,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
             }
             it.remove();
             while(itr.hasNext()){
-                ArbreFichiers crt = itr.next();
+                IArbreFichier crt = itr.next();
                 if (!atteint.contains(crt)){
                     it.add(crt);
                     atteint.add(crt);
@@ -163,26 +166,26 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         return exit;
     }
 
-    private List<ArbreFichiers> getSibling() {
-        List<ArbreFichiers> sibling = new ArrayList();
+    @Override
+    public List<IArbreFichier> getFreres() {
+        List<IArbreFichier> sibling = new ArrayList();
         if (this.frereDroit != null) sibling.add(frereDroit);
         if (frereGauche != null) sibling.add(frereGauche);
         return sibling;
     }
 
-    protected void setPere(ArbreFichiers pere) {
+    @Override
+    public void setPere(Dossier pere) {
         this.pere = pere;
     }
 
-    protected void setPremierFils(ArbreFichiers premierFils) {
-        this.premierFils = premierFils;
-    }
-
-    protected void setFrereDroit(ArbreFichiers frereDroit) {
+    @Override
+    public void setFrereDroit(IArbreFichier frereDroit) {
         this.frereDroit = frereDroit;
     }
 
-    protected void setFrereGauche(ArbreFichiers frereGauche) {
+    @Override
+    public void setFrereGauche(IArbreFichier frereGauche) {
         this.frereGauche = frereGauche;
     }
 
@@ -194,12 +197,11 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
     @Override
     public boolean supprimerNoeud() {
 
-        ArbreFichiers crt = null;
+        IArbreFichier crt = null;
         if (this.isRoot()) {
             return false;
         }
-        ArbreFichiers dad = this.pere;
-        Dossier d = (Dossier) dad;
+        Dossier d = this.pere;
         this.setTaille(-(this.getTaille()));
         //cas du fils unique
         if (this.getFrereGauche() == null && this.getFrereDroit() == null) {
@@ -209,7 +211,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
             return true;
         } else {
             //cas si ce n'est pas le premierFils de son père
-            if (!this.isFirstSon() && this.getFrereGauche() != null && this.getFrereDroit() != null) {
+            if (!this.estPremierFils() && this.getFrereGauche() != null && this.getFrereDroit() != null) {
 
                 this.getFrereGauche().setFrereDroit(this.getFrereDroit());
                 this.getFrereDroit().setFrereGauche(this.getFrereGauche());
@@ -246,11 +248,17 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
 
     protected abstract String dessiner(int n, ArbreFichiers exrs);
 
-    protected void setNom(String nom) {
+    protected void setPremierFils(IArbreFichier pf) {
+        this.premierFils = pf;
+    }
+
+    @Override
+    public void setNom(String nom) {
         this.nom = nom;
     }
 
-    protected boolean isFirstSon(){
+    @Override
+    public boolean estPremierFils(){
         return  getPere().getPremierFils() == this;
     }
 
