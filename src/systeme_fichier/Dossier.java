@@ -16,7 +16,7 @@ public class Dossier extends ArbreFichiers {
         n2.setPere(this);
         int n = 1;
 
-        while (l.contains(n2)) {
+        while (l.contains(n2)) { //todo : c'est chaud ici enfait ça marche pas j'men occupe asap
             String nom = n2.getNom();
             Matcher matcher = Pattern.compile(".*\\(\\d+\\)$").matcher(nom);
             if (matcher.find()) {
