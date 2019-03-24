@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public class Ls implements Commande {
 
-
     @Override
     public Optional<String> execute(Dossier currDir, String... args) throws Exception {
         if (currDir == null) {
