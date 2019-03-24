@@ -24,9 +24,11 @@ public class Commandes {
         commandes.put(QUIT, new Quit());
         commandes.put(EXIT, new Exit());
         commandes.put(CD, new Cd());
-        commandes.put(LS,new Ls());
+        commandes.put(LS, new Ls());
         commandes.put(GREP, new Grep());
         commandes.put(PWD, new Pwd());
+        commandes.put(MKFILE, new Mkfile());
+        commandes.put(MKDIR, new Mkdir());
     }
 
     public static Map<String,Commande> importCmd(){
