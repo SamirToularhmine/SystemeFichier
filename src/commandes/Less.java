@@ -27,12 +27,14 @@ public class Less implements Commande{
                 }
             }else{
                 fichier = currDir.getNoeud(chemin);
+
+                if(fichier.isFichier()){
+                    retour += fichier.getContenu();
+                }else{
+                    throw new Exception("Il faut passer un fichier en argument !");
+                }
             }
-            if(fichier.isFichier()){
-                retour += fichier.getContenu();
-            }else{
-                throw new Exception("Il faut passer un fichier en argument !");
-            }
+
         }else{
             throw new Exception(f[0] + " : Pas assez d'arguments !");
         }

@@ -28,8 +28,7 @@ public class Cd implements Commande {
                 }
             }
         }
-
-        System.out.println(currDir.dessiner());
+        
         return Optional.of(currDir);
     }
 }

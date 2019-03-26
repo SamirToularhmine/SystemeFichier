@@ -1,6 +1,5 @@
 package commandes;
 
-import systeme_fichier.ArbreFichiers;
 import systeme_fichier.Dossier;
 import systeme_fichier.IArbreFichier;
 
@@ -13,16 +12,16 @@ public class Grep implements Commande{
     @Override
     public Optional execute(Dossier currDir, String... f) throws Exception {
         String[] fichiers = Arrays.copyOfRange(f, 1, f.length);
-        Pattern pattern = Pattern.compile(f[0]);
+        String patternRaw = f[0].replaceAll("\"", "");
+        Pattern pattern = Pattern.compile(patternRaw);
         String retour = "";
         for(String s : fichiers){
-            if(currDir.getNoeud(s).isFichier()){
-                IArbreFichier noeud = currDir.getNoeud(s);
-                String contenu = new Less().execute(currDir, fichiers).get().toString();
-                Matcher m = pattern.matcher(contenu);
-                if(m.find()){
-                    retour += noeud.getNom() + " : " + m.group(0) + "\n";
-                }
+            String contenu = new Less().execute(currDir, s).get().toString();
+            Matcher m = pattern.matcher(contenu);
+            String[] chemin = s.split("/");
+            String nomFichier = chemin[chemin.length - 1];
+            if(m.find()){
+                retour += nomFichier + " : " + m.group(0) + "\n";
             }
         }
         retour = !retour.isEmpty() ? retour.substring(0, retour.length() - 1) : "";
