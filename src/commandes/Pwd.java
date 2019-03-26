@@ -6,10 +6,12 @@ import java.util.Optional;
 
 public class Pwd implements Commande{
 
+    private static final String COMMANDE = "PWD";
+
     @Override
-    public Optional execute(Dossier currDir, String... f) throws Exception {
-        if(f.length > 1){
-            throw new Exception(f[0] + " : Trop d'argument !");
+    public Optional execute(Dossier currDir, String... args) throws Exception {
+        if(args.length == 1){
+            throw new Exception(COMMANDE + " : Trop d'argument !");
         }
         String retour = currDir.cheminAbsolu();
 

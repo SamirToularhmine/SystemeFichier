@@ -12,13 +12,13 @@ import java.util.regex.Pattern;
 public class Grep implements Commande{
     @Override
     public Optional execute(Dossier currDir, String... f) throws Exception {
-        String[] fichiers = Arrays.copyOfRange(f, 2, f.length);
-        Pattern pattern = Pattern.compile(f[1]);
+        String[] fichiers = Arrays.copyOfRange(f, 1, f.length);
+        Pattern pattern = Pattern.compile(f[0]);
         String retour = "";
         for(String s : fichiers){
             if(currDir.getNoeud(s).isFichier()){
                 IArbreFichier noeud = currDir.getNoeud(s);
-                String contenu = noeud.getContenu();
+                String contenu = new Less().execute(currDir, fichiers).get().toString();
                 Matcher m = pattern.matcher(contenu);
                 if(m.find()){
                     retour += noeud.getNom() + " : " + m.group(0) + "\n";

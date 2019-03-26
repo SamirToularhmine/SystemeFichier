@@ -6,10 +6,7 @@ import commandes.Commandes;
 import commandes.Quit;
 import fileparser.FileParser;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class SystemeFichier {
 
@@ -50,13 +47,14 @@ public class SystemeFichier {
                     if(s.equals(lineSplitted[0])){
                         Object o = null;
                         try {
-                            o = this.commandes.get(s).execute(currDir, lineSplitted).get();
+                            String[] args = Arrays.copyOfRange(lineSplitted, 1, lineSplitted.length);
+                            o = this.commandes.get(s).execute(currDir, args).get();
                         }catch(Exception e){
                             System.out.println(e.getLocalizedMessage());
                         }
                         currDir = o instanceof Dossier ? (Dossier)o:currDir;
                         if(o instanceof String && !((String) o).isEmpty()){
-                            System.out.println(o);
+                           System.out.println(o);
                         }
                         break;
                     }

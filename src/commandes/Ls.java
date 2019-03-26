@@ -16,7 +16,7 @@ public class Ls implements Commande {
             System.out.println("\u001B[31m"+"currDir NULL"+"\u001B[0m");
             return Optional.empty();
         }
-        if(args.length>1){
+        if(args.length == 1){
             System.out.println(args[0]);
         }else {
             List<ArbreFichiers> childrenCurr = currDir.enfantsVersListe();
