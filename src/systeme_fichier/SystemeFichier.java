@@ -43,6 +43,7 @@ public class SystemeFichier {
             if(sc.hasNext()){
                 String line = sc.nextLine();
                 String[] lineSplitted = line.split(" ");
+                //TODO: Utiliser la stream api
                 for(String s : this.commandes.keySet()){
                     if(s.equals(lineSplitted[0])){
                         Object o = null;
