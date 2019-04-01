@@ -30,6 +30,7 @@ public class Commandes {
         commandes.put(MKFILE, new Mkfile());
         commandes.put(MKDIR, new Mkdir());
         commandes.put(LESS, new Less());
+        commandes.put(FIND, new Find());
     }
 
     public static Map<String,Commande> importCmd(){
