@@ -5,6 +5,8 @@ import java.util.List;
 public interface IArbreFichier {
 
     public String cheminAbsolu();
+    
+    public String cheminRelatif(IArbreFichier debut);
 
     public boolean supprimerNoeud();
 
