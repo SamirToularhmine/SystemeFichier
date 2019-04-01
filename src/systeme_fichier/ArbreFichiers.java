@@ -304,7 +304,18 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         }
         return s;
     }
-
+    
+    public String cheminRelatif(IArbreFichier debut){
+        final String SEPARATEUR="/";
+        String s=SEPARATEUR+this.nom;
+        IArbreFichier node = this.pere;
+        while(node!=debut){
+            s=SEPARATEUR+node.getNom()+s;
+            node=node.getPere();
+        }
+        return "."+s;
+    }
+    
     protected ArbreFichiers getThis(){
         return this;
     }
