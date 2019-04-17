@@ -7,7 +7,7 @@ public class Commandes {
 
     //Peut etre provisoire, c'est une proposition de classe pour stocker les commandes reconnues par le système de fichier
     private static final String LS = "ls";
-    private static final String CD = "cd";
+    public static final String CD = "cd";
     private static final String MKDIR = "mkdir";
     private static final String MKFILE = "mkfile";
     private static final String LESS = "less";
@@ -17,6 +17,7 @@ public class Commandes {
     private static final String EXIT = "exit";
     private static final String FIND = "find";
     private static final String GREP = "grep";
+    private static final String TREE = "tree";
 
     private static final Map<String, Commande> commandes = new HashMap<>();
 
@@ -31,6 +32,7 @@ public class Commandes {
         commandes.put(MKDIR, new Mkdir());
         commandes.put(LESS, new Less());
         commandes.put(FIND, new Find());
+        commandes.put(TREE,new Tree());
     }
 
     public static Map<String,Commande> importCmd(){
