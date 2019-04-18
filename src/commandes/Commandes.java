@@ -33,6 +33,7 @@ public class Commandes {
         commandes.put(LESS, new Less());
         commandes.put(FIND, new Find());
         commandes.put(TREE,new Tree());
+        commandes.put(RM, new Rm());
     }
 
     public static Map<String,Commande> importCmd(){

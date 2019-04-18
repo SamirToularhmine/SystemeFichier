@@ -159,10 +159,10 @@ public class Dossier extends ArbreFichiers {
         return this.getPremierFils() == null;
     }
 
-    @Override
+    /*@Override
     public boolean supprimerNoeud(){
         return this.supprimerNoeud();
-    }
+    }*/
 
     @Override
     public String dessiner() {
