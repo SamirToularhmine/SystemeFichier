@@ -23,7 +23,6 @@ public class Mkdir implements Commande{
                 }else{
                     dossierCourrant = currDir;
                 }
-                System.out.println("\u001B[31m"+nom+"\u001B[0m");
                 Dossier dossier = new Dossier(nom);
                 dossierCourrant.ajouterNoeud(dossier);
 
