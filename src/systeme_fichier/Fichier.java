@@ -23,7 +23,7 @@ public class Fichier extends ArbreFichiers {
 
     public String dessiner(int n, ArbreFichiers exRS){
         String s ="";
-        s+="\u001B[33m"+super.getNom()+" - [ "+"\u001B[35m"+super.getContenu()+"\u001B[0m"+"\u001B[33m"+" ] - "+"\n\u001B[0m";
+        s+="\u001B[33m"+super.getNom()+" -"+" [t:"+this.getTaille()+"]"+" [ "+"\u001B[35m"+super.getContenu()+"\u001B[0m"+"\u001B[33m"+" ] - "+"\n\u001B[0m";
         return s;
     }
 

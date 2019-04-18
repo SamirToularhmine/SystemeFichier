@@ -46,9 +46,8 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         this.frereGauche = null;
         this.frereDroit = null;
         this.fichier = true;
-        this.taille = contenu.length();
         this.contenu = contenu;
-        mettreAJourTaille(this.taille);
+        mettreAJourTaille(contenu.length()); // this.taille est mise à jour ici
         System.out.println("contenu = "+contenu+" Nom = "+ nom);
     }
 

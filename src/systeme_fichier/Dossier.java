@@ -70,7 +70,7 @@ public class Dossier extends ArbreFichiers {
     public String dessiner(int n, ArbreFichiers exRS){
         String s ="";
         List<ArbreFichiers> l = this.enfantsVersListe();
-        s += "\u001B[36m"+this.getNom() + "/\n"+"\u001B[0m";
+        s += "\u001B[36m"+this.getNom()+" [t:"+this.getTaille()+"]"+ "/\n"+"\u001B[0m";
         for (ArbreFichiers a : l) {
             boolean t = false;
             if(exRS instanceof Dossier){

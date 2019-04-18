@@ -35,17 +35,18 @@ public class testMahafaly {
             a.ajouterNoeud(d);
             d.ajouterNoeud(e);
             //e.ajouterNoeud(f);
-            for (int i = 1; i < 30; i++) {
+            for (int i = 1; i < 2; i++) {
 
-                e.ajouterNoeud(new Fichier("azerzrazazra"));
+                e.ajouterNoeud(new Fichier("azerzrazazra","1"));
 
             }
 
             System.out.println(root.dessiner());
             System.out.println("\u001B[34m"+a1+"\n"+root+"\u001B[0m");
             System.out.println("------------------------------------");
-        a1.setContenu("20000000000");
+        a1.setContenu("11");
         System.out.println("\u001B[34m"+a1+"\n"+root+"\u001B[0m");
+        System.out.println(root.dessiner());
 
            // SystemeFichier systemeFichier = new SystemeFichier("arbo2");
             //systemeFichier.in();
