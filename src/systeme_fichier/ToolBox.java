@@ -23,7 +23,7 @@ public class ToolBox {
         String nom = s;
         if (ToolBox.estChemin(s)){
             String chemin = s;
-            Matcher matcher = Pattern.compile("/([A-z]|[0-9])*$").matcher(s);
+            Matcher matcher = Pattern.compile("/([A-z]|[0-9]|\\(|\\))*$").matcher(s);
             matcher.find();
             String end = matcher.group();
             end = end.substring(1);

@@ -7,6 +7,8 @@ import commandes.Quit;
 import fileparser.FileParser;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SystemeFichier {
 
@@ -42,6 +44,9 @@ public class SystemeFichier {
             c.afficherMenu(currDir);
             if(sc.hasNext()){
                 String line = sc.nextLine();
+                Matcher matcher = Pattern.compile("([A-z]|[0-9]|\\(|\\))*$").matcher(line);
+                if(matcher.find())System.out.println("\u001B[33m"+"c'est bon"+"\u001B[0m");
+                else System.out.println("\u001B[31m"+"C'est PAS BON"+"\u001B[0m");
                 String[] lineSplitted = line.split(" ");
                 //TODO: Utiliser la stream api
                 for(String s : this.commandes.keySet()){
@@ -49,7 +54,10 @@ public class SystemeFichier {
                         Object o = null;
                         try {
                             String[] args = Arrays.copyOfRange(lineSplitted, 1, lineSplitted.length);
-                            o = this.commandes.get(s).execute(currDir, args).get();
+                           Optional opt = this.commandes.get(s).execute(currDir, args);
+                           if(opt.isPresent()) {
+                               o = opt.get();
+                           }
                         }catch(Exception e){
                             System.out.println(e.getLocalizedMessage());
                         }
