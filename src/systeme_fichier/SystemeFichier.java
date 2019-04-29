@@ -44,9 +44,6 @@ public class SystemeFichier {
             c.afficherMenu(currDir);
             if(sc.hasNext()){
                 String line = sc.nextLine();
-                Matcher matcher = Pattern.compile("([A-z]|[0-9]|\\(|\\))*$").matcher(line);
-                if(matcher.find())System.out.println("\u001B[33m"+"c'est bon"+"\u001B[0m");
-                else System.out.println("\u001B[31m"+"C'est PAS BON"+"\u001B[0m");
                 String[] lineSplitted = line.split(" ");
                 //TODO: Utiliser la stream api
                 for(String s : this.commandes.keySet()){
