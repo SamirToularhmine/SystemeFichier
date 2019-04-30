@@ -47,7 +47,7 @@ public class SystemeFichier {
 
                 String line = sc.nextLine();
                 try{
-                ToolBox.characterAutorises(line);
+                //ToolBox.characterAutorises(line);
 
                 String[] lineSplitted = line.split(" ");
                 //TODO: Utiliser la stream api
@@ -68,9 +68,9 @@ public class SystemeFichier {
                     if (o instanceof String && !((String) o).isEmpty()) {
                         System.out.println(o);
                     }
-            }catch (Exception e){
-            System.out.println("\u001B[31m"+e.getMessage()+"\u001B[0m");
-        }
+                    }catch (Exception e){
+                        System.out.println("\u001B[31m"+e.getMessage()+"\u001B[0m");
+                    }
             }
 
         }while(!stop);

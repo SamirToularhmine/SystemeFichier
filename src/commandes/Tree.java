@@ -10,4 +10,9 @@ public class Tree implements Commande {
         System.out.println(currDir.dessiner());
         return Optional.empty();
     }
+
+    @Override
+    public String help() {
+        return "La commande tree permet d'afficher l'arborescence sous forme d'arbre.";
+    }
 }

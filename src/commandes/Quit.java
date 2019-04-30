@@ -11,4 +11,9 @@ public class Quit implements Commande {
         System.exit(0);
         return Optional.empty();
     }
+
+    @Override
+    public String help() {
+        return "La commande quit permet de quitter le programme.";
+    }
 }

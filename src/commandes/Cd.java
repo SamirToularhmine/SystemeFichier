@@ -31,4 +31,10 @@ public class Cd implements Commande {
         
         return Optional.of(currDir);
     }
+
+    @Override
+    public String help() {
+        return "La commande cd permet de se déplacer dans l'arborescence en passant le chemin en paramètre. \n" +
+                "Ce chemin doit être composé de noms de dossiers séparés par des /";
+    }
 }

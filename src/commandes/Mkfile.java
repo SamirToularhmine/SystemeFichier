@@ -51,4 +51,10 @@ public class Mkfile implements Commande{
 
     }
 
+    @Override
+    public String help() {
+        return "La commande mkfile permet de créer un fichier dans un chemin passé en paramètre se terminant par \n" +
+                "le nom du fichier à créer.";
+    }
+
 }

@@ -54,6 +54,7 @@ public class FileParser{
                 }else{
                     if(line.charAt(0) != '%'){
                         if(line.matches("^[*]+ ([a-zA-Z0-9]*|([a-zA-Z0-9]*_[a-zA-Z0-9]*)*) (d|f)( %.*)?$")){
+                            currentFile = null;
                             String[] lineSplitted = line.split(" ");
                             String arbo = lineSplitted[0];
                             String nom = lineSplitted[1];
@@ -103,8 +104,10 @@ public class FileParser{
                                         }
                                     }
                                     if(contenuOk){
-                                        currentFile.setContenu(line);
-                                        currentFile = null;
+                                        String contenu  = currentFile.getContenu();
+                                        contenu = contenu + line + "___";
+                                        currentFile.setContenu(contenu);
+                                        //currentFile = null;
                                     }else{
                                         throw new FileParseException(FORMAT_LIGNE, numLigne);
                                     }
