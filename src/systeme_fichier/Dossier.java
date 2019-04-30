@@ -23,13 +23,14 @@ public class Dossier extends ArbreFichiers {
                 matcher = Pattern.compile("\\(\\d+\\)$").matcher(nom);
                 matcher.find();
                 String end = matcher.group();
+                String begin = nom.substring(0,(nom.length()-end.length()));
                 matcher = Pattern.compile("\\d+").matcher(end);
                 matcher.find();
                 end = matcher.group();
                 int nv = Integer.valueOf(end);
                 matcher = Pattern.compile("[^\\(\\d+\\)$)]*").matcher(nom);
                 matcher.find();
-                String begin = matcher.group();
+
                 nom = begin + "(" + (nv + 1) + ")";
             } else {
                 nom += "(" + (n++) + ")";
