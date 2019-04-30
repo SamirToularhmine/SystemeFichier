@@ -54,26 +54,22 @@ public class SystemeFichier {
                 if (!this.commandes.containsKey(lineSplitted[0]))
                     throw new Exception("la commande : " + lineSplitted[0] + " n'existe pas");
 
-                for (String s : this.commandes.keySet()) {
-                    if (s.equals(lineSplitted[0])) {
-                        Object o = null;
-                        try {
-                            String[] args = Arrays.copyOfRange(lineSplitted, 1, lineSplitted.length);
+                    Commande commande = this.commandes.get(lineSplitted[0]);
+                    Object o = null;
+                    try {
+                        String[] args = Arrays.copyOfRange(lineSplitted, 1, lineSplitted.length);
 
-                            Optional opt = this.commandes.get(s).execute(currDir, args);
-                            if (opt.isPresent()) {
-                                o = opt.get();
-                            }
-                        } catch (Exception e) {
-                            System.out.println(e.getLocalizedMessage());
+                        Optional opt = commande.execute(currDir, args);
+                        if (opt.isPresent()) {
+                            o = opt.get();
                         }
-                        currDir = o instanceof Dossier ? (Dossier) o : currDir;
-                        if (o instanceof String && !((String) o).isEmpty()) {
-                            System.out.println(o);
-                        }
-                        break;
+                    } catch (Exception e) {
+                        System.out.println(e.getLocalizedMessage());
                     }
-                }
+                    currDir = o instanceof Dossier ? (Dossier) o : currDir;
+                    if (o instanceof String && !((String) o).isEmpty()) {
+                        System.out.println(o);
+                    }
             }catch (Exception e){
             System.out.println("\u001B[31m"+e.getMessage()+"\u001B[0m");
         }
