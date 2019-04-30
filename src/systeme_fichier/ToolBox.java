@@ -13,6 +13,20 @@ public class ToolBox {
         return s;
     }
 
+    public static void characterAutorises(String s)throws Exception{
+        Pattern p = Pattern.compile("([A-z]|[0-9]|\\(|\\)|/| )*");
+        Matcher m  = p.matcher(s);
+        if(!m.matches()){
+            Pattern pattern = Pattern.compile("[^([A-z]|[0-9]|\\(|\\)|/)]");
+            Matcher matcher = pattern.matcher(s);
+            String notAllowed = "";
+            while (matcher.find()) {
+               notAllowed += ("\u001B[36m"+matcher.group()+" "+"\u001B[0m") ;
+            }
+            throw new Exception("\u001B[31m"+"characters : "+notAllowed+"\u001B[31m"+"non autorisés"+"\u001B[0m");
+        }
+    }
+
     public static boolean estChemin(String s){
         Matcher matcher = Pattern.compile(".*/.*$").matcher(s);
 
@@ -21,6 +35,7 @@ public class ToolBox {
 
     public static String getNomChemin(String s) throws Exception{
         String nom = s;
+
         if (ToolBox.estChemin(s)){
             String chemin = s;
             Matcher matcher = Pattern.compile("/([A-z]|[0-9]|\\(|\\))*$").matcher(s);
@@ -38,7 +53,7 @@ public class ToolBox {
     public  static String getChemin(String s)throws Exception{
         String chemin = s;
         String end = getNomChemin(s);
-        Matcher matcher = Pattern.compile("^.*/[^(([A-z]|[0-9]|\\(|\\))*)]").matcher(s);
+        Matcher matcher = Pattern.compile("^[^(([A-z]|[0-9]|\\(|\\))*)]*/[^(([A-z]|[0-9]|\\(|\\))*)]").matcher(s);
         matcher.find();
         chemin = chemin.substring(0, (chemin.length() - (end.length())));
         return chemin;

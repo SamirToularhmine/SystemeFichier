@@ -8,7 +8,6 @@ public class Fichier extends ArbreFichiers {
 
     public Fichier(String nom, String contenu){
         super(nom,contenu);
-        System.out.println("FICHIER contenu ="+contenu);
     }
 
     //pour les tests contenu rempli automatiquement

@@ -42,33 +42,43 @@ public class SystemeFichier {
         Console c = new Console();
         do {
             c.afficherMenu(currDir);
-            if(sc.hasNext()){
+            if(sc.hasNext()) {
+
+
                 String line = sc.nextLine();
-                Matcher matcher = Pattern.compile("([A-z]|[0-9]|\\(|\\))*$").matcher(line);
-                if(matcher.find())System.out.println("\u001B[33m"+"c'est bon"+"\u001B[0m");
-                else System.out.println("\u001B[31m"+"C'est PAS BON"+"\u001B[0m");
+                try{
+                ToolBox.characterAutorises(line);
+
                 String[] lineSplitted = line.split(" ");
                 //TODO: Utiliser la stream api
-                for(String s : this.commandes.keySet()){
-                    if(s.equals(lineSplitted[0])){
+                if (!this.commandes.containsKey(lineSplitted[0]))
+                    throw new Exception("la commande : " + lineSplitted[0] + " n'existe pas");
+
+                for (String s : this.commandes.keySet()) {
+                    if (s.equals(lineSplitted[0])) {
                         Object o = null;
                         try {
                             String[] args = Arrays.copyOfRange(lineSplitted, 1, lineSplitted.length);
-                           Optional opt = this.commandes.get(s).execute(currDir, args);
-                           if(opt.isPresent()) {
-                               o = opt.get();
-                           }
-                        }catch(Exception e){
+
+                            Optional opt = this.commandes.get(s).execute(currDir, args);
+                            if (opt.isPresent()) {
+                                o = opt.get();
+                            }
+                        } catch (Exception e) {
                             System.out.println(e.getLocalizedMessage());
                         }
-                        currDir = o instanceof Dossier ? (Dossier)o:currDir;
-                        if(o instanceof String && !((String) o).isEmpty()){
-                           System.out.println(o);
+                        currDir = o instanceof Dossier ? (Dossier) o : currDir;
+                        if (o instanceof String && !((String) o).isEmpty()) {
+                            System.out.println(o);
                         }
                         break;
                     }
                 }
+            }catch (Exception e){
+            System.out.println("\u001B[31m"+e.getMessage()+"\u001B[0m");
+        }
             }
+
         }while(!stop);
 
     }
