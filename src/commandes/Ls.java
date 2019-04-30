@@ -31,4 +31,9 @@ public class Ls implements Commande {
         }
         return Optional.empty();
     }
+
+    @Override
+    public String help() {
+        return "La commande ls permet d'afficher le contenu d'un dossier passé en paramètre.";
+    }
 }

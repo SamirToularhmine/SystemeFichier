@@ -18,6 +18,7 @@ public class Commandes {
     private static final String FIND = "find";
     private static final String GREP = "grep";
     private static final String TREE = "tree";
+    private static final String HELP = "help";
 
     private static final Map<String, Commande> commandes = new HashMap<>();
 
@@ -34,6 +35,7 @@ public class Commandes {
         commandes.put(FIND, new Find());
         commandes.put(TREE,new Tree());
         commandes.put(RM, new Rm());
+        commandes.put(HELP, new Help());
     }
 
     public static Map<String,Commande> importCmd(){

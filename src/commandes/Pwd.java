@@ -17,4 +17,9 @@ public class Pwd implements Commande{
 
         return Optional.of(retour);
     }
+
+    @Override
+    public String help() {
+        return "La commande pwd permet d'afficher le chemin absolu du dossier actuel.";
+    }
 }

@@ -49,4 +49,10 @@ public class Grep implements Commande{
 
         return Optional.of(retour);
     }
+
+    @Override
+    public String help() {
+        return "La commande grep permet de voir si le contenu d'un fichier correspond à un certain pattern regex passé\n" +
+                "en paramètre.";
+    }
 }

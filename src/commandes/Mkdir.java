@@ -36,4 +36,10 @@ public class Mkdir implements Commande{
         }
         return Optional.empty();
     }
+
+    @Override
+    public String help() {
+        return "La commande mkdir permet de créer un dossier dans un chemin passé en paramètre se terminant par \n" +
+                "le nom du dossier à créer.";
+    }
 }

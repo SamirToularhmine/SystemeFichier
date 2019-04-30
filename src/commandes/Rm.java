@@ -26,4 +26,9 @@ public class Rm implements Commande {
         }
         return Optional.of(currDir);
     }
+
+    @Override
+    public String help() {
+        return "La commande rm permet de supprimer un dossier ou un fichier dont le chemin est passé en paramètre.";
+    }
 }

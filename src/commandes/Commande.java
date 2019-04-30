@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface Commande<T> {
 
     public Optional<T> execute(Dossier currDir, String...f) throws Exception;
+
+    public String help();
 }

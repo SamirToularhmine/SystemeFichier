@@ -45,7 +45,7 @@ public class Mkfile implements Commande{
         return Optional.empty();
     }
 
-    public String demandeContenu(){
+    private String demandeContenu(){
         switch (ToolBox.choose("voulez-vous mettre du contenu ?","oui","non")){
             case 1 : System.out.println("rentrez le contenu :");
                      return sc.nextLine();
@@ -53,6 +53,12 @@ public class Mkfile implements Commande{
             case 2 : return "";
         }
         return "";
+    }
+
+    @Override
+    public String help() {
+        return "La commande mkfile permet de créer un fichier dans un chemin passé en paramètre se terminant par \n" +
+                "le nom du fichier à créer.";
     }
 
 }

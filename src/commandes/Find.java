@@ -37,4 +37,9 @@ public class Find implements Commande {
         }
         return Optional.of(s);
     }
+
+    @Override
+    public String help() {
+        return "La commande find permet d'afficher l'arborescence d'un dossier passé en paramètre.";
+    }
 }
