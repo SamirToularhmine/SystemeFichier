@@ -170,10 +170,7 @@ public class Dossier extends ArbreFichiers {
         return this.dessiner(0,(ArbreFichiers)this.getEnfantExtremeDroite());
     }
 
-    @Override
-    public boolean equals(Object o){
-        return this.compareTo((ArbreFichiers) o) == 0;
-    }
+
 
     @Override
     public String toString(){

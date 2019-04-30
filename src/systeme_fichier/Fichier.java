@@ -40,10 +40,7 @@ public class Fichier extends ArbreFichiers {
         return super.getNom();
     }
 
-    @Override
-    public boolean equals(Object o){
-        return this.compareTo((ArbreFichiers) o)==0;
-    }
+
 
     @Override
     public String toString(){

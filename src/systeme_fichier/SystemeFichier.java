@@ -56,16 +56,14 @@ public class SystemeFichier {
 
                     Commande commande = this.commandes.get(lineSplitted[0]);
                     Object o = null;
-                    try {
+
                         String[] args = Arrays.copyOfRange(lineSplitted, 1, lineSplitted.length);
 
                         Optional opt = commande.execute(currDir, args);
                         if (opt.isPresent()) {
                             o = opt.get();
                         }
-                    } catch (Exception e) {
-                        System.out.println(e.getLocalizedMessage());
-                    }
+
                     currDir = o instanceof Dossier ? (Dossier) o : currDir;
                     if (o instanceof String && !((String) o).isEmpty()) {
                         System.out.println(o);

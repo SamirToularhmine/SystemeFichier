@@ -279,6 +279,14 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         }*/
         return this.getNom().compareToIgnoreCase(o.getNom());
     }
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof ArbreFichiers){
+            ArbreFichiers arbreFichiers = (ArbreFichiers) o;
+            return arbreFichiers.nom.equals(this.nom);
+        }
+        return false;
+    }
 
     protected void ajouterNoeudDroite(ArbreFichiers toAdd){
         toAdd.setFrereGauche(this);

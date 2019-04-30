@@ -46,13 +46,9 @@ public class Mkfile implements Commande{
     }
 
     public String demandeContenu(){
-        switch (ToolBox.choose("voulez-vous mettre du contenu ?","oui","non")){
-            case 1 : System.out.println("rentrez le contenu :");
-                     return sc.nextLine();
+        System.out.print("Contenu du fichier ? ");
+        return sc.nextLine();
 
-            case 2 : return "";
-        }
-        return "";
     }
 
 }

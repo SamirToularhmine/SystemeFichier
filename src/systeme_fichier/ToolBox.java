@@ -5,6 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ToolBox {
+
+    private static final String PATTERN_CHAR_AUTORISEES = "[^\\\\|:|*|?|<|>|\\|]*" ;
+
     static String nChar(String c, int n, boolean t){
         String s=(n==0||t)?"":"│";
         for (int i = 0; i < n; i++) {
@@ -13,11 +16,12 @@ public class ToolBox {
         return s;
     }
 
-    public static void characterAutorises(String s)throws Exception{
-        Pattern p = Pattern.compile("([A-z]|[0-9]|\\(|\\)|/| )*");
+    public static void characterAutorises(String s) throws Exception{
+
+        Pattern p = Pattern.compile("[^\\\\|:|*|?|<|>|\\|]*");
         Matcher m  = p.matcher(s);
         if(!m.matches()){
-            Pattern pattern = Pattern.compile("[^([A-z]|[0-9]|\\(|\\)|/)]");
+            Pattern pattern = Pattern.compile("[^"+PATTERN_CHAR_AUTORISEES+"]");
             Matcher matcher = pattern.matcher(s);
             String notAllowed = "";
             while (matcher.find()) {
@@ -38,7 +42,7 @@ public class ToolBox {
 
         if (ToolBox.estChemin(s)){
             String chemin = s;
-            Matcher matcher = Pattern.compile("/([A-z]|[0-9]|\\(|\\))*$").matcher(s);
+            Matcher matcher = Pattern.compile("/"+PATTERN_CHAR_AUTORISEES+"$").matcher(s);
             matcher.find();
             String end = matcher.group();
             end = end.substring(1);
@@ -53,8 +57,8 @@ public class ToolBox {
     public  static String getChemin(String s)throws Exception{
         String chemin = s;
         String end = getNomChemin(s);
-        Matcher matcher = Pattern.compile("^[^(([A-z]|[0-9]|\\(|\\))*)]*/[^(([A-z]|[0-9]|\\(|\\))*)]").matcher(s);
-        matcher.find();
+        //Matcher matcher = Pattern.compile("^[^(([A-z]|[0-9]|\\(|\\))*)]*/[^(([A-z]|[0-9]|\\(|\\))*)]").matcher(s);
+        //matcher.find();
         chemin = chemin.substring(0, (chemin.length() - (end.length())));
         return chemin;
     }
