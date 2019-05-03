@@ -127,7 +127,15 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         return s;
     }
 
-    protected Object parcoursLargeurFrere(IArbreFichier n1, Rule r)throws RuntimeException{
+
+    /**
+     * Cette méthode permet d'effectuer un parcours en largeur permmettant de parcourir tous les frères d'un ArbreFichier
+     *
+     * @param n1 Noeud sur lequel le parcours commence commence
+     * @param r ce parametre qui est une interface determine ce que l'on veut faire du parcours en largeur sur un noeud
+     * @return la valeur de retour dépend grandement du paramètre r.
+     */
+    protected Object parcoursLargeurFrere(IArbreFichier n1, Rule r){
         if (n1 == null) {
             throw new RuntimeException("Argument n1 null");
         }
