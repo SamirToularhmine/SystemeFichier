@@ -4,6 +4,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Cette classe est un ArbreFichier pouvant ajouter d'autre Arbrefichier parmis ses enfants.
+ */
 public class Dossier extends ArbreFichiers {
 
     public Dossier(String nom){

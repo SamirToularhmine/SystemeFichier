@@ -1,5 +1,8 @@
 package systeme_fichier;
 
+/**
+ * Cette classe est un Arbrefichier qui peut avoir du contenu
+ */
 public class Fichier extends ArbreFichiers {
 
     public Fichier(String nom){
