@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ *  Cette classe est la représentation d'un noeud dans une arborescence
+ */
 public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFichiers>{
 
     private IArbreFichier pere;
@@ -127,7 +130,15 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         return s;
     }
 
-    protected Object parcoursLargeurFrere(IArbreFichier n1, Rule r)throws RuntimeException{
+
+    /**
+     * Cette méthode permet d'effectuer un parcours en largeur permmettant de parcourir tous les frères d'un ArbreFichier
+     *
+     * @param n1 Noeud sur lequel le parcours commence commence
+     * @param r ce parametre qui est une interface determine ce que l'on veut faire du parcours en largeur sur un noeud
+     * @return la valeur de retour dépend grandement du paramètre r.
+     */
+    protected Object parcoursLargeurFrere(IArbreFichier n1, Rule r){
         if (n1 == null) {
             throw new RuntimeException("Argument n1 null");
         }
@@ -198,6 +209,11 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         this.frereGauche = null;
     }
 
+    /**
+     * Méthode permettant de supprimer le noeud,
+     * le noeud en question va modifié ses attributs de façon à ce qu'il ne soit plus en liaison avec ses frères et de son père si il s'agissait du premier fils
+     * @return retourne true si le noeud a bien été supprimé
+     */
     @Override
     public boolean supprimerNoeud() {
 
@@ -243,6 +259,11 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         }
     }
 
+
+    /**
+     * Cette méthode est appelé récursivement sur le père (si prèsent) de cette objet en modifiant la taille pour concorder selon les changements
+     * @param taille il s'agit de la nouvelle taille
+     */
     protected void mettreAJourTaille(int taille){
         this.setTaille(this.taille + taille);
         if (this.pere != null) {

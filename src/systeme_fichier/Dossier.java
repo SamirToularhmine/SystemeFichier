@@ -4,19 +4,28 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Cette classe est un ArbreFichier pouvant ajouter d'autre Arbrefichier parmis ses enfants.
+ */
 public class Dossier extends ArbreFichiers {
 
     public Dossier(String nom){
         super(nom,false);
     }
 
+    /**
+     * Permet d'ajouter un noeud tout en respectant l'ordre définit dans le sujet
+     * Lorsque un noeud ajouté porte le même nom qu'un noeud déjà présent ce nom est alors modifié.
+     * e.g : si un noeud portant le nom de fichier est déjà présent alors le nouveau noeud à ajouter qui porte ce même nom à la base, sera nommé fichier(1)
+     * @param n2 noeud à ajouter
+     */
     public void ajouterNoeud(ArbreFichiers n2) {
 
         List<ArbreFichiers> l = this.enfantsVersListe();
         n2.setPere(this);
         int n = 1;
 
-        while (l.contains(n2)) { //todo : c'est chaud ici enfait ça marche pas j'men occupe asap
+        while (l.contains(n2)) {
             String nom = n2.getNom();
             Matcher matcher = Pattern.compile(".*\\(\\d+\\)$").matcher(nom);
             if (matcher.find()) {
@@ -43,6 +52,12 @@ public class Dossier extends ArbreFichiers {
         this.mettreAJourTaille(n2.getTaille());
     }
 
+    /**
+     * Permet de récupérer un IArbreFichier via son attribut nom
+     * @param nom, il s'agit de l'attribut nom de l'IArbreFichier que l'on recherche
+     * @return un IArbrefichier correspondant au nom
+     * @throws Exception si le noeud n'est pas trouvé une exception est levée
+     */
     public IArbreFichier getNoeud(String nom) throws Exception{
         IArbreFichier noeud = this.getPremierFils();
         String nomNoeud = noeud.getNom();
@@ -68,6 +83,13 @@ public class Dossier extends ArbreFichiers {
         return false;
     }
 
+
+    /**
+     * methode necessaire au dessin d'un arbrefichier
+     * @param n
+     * @param exRS
+     * @return
+     */
     public String dessiner(int n, ArbreFichiers exRS){
         String s ="";
         List<ArbreFichiers> l = this.enfantsVersListe();
