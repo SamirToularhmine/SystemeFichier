@@ -256,6 +256,11 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         }
     }
 
+
+    /**
+     * Cette méthode est appelé récursivement sur le père (si prèsent) de cette objet en modifiant la taille pour concorder selon les changements
+     * @param taille il s'agit de la nouvelle taille
+     */
     protected void mettreAJourTaille(int taille){
         this.setTaille(this.taille + taille);
         if (this.pere != null) {
