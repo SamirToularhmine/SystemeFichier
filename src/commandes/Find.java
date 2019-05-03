@@ -42,6 +42,8 @@ public class Find implements Commande {
                     }
                 }
             }
+        }else{
+            throw new Exception("Nombre d'arguments invalide!");
         }
         return Optional.of(s);
     }
