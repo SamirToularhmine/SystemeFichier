@@ -211,7 +211,7 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
 
     /**
      * Méthode permettant de supprimer le noeud,
-     * le noeud en question va modifié ses attributs de façon à ce qu'il ne soit plus en liaison avec ses frères et de son père si il s'agissait du premier fils
+     * le noeud en question va modifié ses attributs de façon à ce qu'il n'y ait plus de "chaînage" avec ses frères et de son père s'il s'agissait du premier fils
      * @return retourne true si le noeud a bien été supprimé
      */
     @Override
