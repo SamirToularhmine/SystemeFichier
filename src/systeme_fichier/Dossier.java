@@ -81,7 +81,8 @@ public class Dossier extends ArbreFichiers {
     }
 
 
-    /** methode necessaire au dessin d'un arbrefichier
+    /**
+     * methode necessaire au dessin d'un arbrefichier
      * @param n
      * @param exRS
      * @return

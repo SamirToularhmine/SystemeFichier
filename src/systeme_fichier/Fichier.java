@@ -35,6 +35,10 @@ public class Fichier extends ArbreFichiers {
         return super.supprimerNoeud();
     }
 
+    /**
+     * methode necessaire au dessin d'un arbrefichier
+     * @return
+     */
     @Override
     public String dessiner() {
         return super.getNom();
