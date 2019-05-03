@@ -8,6 +8,13 @@ public class Pwd implements Commande{
 
     private static final String COMMANDE = "PWD";
 
+    /**
+     * Cette commande permet d'afficher le chemin actuel
+     * @param currDir dossier courant
+     * @param args aucun
+     * @return une chaine de charactère contenant ce chemin
+     * @throws Exception si la commande à trop d'arguments
+     */
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
         if(args.length == 1){

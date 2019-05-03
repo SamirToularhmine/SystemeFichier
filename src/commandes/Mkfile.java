@@ -13,13 +13,19 @@ import java.util.regex.Pattern;
 public class Mkfile implements Commande{
 
     private Scanner sc = new Scanner(System.in);
+
+    /**
+     * Cette commande permet de créer un fichier
+     * @param currDir dossier courant
+     * @param args nom + éventuellement le chemin dans lequel créer le fichier
+     * @return rien
+     * @throws Exception si le nombre d'arguments est incorrect
+     */
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
         Dossier dossierCourrant = currDir;
 
 
-
-        //TODO: Gérer le cas où l'on passe un chemin en paramètre
         if(args.length!=0) {
             for (int i = 0; i < args.length; i++) {
                 String nom = args[i];
@@ -39,7 +45,7 @@ public class Mkfile implements Commande{
 
         }else{
 
-            throw new Exception("nombre d'arguments incorrect");
+            throw new Exception("Nombre d'arguments incorrect");
 
         }
         return Optional.empty();

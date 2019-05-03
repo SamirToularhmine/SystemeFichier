@@ -7,6 +7,14 @@ import systeme_fichier.ToolBox;
 import java.util.Optional;
 
 public class Rm implements Commande {
+
+    /**
+     * Cette commande permet de supprimer un fichier ou un dossier en fonction de son nom ou du chemin menant à celui-ci
+     * @param currDir dossier courant
+     * @param args nom ou chemin du dossier/fichier
+     * @return le dossier courant
+     * @throws Exception si le dossier ou le fichier n'existe pas
+     */
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
         Dossier dossierCourrant = currDir;

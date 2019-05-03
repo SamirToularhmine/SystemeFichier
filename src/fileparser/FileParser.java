@@ -12,10 +12,10 @@ import java.util.Deque;
 import java.util.List;
 
 public class FileParser{
-    //TODO: Hashmap pour les mots réservés
-    //TODO: Internationalisation des messages
-    //TODO: Ajouter help général et help commande
 
+    /**
+     * Toutes ces constantes représentes les différents messages d'erreur que peut lever la méthode parserFichier()
+     */
     private static final String BEGIN_RACINE = "Votre fichier doit commencer par le mot racine !";
     private static final String PB_ARBO = "Vous devez d'abord définir un dossier avant de pouvoir descendre dans l'arborescence !";
     private static final String FIN_DECLA = "Vous devez terminer la déclaration d'un dossier par le mot fin suivit du nombre d'étoiles correspondants";
@@ -35,6 +35,12 @@ public class FileParser{
         this.motsReserves = List.of(motsReserves);
     }
 
+    /**
+     * Cette méthode parserFichier nous permet de lire un fichier arborescence et d'en extraire une arborescence utilisable
+     * afin de pouvoir y appliquer des commandes par exemple.
+     *
+     * @return l'arborescence générée à partir du fichier
+     */
     public Dossier parserFichier(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(this.file));

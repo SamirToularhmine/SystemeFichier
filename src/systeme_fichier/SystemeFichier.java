@@ -15,6 +15,9 @@ public class SystemeFichier {
     private Dossier arborescence;
     private Map<String, Commande> commandes;
     private FileParser fp;
+    /**
+     * Ce tableau de String contient les mots réservés qui ne peuvent pas se trouver en début du contenu d'un fichier.
+     */
     private static final String[] MOTS_RESERVES = {
             "*",
             "fin",
@@ -35,6 +38,9 @@ public class SystemeFichier {
         this.fp = null;
     }
 
+    /**
+     * Cette méthode in nous permet de récupérer les inputs utilisateur afin d'éxecuter les commandes disponibles
+     */
     public void in(){
         Scanner sc = new Scanner(System.in);
         boolean stop = false;

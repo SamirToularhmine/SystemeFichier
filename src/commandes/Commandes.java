@@ -5,7 +5,9 @@ import java.util.Map;
 
 public class Commandes {
 
-    //Peut etre provisoire, c'est une proposition de classe pour stocker les commandes reconnues par le système de fichier
+    /**
+     * Ces constantes réprésentes les différentes commandes disponibles dans notre système de fichier
+     */
     private static final String LS = "ls";
     public static final String CD = "cd";
     private static final String MKDIR = "mkdir";

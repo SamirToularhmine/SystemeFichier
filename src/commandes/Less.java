@@ -10,6 +10,14 @@ public class Less implements Commande{
 
     private static final String retourLigne = "___";
 
+    /**
+     * Cette commande permet d'afficher le contenu d'un fichier grâce à son nom/chemin passé en paramètre
+     * @param currDir dossier courant
+     * @param f nom ou chemin du fichier
+     * @return le contenu du fichier
+     * @throws Exception si le fichier n'existe pas ou si le nom/chemin passé en paramètre n'est pas un fichier.
+     */
+
     @Override
     public Optional execute(Dossier currDir, String... f) throws Exception {
         String retour = "";

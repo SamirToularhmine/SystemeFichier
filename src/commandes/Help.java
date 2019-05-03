@@ -7,6 +7,17 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Help implements Commande{
+
+    /**
+     * Cette commande permet d'afficher une aide pour les commandes disponibles. Si il n'y a pas de commande passée en
+     * paramètre alors cette commande afficher toutes les commandes disponibles sinon elle afficher l'aide associée à
+     * chaque commande
+     * @param currDir dossier courant
+     * @param f arguments
+     * @return l'aide voulue
+     * @throws Exception si le nombre d'arguments est incorrect par exemple si l'on veut passer deux commandes en même
+     * temps.
+     */
     @Override
     public Optional execute(Dossier currDir, String... f) throws Exception {
         String retour = "";

@@ -10,6 +10,14 @@ import java.util.Optional;
 
 public class Ls implements Commande {
 
+
+    /**
+     * Cette commande permer d'afficher le contenu du dossier courant ou du chemin passé paramètre éventuellement
+     * @param currDir dossier courant
+     * @param args chemin éventuel vers le dossier
+     * @return une chaîne de charactère contenant le contenu du dossier voulu
+     * @throws Exception si le dossier n'existe pas ou si le chemin/nom passé en paramètre n'est pas un dossier.
+     */
     @Override
     public Optional<String> execute(Dossier currDir, String... args) throws Exception {
         if (currDir == null) {

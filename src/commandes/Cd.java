@@ -6,6 +6,13 @@ import java.util.Optional;
 
 public class Cd implements Commande {
 
+    /**
+     * Cette commande nous permet de nous déplacer dans l'arborescence
+     * @param currDir dossier courant
+     * @param args chemin
+     * @return le dossier dans lequel l'utilisateur s'est déplacé
+     * @throws Exception si le dossier n'existe pas
+     */
     @Override
     public Optional<Dossier> execute(Dossier currDir, String...args) throws Exception {
         if(args.length == 1){

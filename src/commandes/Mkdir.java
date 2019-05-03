@@ -9,6 +9,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Mkdir implements Commande{
+
+    /**
+     * Cette commande permet de créer un dossier
+     * @param currDir dossier courant
+     * @param args nom + éventuellement le chemin dans lequel créer le dossier
+     * @return rien
+     * @throws Exception si le nombre d'arguments est incorrect
+     */
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
         Dossier dossierCourrant = currDir;

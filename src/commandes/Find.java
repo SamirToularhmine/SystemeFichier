@@ -7,6 +7,14 @@ import systeme_fichier.IArbreFichier;
 import java.util.*;
 
 public class Find implements Commande {
+
+    /**
+     * Cette commande permet de détailler entièrement une arborescence, avec par exemple un dossier passé en paramètre
+     * @param currDir dossier courant
+     * @param f dossier à afficher
+     * @return l'arborescence complète du dossier
+     * @throws Exception si le dossier n'existe pas ou si l'on passe un fichier
+     */
     @Override
     public Optional execute(Dossier currDir, String... f) throws Exception {
         String s="";

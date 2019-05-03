@@ -9,6 +9,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Grep implements Commande{
+
+    /**
+     * Cette commande nous permet de trouver les fichiers dont le contenu match avec le pattern passé en paramètre
+     * @param currDir dossier courant
+     * @param f le patterne ainsi que les différents fichiers
+     * @return les fichiers avec leur contenu avec qui ce dernier match avec le pattern passé en paramètre
+     * @throws Exception si le fichier n'existe pas
+     */
     @Override
     public Optional execute(Dossier currDir, String... f) throws Exception {
         Pattern p = Pattern.compile("^\".*\" .*$");
