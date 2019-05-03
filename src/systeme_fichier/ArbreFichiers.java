@@ -319,6 +319,11 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         toAdd.setPere(this.pere);
     }
 
+     /**
+     * Cette methode renvoie les noms de nœuds situés sur la branche reliant la racine à un nœud
+     * @return le chemin absolu
+     */
+
     @Override
     public String cheminAbsolu(){
         // TODO :Vérifier le cas d'un fichier à la racine
@@ -332,6 +337,12 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         return s;
     }
     
+    /**
+     * Cette methode renvoie les noms de nœuds situés sur la branche reliant
+     * le nœud donné en paramètre et un nœud.
+     * @param debut represente le noeud courant
+     * @return le chemin relatif
+     */
     public String cheminRelatif(IArbreFichier debut){
         final String SEPARATEUR="/";
         String s=SEPARATEUR+this.nom;
