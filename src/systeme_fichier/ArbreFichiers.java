@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- *  Cette classe est la représentation d'un noeud dans une arborescencek
+ *  Cette classe est la représentation d'un noeud dans une arborescence
  */
 public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFichiers>{
 
