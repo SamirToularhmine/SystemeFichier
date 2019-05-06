@@ -14,7 +14,7 @@ public class Commandes {
     private static final String MKFILE = "mkfile";
     private static final String LESS = "less";
     private static final String PWD = "pwd";
-    private static final String RM = "rm";
+    public static final String RM = "rm";
     private static final String QUIT = "quit";
     private static final String EXIT = "exit";
     private static final String FIND = "find";

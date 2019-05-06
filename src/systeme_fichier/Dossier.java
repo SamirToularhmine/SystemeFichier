@@ -120,6 +120,16 @@ public class Dossier extends ArbreFichiers {
         }
         return l;
     }
+    public HashMap<String,ArbreFichiers> enfantVersMap(){
+        HashMap<String,ArbreFichiers> map = new HashMap<>();
+        List<ArbreFichiers> l = this.enfantsVersListe();
+        Iterator<ArbreFichiers> crt = l.iterator();
+        while(crt.hasNext()){
+            ArbreFichiers arbreFichiers = crt.next();
+            map.put(arbreFichiers.getNom(),arbreFichiers);
+        }
+        return map;
+    }
 
     private void listeVersEnfant(List<ArbreFichiers> l){
         if(!l.isEmpty()){
@@ -140,6 +150,8 @@ public class Dossier extends ArbreFichiers {
         }
         this.mettreAJourPremierFils();
     }
+
+
 
     protected void mettreAJourPremierFils(){
         //le cas où this a au moins un enfant
