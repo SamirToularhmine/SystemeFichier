@@ -33,9 +33,11 @@ public class SystemeFichier {
     }
 
     public SystemeFichier(){
-        this.arborescence = new Dossier("/");
-        this.commandes = null;
+        this.arborescence = new Dossier("");
+        this.commandes = Commandes.importCmd();
+        System.out.println(this.arborescence.dessiner());
         this.fp = null;
+        this.in();
     }
 
     /**
