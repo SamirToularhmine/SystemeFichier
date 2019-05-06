@@ -29,7 +29,6 @@ public class SystemeFichier {
         this.arborescence = fp.parserFichier();
         System.out.println(this.arborescence.dessiner());
         this.commandes = Commandes.importCmd();
-        this.in();
     }
 
     public SystemeFichier(){
@@ -37,7 +36,6 @@ public class SystemeFichier {
         this.commandes = Commandes.importCmd();
         System.out.println(this.arborescence.dessiner());
         this.fp = null;
-        this.in();
     }
 
     /**
