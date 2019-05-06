@@ -1,16 +1,14 @@
 package commandes;
 
-import systeme_fichier.*;
+import systeme_fichier.ArbreFichiers;
+import systeme_fichier.Dossier;
+import systeme_fichier.Fichier;
+import systeme_fichier.ToolBox;
 
-import java.security.KeyPair;
-import java.util.HashMap;
+import javax.tools.Tool;
 import java.util.Optional;
-import java.util.Scanner;
 
-public class Mv implements Commande{
-
-        private Scanner sc = new Scanner(System.in);
-
+public class Cp implements Commande {
     @Override
     public Optional execute(Dossier currDir, String... args) throws Exception {
 
@@ -54,8 +52,8 @@ public class Mv implements Commande{
                     dossierCourrant = (Dossier) Commandes.importCmd().get(Commandes.CD).execute(currDir, dest).get();
                 }
             }
+            System.out.println(toCopy);
             dossierCourrant.ajouterNoeud(toCopy);
-            arbreFichiers.supprimerNoeud();
         }
 
         return Optional.empty();
@@ -63,9 +61,9 @@ public class Mv implements Commande{
 
     @Override
     public String help() {
-        return " mv  sert  à  déplacer  des  fichiers  (et eventuellement des\n" +
-                "       répertoires).  On peut aussi bien déplacer un fichier  donné\n" +
-                "       vers  une  destination  précise  que déplacer un ensemble de\n" +
+        return " cp  sert  à  copier  des  fichiers  (et eventuellement des\n" +
+                "       répertoires).  On peut aussi bien copier un fichier  donné\n" +
+                "       vers  une  destination  précise  que copier un ensemble de\n" +
                 "       fichiers dans un répertoire.\n";
     }
 }

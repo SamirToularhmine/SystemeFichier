@@ -10,8 +10,10 @@ public class Commandes {
      */
     private static final String LS = "ls";
     public static final String CD = "cd";
+    public static final String CP = "cp";
     private static final String MKDIR = "mkdir";
     private static final String MKFILE = "mkfile";
+    private static final String MV = "mv";
     private static final String LESS = "less";
     private static final String PWD = "pwd";
     public static final String RM = "rm";
@@ -28,11 +30,13 @@ public class Commandes {
         commandes.put(QUIT, new Quit());
         commandes.put(EXIT, new Exit());
         commandes.put(CD, new Cd());
+        commandes.put(CP, new Cp());
         commandes.put(LS, new Ls());
         commandes.put(GREP, new Grep());
         commandes.put(PWD, new Pwd());
         commandes.put(MKFILE, new Mkfile());
         commandes.put(MKDIR, new Mkdir());
+        commandes.put(MV, new Mv());
         commandes.put(LESS, new Less());
         commandes.put(FIND, new Find());
         commandes.put(TREE,new Tree());

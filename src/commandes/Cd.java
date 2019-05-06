@@ -30,7 +30,7 @@ public class Cd implements Commande {
                     if(!currDir.getNoeud(i).isFichier()){
                         currDir = (Dossier)currDir.getNoeud(i);
                     }else{
-                        throw new Exception("Pas de dossier portant ce nom !");
+                        throw new DossierAttenduException("Pas de dossier portant ce nom : "+i+", il s'agit d'un fichier");
                     }
                 }
             }

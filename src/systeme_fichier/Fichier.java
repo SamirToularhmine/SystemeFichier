@@ -13,6 +13,10 @@ public class Fichier extends ArbreFichiers {
         super(nom,contenu);
     }
 
+    protected Fichier(Fichier f){
+        super(f);
+    }
+
     //pour les tests contenu rempli automatiquement
     public Fichier(String nom, int taille){
         super(nom,taille);
@@ -47,7 +51,9 @@ public class Fichier extends ArbreFichiers {
         return super.getNom();
     }
 
-
+    public ArbreFichiers getCopy(){
+        return new Fichier(this);
+    }
 
     @Override
     public String toString(){

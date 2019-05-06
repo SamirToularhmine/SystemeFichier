@@ -75,6 +75,17 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
         this.taille = 0;
     }
 
+    protected ArbreFichiers(ArbreFichiers a) {
+        this.pere = null;
+        this.premierFils = null;
+        this.frereGauche = null;
+        this.frereDroit = null;
+        this.nom = a.getNom();
+        this.fichier = a.isFichier();
+        this.contenu = a.getContenu();
+        this.taille = a.getTaille();
+    }
+
     @Override
     public IArbreFichier getPere() {
         return this.pere;
@@ -113,6 +124,8 @@ public abstract class ArbreFichiers implements IArbreFichier, Comparable<ArbreFi
     public int getTaille() {
         return taille;
     }
+
+
 
     public void setTaille(int taille) {
         this.taille = taille;

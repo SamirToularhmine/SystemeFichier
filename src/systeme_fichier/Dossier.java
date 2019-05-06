@@ -13,6 +13,10 @@ public class Dossier extends ArbreFichiers {
         super(nom,false);
     }
 
+    protected Dossier(Dossier d){
+        super(d);
+    }
+
     /**
      * Permet d'ajouter un noeud tout en respectant l'ordre définit dans le sujet
      * Lorsque un noeud ajouté porte le même nom qu'un noeud déjà présent ce nom est alors modifié.
@@ -71,7 +75,7 @@ public class Dossier extends ArbreFichiers {
         if(noeud.getNom().equals(nom)){
             return noeud;
         }
-        throw new Exception("Pas de dossier/fichier avec ce nom !");
+        throw new Exception("le fichier/dossier : "+nom+" n'existe pas");
     }
 
     protected boolean contient(IArbreFichier n){
@@ -129,6 +133,10 @@ public class Dossier extends ArbreFichiers {
             map.put(arbreFichiers.getNom(),arbreFichiers);
         }
         return map;
+    }
+
+    public ArbreFichiers getCopy(){
+        return new Dossier(this);
     }
 
     private void listeVersEnfant(List<ArbreFichiers> l){

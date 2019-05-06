@@ -32,7 +32,7 @@ public class ToolBox {
     }
 
     public static boolean estChemin(String s){
-        Matcher matcher = Pattern.compile(".*/.*$").matcher(s);
+        Matcher matcher = Pattern.compile("(.*/.*)|(\\.{1,2})$").matcher(s);
 
         return (matcher.find() ) ;
     }
@@ -46,9 +46,7 @@ public class ToolBox {
             matcher.find();
             String end = matcher.group();
             end = end.substring(1);
-            if (end.length() == 0) throw new Exception("chemin incorrect");
-
-            System.out.println("\u001B[31m" + chemin + "\u001B[0m");
+            if (end.length() == 0) throw new NomCheminException("chemin : \" "+s+ " \" incorrect");
             nom = end;
         }
         return nom;

@@ -36,7 +36,7 @@ public class Mkfile implements Commande{
                 }else{
                     dossierCourrant = currDir;
                 }
-
+                System.out.print("\u001B[33m ["+nom+"]"+"\u001B[0m - ");
                 String contenu = demandeContenu();
                 Fichier fichier = new Fichier(nom,contenu);
                 dossierCourrant.ajouterNoeud(fichier);
