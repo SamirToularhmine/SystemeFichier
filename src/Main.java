@@ -8,7 +8,12 @@ public class Main {
         SystemeFichier sf;
 
         if (c.demanderChargerFichier()){
-            sf = new SystemeFichier("arbo");
+            String nomFichier = c.demanderNomFichier();
+            if(nomFichier.equals("")){
+                sf = new SystemeFichier();
+            }else{
+                sf = new SystemeFichier(nomFichier);
+            }
         }else{
             sf = new SystemeFichier();
         }

@@ -5,6 +5,7 @@ import systeme_fichier.IArbreFichier;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +51,13 @@ public class Grep implements Commande{
             String[] chemin = s.split("/");
             String nomFichier = chemin[chemin.length - 1];
             if(m.find()){
-                retour += nomFichier + " : " + m.group(0) + "\n";
+                Scanner sc = new Scanner(contenu);
+                while(sc.hasNextLine()){
+                    String ligne2 = sc.nextLine();
+                    if(pattern.matcher(ligne2).find()){
+                        retour += nomFichier + " : " + ligne2 + "\n";
+                    }
+                }
             }
         }
         retour = !retour.isEmpty() ? retour.substring(0, retour.length() - 1) : "";

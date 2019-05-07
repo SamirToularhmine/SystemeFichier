@@ -1,5 +1,7 @@
 package systeme_fichier;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Console {
@@ -35,5 +37,28 @@ public class Console {
         }while(in == 0);
 
         return false;
+    }
+
+    public String demanderNomFichier(){
+        Scanner sc = new Scanner(System.in);
+        boolean exists = false;
+        String nom= "";
+        System.out.println("Veuillez entrer le nom du fichier (rien pour un arborescence vide):");
+        do {
+            nom = sc.nextLine();
+            if(nom.equals("")){
+                exists = true;
+            }else{
+                File f = new File(nom);
+                if(f.exists()){
+                    exists = true;
+                }else{
+                    System.out.println("Le fichier est introuvable, veuillez entrer un autre nom de fichier !");
+                }
+            }
+
+        }while(!exists);
+
+        return nom;
     }
 }
