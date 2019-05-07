@@ -42,13 +42,14 @@ public class ToolBox {
 
         if (ToolBox.estChemin(s)){
             String chemin = s;
-            Matcher matcher = Pattern.compile("/"+PATTERN_CHAR_AUTORISEES+"$").matcher(s);
+            Matcher matcher = Pattern.compile("/[^\\\\|:|*|?|<|>|\\||/]*$").matcher(s);
             matcher.find();
             String end = matcher.group();
             end = end.substring(1);
             if (end.length() == 0) throw new NomCheminException("chemin : \" "+s+ " \" incorrect");
             nom = end;
         }
+
         return nom;
     }
 
